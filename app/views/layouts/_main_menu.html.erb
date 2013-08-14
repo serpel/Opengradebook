@@ -1,0 +1,105 @@
+
+<% arrow_dir = rtl? ? "◀" : "▶" %>
+<ul id="main-menu">
+  <li class="a"><%= link_to t('dashboard_text'), :controller => "user", :action => "dashboard" %></li>
+  <% if permitted_to? :index, :student %>
+    <li class="a"><%= link_to t('students'), :controller => "student", :action => "index" %></li>
+  <% end %>
+        
+  <% if permitted_to? :index, :configuration %>
+    <li class="a"><%= link_to "#{t('settings')} ▼", :controller => "configuration", :action => "index" %>
+      <ul class="level-1">
+        <% if permitted_to? :create, :courses %>
+          <li><%= link_to "#{t('manage_course_batch')}", courses_path %></li>
+        <% end %>
+        <% if permitted_to? :settings, :configuration %>
+          <li><%= link_to "#{t('manage_student_category')}", :controller => "student", :action => "categories" %></li>
+        <% end %>
+        <% if permitted_to? :index, :subjects %>
+          <li><%= link_to "#{t('manage_subject')}", subjects_path %></li>
+        <% end %>
+        <% if permitted_to? :settings, :configuration %>
+          <li><%= link_to "#{t('general_settings')}", :controller => "configuration", :action => "settings" %></li>
+        <% end %>
+        <% if permitted_to? :settings, :configuration %>
+          <li><%= link_to "#{t('add_admission_additional_detail')}", :controller=>"student", :action => "add_additional_details" %></li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+  <!--
+  <li><%= link_to t('news_text'), :controller => "news", :action => "index" \
+    if @current_user.admin? %></li> -->
+  <% if @current_user.admin? %>
+    <% FedenaPlugin::AVAILABLE_MODULES.each do |mod| %>
+      <% unless mod[:top_bar].blank? %>
+        <% if permitted_to? "#{mod[:top_bar][:action]}".to_sym,"#{mod[:top_bar][:controller]}".to_sym %>
+          <%= link_to "#{t(mod[:top_bar][:title])}", {:controller => "#{mod[:top_bar][:controller]}", :action => "#{mod[:top_bar][:action]}"} %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <li class="a"><a href="#"><%= t('more') %> ▼</a>
+    <ul class="level-1" id="more-parent">
+      <li><%= link_to "#{t('calendar_text')}" , :controller => "calendar", :action=>"index" %></li>
+      <% if permitted_to? :index, :event %>
+        <li><%= link_to "#{t('event_creations')}" , :controller => "event", :action=>"index" %></li>
+      <% end %>
+      <% if permitted_to? :hr, :employee %>
+        <li><%= link_to "#{t('human_resource')} <span class='right-arrow'>#{arrow_dir}</span>" , :controller => "employee", :action=>"hr" %>
+          <ul class="level-2">
+            <% if permitted_to? :settings, :employee %>
+              <li><%= link_to "#{t('setting')}", :controller=>"employee", :action=>"settings"%></li>
+            <%end%>
+            <% if permitted_to? :employee_management, :employee %>
+              <li><%= link_to "#{t('employee_management_text')}", :controller=>"employee", :action=>"employee_management"%></li>
+            <%end%>
+            <% if permitted_to? :search, :employee %>
+              <li><%= link_to "#{t('employee_search')}", :controller=>"employee", :action=>"search" %></li>
+            <%end%>         
+          </ul>
+        </li>
+      <% end %>
+      <% if @current_user.admin? %>
+        <li><%= link_to "#{t('user_text')}" , :controller => "user", :action=>"index" %></li>
+      <% end %>
+    </ul>
+  </li>
+</ul>
+
+<script type="text/javascript">
+  function load_menu_from_plugins(){
+<% FedenaPlugin::AVAILABLE_MODULES.each do |mod|  %>
+  <% unless mod[:more_menu].blank? %>
+    <% sub_menu_flag = 0 %>
+    <% unless mod[:sub_menus].blank? %>
+      <% mod[:sub_menus].each do|mnu| %>
+        <% if permitted_to? "#{mnu[:action]}".to_sym,"#{mnu[:controller]}".to_sym and mnu[:target_id]==mod[:name]%>
+          <% sub_menu_flag = 1 %>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% arrow = sub_menu_flag==1 ? " <span class=right-arrow>#{arrow_dir}</span>" : "" %>
+    <% if mod[:more_menu][:target_id].present? %>
+      <% if permitted_to? mod[:more_menu][:action].to_sym,mod[:more_menu][:controller].to_sym %>
+        <% if sub_menu_flag==1 %>
+              $('<%= mod[:more_menu][:target_id] %>').insert({bottom: '<li><%= link_to "#{t(mod[:more_menu][:title])}#{arrow}",:controller => "#{mod[:more_menu][:controller]}", :action=>"#{mod[:more_menu][:action]}" %><ul class="level-2" id="<%= mod[:name] %>"></ul></li>'})
+        <% else %>
+              $('<%= mod[:more_menu][:target_id] %>').insert({bottom: '<li><%= link_to "#{t(mod[:more_menu][:title])}#{arrow}",:controller => "#{mod[:more_menu][:controller]}", :action=>"#{mod[:more_menu][:action]}" %></li>'})
+        <% end %>
+      <% end %>
+      <% unless mod[:sub_menus].blank? %>
+        <% mod[:sub_menus].each do |submenu| %>
+          <% if submenu[:target_id].present? %>
+                if ($('<%= submenu[:target_id] %>')!=null)
+                {
+                  $('<%= submenu[:target_id] %>').insert({bottom: '<li><%= link_to "#{t(submenu[:title])}",:controller => "#{submenu[:controller]}", :action=>"#{submenu[:action]}"  if permitted_to? "#{submenu[:action]}".to_sym,"#{submenu[:controller]}".to_sym  %></li>'})
+                }
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+  }
+</script>

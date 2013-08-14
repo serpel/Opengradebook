@@ -1,0 +1,125 @@
+<%-#
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+<div id="content-header">
+  <%= image_tag("/images/library/library_small.png") %>
+  <h1><%= "#{t('library_text')}"%></h1>
+  <h3><%= "#{t('issue_book_text')}"%></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+<div id="page-yield-bookissue">
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p><br/>
+  <% end %>
+  <%= error_messages_for :movement, :header_message => nil %>
+  <div class="extender"></div>
+   <div class="issue_form">
+    <% form_for :issue do |f| %>
+      <div class="label-field-pair">
+        <label for="book_number"><%= "#{t('book_number')}"%> </label>
+        <div class="text-input-bg">
+          <%= text_field :library,:book_number, :value=>@book.book_number, :disabled=>true %>
+          <%= f.hidden_field :book_id, :value=>@book.id %>
+        </div>
+      </div>
+      <div class="label-field-pair">
+        <label for="book_title"><%= "#{t('book_title')}"%> </label>
+        <div class="text-input-bg">
+          <%= text_field :library, :book_title, :value=>@book.title, :disabled=>true %>
+        </div>
+      </div>
+      <div id="user">
+        <div class="label-field-pair">
+          <label for="user_name"><%= "#{t('name')}"%> </label>
+          <div class="text-input-bg">
+            <%= text_field :library, :name, :value=>@user.full_name , :disabled=>true unless @user.nil? %>
+            <%= text_field :library, :name, :disabled=>true  if @user.nil? %>
+            <%= f.hidden_field :user_id, :value=>@user.id unless @user.nil? %>
+          </div>
+        </div>
+        <div class="label-field-pair">
+          <%# label='Admission no.'
+          unless @user.nil?
+              label='Employee no.' if @user.employee?
+          end
+          %>
+          <%= label_tag "#{t('admission_no')}."  %>
+          <div class="text-input-bg">
+            <%= text_field :library, :username, :value=>@user.username , :disabled=>true unless @user.nil? %>
+            <%= text_field :library, :username, :disabled=>true if @user.nil? %>
+          </div>
+        </div>
+        <% unless @issueable.nil? %>
+          <div class="name"><%= "#{t('no_of_books_can_be_taken')}"%></div><div class="val"><span>:</span><%= @issueable.books_issueable.to_s  %></div>
+          <% count = 1 %>
+          <% count = @issueable.books_issueable - @in_hand_books.size  %>
+        <% end %>
+        <% unless @in_hand_books.nil? %>
+          <div class="name"><%= "#{t('books_taken')}"%></div><div class="val"><span>:</span><%=  (@in_hand_books) ? @in_hand_books.size : 0 %></div>
+          <% if count.present? %>
+         <% if count <= 0 %>
+            <p><%= "#{t('library')}"%>This user has reached the maximum limit of availing books.</p>
+          <% end %>
+          <% end %>
+            <div class="pack"></div>
+          <% @in_hand_books.each do |b| %>
+            <div class="name"><%= "#{t('book_title')}"%></div><div class="val"><span>:</span><%= b.book.title %></div>
+            <div class="name"><%= "#{t('book_number')}"%></div><div class="val"><span>:</span><%= b.book.book_number %></div>
+            <div class="name"><%= "#{t('issue_date')}"%></div><div class="val"><span>:</span><%= b.issue_date %></div>
+            <div class="name"><%= "#{t('due_date')}"%></div><div class="val"><span>:</span><%= b.due_date %></div>
+             <div class="pack"></div>
+          <% end %>
+        <% end %>
+        <div class="label-field-pair">
+          <label for="issue_date"><%= "#{t('issue_date')}"%> </label>
+          <div class="text-input-bg">
+            <%= calendar_date_select_tag 'issue[issue_date]', I18n.l(Date.today,:format=>:default),:readonly=>true,:popup=>"force"%>
+          </div>
+        </div>
+        <div class="label-field-pair">
+          <label for="Due Date"><%= "#{t('due_date')}"%> </label>
+          <div class="text-input-bg">
+            <%= calendar_date_select_tag 'issue[due_date]', I18n.l(Date.today+30,:format=>:default),:readonly=>true,:popup=>"force"%>
+          </div>
+        </div>
+      </div>
+      <%= f.submit "#{t('issue')}", :class=>"submit_button" %>
+    <% end %>
+  </div>
+  <div id="search_box_bg">
+    <% if @user.nil? %>
+      <% remote_form_for :user, :url=>{:action=>'user_search'} do |f| %>
+        <label for="user_name"><%= "#{t('search_by_admission_no_employee_no')}"%></label>
+
+        <div id="search_textbox">
+          <%= f.text_field  :name %>
+        <div class="radio_button">
+          <%= f.radio_button  "nature", "student", :checked => "checked" %> <%= "#{t('student_text')}"%>
+          <%= f.radio_button  "nature", "employee" %><%= "#{t('employee_text')}"%>
+        </div>
+        </div>
+        <%= f.submit "#{t('search_text')}", :class=>"search_button" %>
+      <% end %>
+    <% end %>
+    <div class="extender"></div>
+  <div id="user_list"></div>
+  </div>
+ 
+</div>

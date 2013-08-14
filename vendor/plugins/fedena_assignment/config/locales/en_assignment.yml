@@ -1,0 +1,74 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  activerecord:
+    attributes:
+      assignment:
+        title: "Title"
+        content: "Content"
+        student_list: "Student list"
+        duedate: "Due Date"
+
+      assignment_answer:
+        title: "Title"
+        content: "Content"
+
+  new_assignment_sucessfuly_created: "New assignment successfully created"
+  assignment_details_updated: "Assignment details updated"
+  assignment_sucessfully_deleted: "Assignment sucessfully deleted"
+  you_do_not_have_permission_to_delete_this_assignment: "You do not have permission to delete this assignment"
+  you_are_not_allowed_to_download_that_file: "You are not allowed to download that file"
+  assignment_text: "Assignment"
+  assignments_text: "Assignments"
+  submit_answer: "Submit Answer"
+  attach_a_file: "Attach a file"
+  on: "On"
+
+  assignments:
+    on_text: "On "
+    change_subject: "Change Subject"
+    create_new_assignment: "Create new Assignment"
+    all_assignments: "All assignments"
+    there_are_no_subjects_assigned_to_this_employee: "There are no subjects assigned to this employee"
+    you_have_not_been_assigned_any_assignments: "You have not been assigned any assignments"
+    create_a_new_assignment: "Create a new assignment"
+    assignment_already_due: "Assignment already due"
+    due_in: "Due in"
+    delete_assignment: "Delete Assignment"
+    delete_this_assignment: "Are you sure you want to delete this assignment?This will also delete all the answers submitted to this assignment."
+    assigned: "Assigned"
+    answered: "Answered"
+    resubmit: "Resubmit"
+    answer_this_assignment: "Answer this assignment"
+    rejected: "Rejected"
+    hostel_accepted: "ACCEPTED"
+    update_assignment: "Update Assignment"
+    edit_assignment: "Edit assignment"
+    no_assignments_for_this_subject_have_been_created: "No assignments for this subject have been created"
+    no_students: "No students"
+
+  assignment_answers:
+    assignment_submitted: "Assignment submitted"
+    you_are_not_allowed_to_view_that_page: "You are not allowed to view that page"
+    you_cannot_edit_the_assignment_once_it_is_accepted: "You cannot edit the assignment once it is accepted"
+    you_cannot_edit_this_assignment: "You cannot edit this assignment"
+    assignment_successfuly_updated: "Assignment successfuly updated"
+    failed_to_update_assignment: "Failed to update assignment"
+    failed_to_set_status_of_assignment: "Failed to set status of assignment"
+    you_cannot_approve_or_reject_this_assignment: "You cannot approve or reject this assignment"
+    assignment_text: "Assignment"
+    edit_answer: "Edit answer"
+    submit_an_answer: "Submit an answer"
+    reject_answer: "Reject answer"
+    accept_answer: "Accept answer"
+    the_assignment_is: "The assignment is"
+    resubmit_answer: "Resubmit Answer"
+    this_answer_yet_to_be_evaluated: "This answer yet to be evaluated"
+    submitted_on: "Submitted on"
+    submitted_by: "Submitted by"
+    answer: "Answer"
+
+  homeworks: "Homework"
+  homeworks_title: "See and create homerwork"
+  homeworks_title_student: "See Homework"

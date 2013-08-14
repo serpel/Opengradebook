@@ -1,0 +1,35 @@
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1>Materias</h1>
+  <h3>Ponderaciones</h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+	<div id="application-list">
+		<table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+			<tbody>			
+				<tr class="tr-head">
+					<td>Materias</td>
+					<td colspan="2">Acciones</td>
+				</tr>
+				<tr class="tr-blank"></tr>
+				<% @my_subjects.each do |subject| %>
+				<tr class="tr-read-<%= cycle('odd', 'even') %>">
+					<td class="col-1" style="text-transform:capitalize"><%=subject.name%></td>
+					<% if subject.plans.size > 0 %>
+						<% subject_plan = subject.plans.first %>
+						<td class="col-1"><%= link_to "Editar Ponderacion", edit_plan_path(subject_plan.id) %></td>
+						<td class="col-1"><%= link_to "Mostrar Ponderacion", plan_path(subject_plan.id) %></td>
+					<% else %>
+						<td class="col-1"><%= link_to "Crear Ponderacion", new_subject_ponderation_path(:id=>subject.id) %></td>
+					<% end %>
+				</tr>
+				<tr class="tr-blank"></tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

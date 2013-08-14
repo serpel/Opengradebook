@@ -1,0 +1,36 @@
+<h1>Listing plans</h1>
+
+<table>
+  <tr>
+    <th>Subject</th>
+    <th>Examen 1</th>
+    <th>Acumulado 1</th>
+    <th>Examen 2</th>
+    <th>Acumulado 2</th>
+    <th>Examen 3</th>
+    <th>Acumulado 3</th>
+    <th>Examen 4</th>
+    <th>Acumulado 4</th>
+  </tr>
+
+<% @plans.each do |plan| %>
+  <tr>
+    <td><%=h plan.subject_id %></td>
+    <td><%=h plan.examen_1 %></td>
+    <td><%=h plan.acumulado_1 %></td>
+    <td><%=h plan.examen_2 %></td>
+    <td><%=h plan.acumulado_2 %></td>
+    <td><%=h plan.examen_3 %></td>
+    <td><%=h plan.acumulado_3 %></td>
+    <td><%=h plan.examen_4 %></td>
+    <td><%=h plan.acumulado_4 %></td>
+    <td><%= link_to 'Show', plan %></td>
+    <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
+    <td><%= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New plan', new_plan_path %>

@@ -1,0 +1,95 @@
+<%-# Fedena
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+
+<div id="content-header">
+  <%= image_tag("/images/attendence/attendence.png") %>
+  <h1><%= t('attendance') %></h1>
+  <h3><%= t('student_report') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+  <div id="box">
+    <% remote_form_for :advance_search do |f| %>
+      <div class="label-field-pair">
+        <label for="student"><%= t('student_name') %></label>
+        <div class="text-input-bg">
+          <%= f.text_field :student_name, :value => @student.full_name, :disabled=> true %></div>
+      </div>
+      <div class="label-field-pair">
+        <label for="student"><%= t('admission_no') %></label>
+        <div class="text-input-bg">
+          <%= f.text_field :student_id, :value => @student.admission_no, :disabled=> true  %></div>
+      </div>
+
+    <% end %>
+
+    <div id="report">
+
+      <% working_days = @academic_days %>
+      <div class="att_detail">
+        <%  if @config.config_value == 'Daily' %>
+          <%= t('total_working_days') %> : <%= working_days %>
+        <% else %>
+          <%= t('total_working_hours') %>: <%= working_days %>
+        <% end %>|<%= t('total_present') %> : <%= @attendance %> |
+        <%= t('percentage') %>: <%= "%.2f" %(@percent.to_f) %>
+      </div>
+      <% unless @student_leaves.empty? %>
+        <table id="listing" align="center" width="80%">
+          <tr class="tr-head">
+            <td>
+              <%= t('date_text') %>
+            </td>
+            <td>
+              <%= t('status') %>
+            </td>
+            <td>
+              <%= t('reason') %>
+            </td>
+          </tr>
+          <tr class="blank"></tr>
+          <% @student_leaves.each do |t| %>
+            <tr class="tr-<%= cycle('odd', 'even') %>">
+              <td class="col-2"><%= t.month_date %></td>
+              <td class="col-3">
+                <%  if @config.config_value == 'Daily' %>
+                  <% if t.forenoon and t.afternoon %>
+                    <%= t('full_day') %>
+                  <% elsif t.afternoon %>
+                    <%= t('afternoon') %>
+                  <% elsif t.forenoon %>
+                    <%= t('forenoon') %>
+                  <% end %>
+                <% else %>
+                  <%= t('absent') %>
+                <% end %>
+              </td>
+              <td class="col-2">
+                <%= t.reason %></td>
+              <% end %>
+          </tr>
+        </table>
+      <% end %>
+
+    </div>
+  </div>
+</div>

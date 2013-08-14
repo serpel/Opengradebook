@@ -1,0 +1,5 @@
+
+#page.visual_effect(:highlight, 'student-school-list')
+page.replace_html 'student-school-form', :partial => 'student_school_create_form'
+page.replace_html 'student-school-list', :partial => 'student_school_list'
+page.replace_html 'flash_box', :text => "<p class='flash-msg'>#{t('student_school_updated_succesfully')}</p>"

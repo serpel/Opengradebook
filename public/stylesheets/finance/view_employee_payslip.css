@@ -1,0 +1,162 @@
+
+.item-list {
+    clear : both;
+    padding : 10px 0 0 130px;
+    margin:0px;
+}
+
+.item-list li.heading1 {
+    background : #BECFFB;
+    border-bottom:1px solid #BECFFB;
+    font-weight : bold;
+    height : 1.5em;
+    width : 35em;
+    list-style-type : none;
+    padding : 0.5em 0 0 0.3em;
+}
+
+.item-list .listeven{
+    background : #EEF2FD;
+    border-bottom:1px solid #BECFFB;
+    color : #444;
+    min-height : 1.5em; width : 30.3em;
+    list-style-type : none;
+    padding : 0.5em 0 0 5em;
+    overflow: hidden;
+}
+
+.item-list .listodd{
+    background : #DFEAFF;
+    border-bottom:1px solid #BECFFB;
+    color : #444;
+    min-height : 1.5em; width : 30.3em;
+    list-style-type : none;
+    padding : 0.5em 0 0 5em;
+    overflow: hidden;
+}
+
+.item-list li.heading {
+    background : none;
+    font-weight : bold;
+    list-style-type : none;
+    color : #444;
+    height : 1.5em; width : 30em;
+    padding : 0.5em 0 0 0em;
+}
+.item-list li div {
+    float : left;
+}
+.item-list li div.item-name {
+    width : 350px;
+    font-size: 13px;
+    font-weight: bold;
+}
+.item-list li div.item-edit {
+    font-size : 0.9em;
+    text-align:right;
+}
+.item-list li div.item-delete {
+    font-size : 0.9em;
+    width : 100px;
+    text-align:right;
+}
+.item-list li div a {
+    color : #000;
+}
+.item-list li div.item-edit b .currency-type1{
+    float:left;
+    margin-left:20px;
+    text-align: left;
+}
+.currency-type{
+    float:left;
+    margin-left:20px;
+}
+.approve{
+    float:right;
+    margin-top:20px;
+    margin-left:10px;
+}
+
+.approve a{
+    -moz-border-radius:10px 10px 10px 10px;
+    -webkit-border-radius:10px;
+    background:none repeat scroll 0 0 #27292B;
+    font-family:arial;
+    font-size:14px;
+    font-weight:bold;
+    padding:7px 10px;
+    text-align: center;
+    text-decoration: none;
+    color:#FFFFFF;
+
+}
+.label-field-pair label.reason{
+    width:200px;
+}
+#MB_frame #payslip_reject_submit{
+    -moz-border-radius:10px 10px 10px 10px;
+    -webkit-border-radius:10px;
+    background:none repeat scroll 0 0 #27292B;
+    font-family:arial;
+    font-size:14px;
+    font-weight:bold;
+    padding:7px 10px;
+    margin-left:210px;
+    text-align: center;
+    text-decoration: none;
+    float:left;
+    color:#FFFFFF;
+    border:none;
+
+}
+.approve:hover a{
+    background:  #373B3F;
+}
+
+.approved{
+    float:right;
+    margin-top:16px;
+    -moz-border-radius:10px 10px 10px 10px;
+    -webkit-border-radius:10px;
+    background:none repeat scroll 0 0 #27292B;
+    font-family:arial;
+    font-size:14px;
+    font-weight:bold;
+    padding:7px 10px;
+    text-align: center;
+    color:#FFFFFF;
+
+}
+.pdf-report{
+
+    float:right;
+    margin-left:10px;
+    margin-right:290px;
+    margin-top:20px;
+}
+
+.pdf-report a{
+    -webkit-border-radius:10px;
+    -moz-border-radius:10px 10px 10px 10px;
+    background:none repeat scroll 0 0 #27292B;
+    text-align: center;
+    text-decoration: none;
+    color:#FFFFFF;
+    font-family:arial;
+    font-size:14px;
+    font-weight:bold;
+    padding:7px 10px;
+
+}
+.pdf-report:hover a{
+    background:  #373B3F;
+}
+
+.box{
+    width:750px;
+    margin:0px auto;
+}
+.red{
+    color: #bb0000;
+}

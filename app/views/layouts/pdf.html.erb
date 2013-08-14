@@ -1,0 +1,75 @@
+<%-# Fedena
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html dir="<%= (rtl?) ? 'rtl' : 'ltr' %>">
+  <head>
+    <% @direction = (rtl?) ? 'rtl/' : '' %>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+    <%= stylesheet_link_tag([@direction+'application', @direction+'_styles/ui.all'])%>
+    <%= stylesheet_link_tag(*get_stylesheets) %>
+    <%= stylesheet_link_tag  @direction+"_layouts/pdf" %>
+    
+    <%= wicked_pdf_javascript_include_tag 'cache/javascripts/all' %>
+    <%= javascript_include_tag :all %>
+
+    <link rel="stylesheet" type="text/css" href="<%="#{RAILS_ROOT}/public/stylesheets/#{@direction}_layouts/pdf.css" %>" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%="#{RAILS_ROOT}/public/stylesheets/#{get_stylesheets}.css"%>" media="all" />
+    <link rel="stylesheet" type="text/css" href="<%= "#{RAILS_ROOT}/public/stylesheets/#{@direction}_styles/ui.all.css"%>" media="all" />
+
+    <script type="text/css">
+      .page {
+        page-break-after: auto;
+        page-break-inside: avoid;
+        overflow: hidden;
+      }
+      .section{
+        margin-top:10px;
+      }
+    </script>
+
+  </head>
+  <body>
+
+    <%= yield %>
+    <script type="text/javascript">
+      var body = document.body,
+      html = document.documentElement;
+      var pg_height = 0;//Magic number.. TADA
+      var page = new Element('div',{'class' : 'page'});
+      var pageBreak = new Element('div',{'class' : 'page-break'});
+      var insertPageBreak = function(){body.appendChild(pageBreak.cloneNode(true))};
+      var insertPage = function(){body.appendChild(page.cloneNode(true));};
+      var currPage = function(){return $$('.page').last()}
+      $$('.available_sections .section').each(function(el){
+        if(currPage() == null){
+          insertPage();//first page
+        }
+        a = parseInt(el.getHeight());
+        b = parseInt(currPage().getHeight());
+        c = a+b;
+        if(c>pg_height){
+          insertPage();
+        }
+        currPage().appendChild(el);
+      });
+    </script>
+  </body>
+</html>

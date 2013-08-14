@@ -1,0 +1,114 @@
+.assignment_container{
+    width: 950px;
+    overflow:hidden;
+
+}
+.assignment_form{
+    float:right;
+    width: 540px;
+    padding-top:20px;;
+}
+#subjects_student_list{
+    float:right;
+    margin-right:0px;
+    padding-top: 30px;
+}
+
+.scrollable{
+    width: 250px;
+    background-color: #EEE;
+    padding :7px;
+    -webkit-border-radius : 10px;
+    -moz-border-radius : 10px;
+}
+#scrollable-list {
+    width: 250px;
+    overflow: auto;
+    height: 160px;
+}
+.select_all{
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom:10px;
+}
+.select_all a {
+    color: #9F0C14;
+    text-decoration: none;
+}
+.select_all a:hover {
+    color: #9F0C14;
+    text-decoration: none;
+}
+.listitem{
+    margin-bottom: 2px;
+    border-bottom: 1px solid #DDDDDD;
+    overflow: hidden;
+    font-size:14px;
+}
+.listitem .check_box {
+    float:right;
+    width: 5px;
+}
+.listitem .student_name {
+    float:right;
+    width: 200px;
+}
+
+#assignment_description{
+    height:150px;
+    overflow: hidden;
+
+}
+.submit_button {
+    margin-right: 130px;
+    padding: 7px 10px;
+    color: #fff;
+    background: #27292B;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    font-weight: bold;
+    font-size: 14px;
+    border:none;
+    font-family: arial;
+    cursor:pointer;
+}
+
+
+.text-input-bg textarea  {
+    -moz-border-radius:10px 10px 10px 10px;
+    -webkit-border-radius:10px;
+    background-color:#EEEEEE;
+    border:1px solid #C6C6C6;
+    height:120px;
+    margin:5px 10px 0 0;
+    padding:3px 6px;
+    width:215px;
+}
+
+.text-input-bg textarea:focus{
+    background: #fff;
+    border: 1px solid #9e0f15;
+}
+
+#assignment-attachment input{
+    height: 24px;
+}
+.text-input-bg img{
+    padding-top:10px;
+    padding-right: 2px;
+}
+.label-field-pair a {
+    color: #000;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+}
+.label-field-pair a:hover{
+    text-decoration: underline;
+}
+.label-field-pair label {
+    width: 122px;
+}
+#assignment-submit{
+    padding-top : 30px;
+}

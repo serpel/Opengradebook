@@ -1,0 +1,176 @@
+
+
+<% unless flash[:notice].nil? %> <p class="flash-msg"> <%= flash[:notice] %> </p> <% end %>
+
+<div id="user_options">
+
+  <% if @user.admin? %>
+    <div class="button-box">
+      <%= link_to "<div class ='button-label'><p>#{t('admission')}</p></div>", {:controller => "student", :action => "admission1"},
+        :class => "option_buttons", :id => "admission_button", :title => "#{t('admission_link_title')}"%>
+    </div>
+    <div class="button-box">
+      <%= link_to "<div class ='button-label'><p>#{t('student_details')}</p></div>", {:controller => "student", :action => "index"},
+        :class => "option_buttons", :id => "student_details_button", :title => "#{t('student_link_title')}"%>
+    </div>
+    <div class="button-box">
+      <%= link_to "<div class ='button-label'><p> #{t('manage_users')} </p></div>", {:controller => "user", :action => "index"},
+        :class => "option_buttons", :id => "manage_users_button", :title =>t('user_link_title') %>
+    </div>  
+    <div class="button-box">
+      <%= link_to "<div class ='button-label'><p>#{t('settings')}</p></div>", {:controller => "configuration", :action => "index"},
+        :class => "option_buttons", :id => "settings_button", :title => t('setting_link_title') %>
+    </div>
+
+    <% if @config.include?('HR') %>
+      <div class="button-box">
+        <%= link_to "<div class ='button-label'><p>#{t('human_resources')}</p></div>", {:controller => "employee", :action => "hr"},
+          :class => "option_buttons", :id => "hr_button", :title => t('hr_link_title')%>
+      </div>
+
+    <% end %>
+
+  <% elsif @user.student? or @user.parent?%>
+
+    <div class="button-box">
+      <%= link_to "<div class ='button-label'><p>#{t('my_profile')}</p></div>", {:controller => "student", :action => "profile", :id => @student.id},
+        :class => "option_buttons", :id => "student_details_button", :title => "        #{t('view_your_profile')}"  %>
+
+    </div>
+    <div class="button-box">
+      <% unless @user.check_reminders == 0 %>
+        <div class="reminder1">
+          <%= link_to "<div class ='button-label'><p>#{t('reminders')}</p></div>", {:controller => "reminder", :action => "index"},
+            :class => "option_buttons", :id => "reminders_button", :title => "         #{t('student_messages')}"%>
+          <div class ="count"><%= render :partial => 'layouts/reminder_count' %></div>
+        </div>
+      <% else %>
+        <%= link_to "<div class ='button-label'><p>#{t('reminders')}</p></div>", {:controller => "reminder", :action => "index"},
+          :class => "option_buttons", :id => "reminders_button", :title => "         #{t('student_messages')}"%>
+      <% end %>
+    </div>
+
+    <div class="button-box">
+      <%= link_to "<div class ='button-label'><p>#{t('homeworks')}</p></div>", {:controller => "assignments", :action => "index"},
+        :class => "option_buttons", :id => "student_attendance_button",:title => t('homeworks_title_student') %>
+    </div>
+    <div class="button-box">
+      <%= link_to "<div class ='button-label'><p>#{t('academic_reports')}</p></div>", {:controller => "student", :action => "get_scores",:id => @student.id},
+        :class => "option_buttons", :id => "academic_button",:title => "#{t('academic_reports')}   "  %>
+    </div>
+  
+    <div class="button-box">
+      <%= link_to "<div class ='button-label'><p>#{t('calendar')}</p></div>", {:controller => "calendar", :action => "index",:id => @student.id},
+        :class => "option_buttons", :id => "calendar_button",:title => "#{t('calendar')}   "  %>
+    </div>
+
+  <% else %>
+
+    <% if @config.include?('HR') %>
+      <div class="button-box">
+        <%= link_to "<div class ='button-label'><p>#{t('my_profile')}</p></div>", {:controller => "employee", :action => "profile",:id => @employee.id},
+          :class => "option_buttons", :id => "my_profile_button", :title => "  #{t('profile_detail')}" unless @employee.nil?%>
+      </div>
+    <% end  %>
+
+
+    <% if permitted_to? :admission1, :student %>
+      <div class="button-box">
+        <%= link_to "<div class ='button-label'><p>#{t('admission')}</p></div>", {:controller => "student", :action => "admission1"},
+          :class => "option_buttons", :id => "admission_button", :title => "#{t('admission_link_title')}" %>
+      </div>
+    <%end%>
+
+    <% if permitted_to? :index, :student%>
+      <div class="button-box">
+        <%= link_to "<div class ='button-label'><p>#{t('student_details')}</p></div>", {:controller => "student", :action => "index"},
+          :class => "option_buttons", :id => "student_details_button", :title => t('student_link_title')%>
+      </div>
+    <%end%>
+
+    <% if permitted_to? :index, :user %>
+      <div class="button-box">
+        <%= link_to "<div class ='button-label'><p>#{t('manage_users')}</p></div>", {:controller => "user", :action => "index"},
+          :class => "option_buttons", :id => "manage_users_button", :title => t('user_link_title') %>
+      </div>
+    <%end%>
+
+    <div class="button-box">
+      <% unless @user.check_reminders == 0 %>
+        <div class="reminder1">
+          <%= link_to "<div class ='button-label'><p>#{t('reminders')}</p></div>", {:controller => "reminder", :action => "index"},
+            :class => "option_buttons", :id => "reminders_button", :title => "#{t('employee_messages')}"%>
+          <div class ="count"><%= render :partial => 'layouts/reminder_count' %></div>
+        </div>
+
+      <% else %>
+        <div class="button-box">
+          <%= link_to "<div class ='button-label'><p>#{t('reminders')}</p></div>", {:controller => "reminder", :action => "index"},
+            :class => "option_buttons", :id => "reminders_button", :title => "            #{t('student_messages')}"%>
+        </div>
+      <% end %>
+    </div>
+    <% if @user.employee? %>
+      <% @employee_subjects= @user.employee_record.subject_ids  %>
+      <% if @employee_subjects.empty?%>
+
+        <% if permitted_to? :index, :exam and (@user.privileges.map{|p| p.name}.include?("ExaminationControl") or @user.privileges.map{|p| p.name}.include?("EnterResults") or @user.privileges.map{|p| p.name}.include?("ViewResults")) %>
+           <div class="button-box">
+            <%= link_to "<div class ='button-label'><p>#{t('examinations')}</p></div>", {:controller => "employee", :action => "get_subjects"},
+              :class => "option_buttons", :id => "examinations_button",:title => t('exam_link_title') %>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="button-box">
+          <%= link_to "<div class ='button-label'><p>#{t('homeworks')}</p></div>", {:controller => "assignments", :action => "index"},
+            :class => "option_buttons", :id => "student_attendance_button",:title => t('homeworks_title') %>
+        </div>
+        <div class="button-box">
+          <%= link_to "<div class ='button-label'><p>#{t('examinations')}</p></div>", {:controller => "employee", :action => "get_subjects"},
+            :class => "option_buttons", :id => "examinations_button",:title => t('exam_link_title') %>
+        </div>
+  
+        <div class="button-box">
+          <%= link_to "<div class ='button-label'><p>#{t('calendar')}</p></div>", {:controller => "calendar", :action => "index"},
+            :class => "option_buttons", :id => "calendar_button",:title => "#{t('calendar')}   "  %>
+        </div>
+      <% end  %>
+    <% end %>
+
+    <% if permitted_to? :index, :configuration %>
+      <div class="button-box">
+        <%= link_to "<div class ='button-label'><p>#{t('settings')}</p></div>", {:controller => "configuration", :action => "index"},
+          :class => "option_buttons", :id => "settings_button", :title => t('setting_link_title') %>
+      </div>
+    <% end %>
+    <% if @config.include?('HR') %>
+      <% if permitted_to? :hr,:employee %>
+        <div class="button-box">
+          <%= link_to "<div class ='button-label'><p>#{t('human_resources')}</p></div>", {:controller => "employee", :action => "hr"},
+            :class => "option_buttons", :id => "hr_button", :title => t('hr_link_title') %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% FedenaPlugin::AVAILABLE_MODULES.each do |mod| %>
+    <% unless mod[:dashboard_menu].blank? %>
+      <% if permitted_to? "#{mod[:dashboard_menu][:action]}".to_sym,"#{mod[:dashboard_menu][:controller]}".to_sym %>
+        <div class="button-box">
+          <%= link_to "<div class =\"button-label\"><p>#{t("#{mod[:dashboard_menu][:title]}")}</p></div>", {:controller => "#{mod[:dashboard_menu][:controller]}", :action => "#{mod[:dashboard_menu][:action]}"}, :class=>"#{mod[:dashboard_menu][:options][:class]}", :id=>"#{mod[:dashboard_menu][:options][:id]}", :title=>"#{t("#{mod[:dashboard_menu][:options][:title]}")}" %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+</div>
+
+<div id="option_description"> </div>
+
+<script type="text/javascript">
+  $$('#user_options .button-box').each(function(ele, index){
+    if(index%5 == 0){
+      ele.addClassName("left-button");
+    }
+  });
+</script>

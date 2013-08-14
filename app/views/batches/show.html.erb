@@ -1,0 +1,103 @@
+<%-# Fedena
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+
+<div id="content-header">
+  <%= image_tag("/images/show_settings.png") %>
+  <h1><%= t('courses_text') %></h1>
+  <h3><%= t('batches_text') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="inner-tab-menu">
+  <ul>
+    <%  if permitted_to? :index,:exam_groups and @batch.allow_exam_acess(@current_user)%>
+      <li><%= link_to "#{t('exams_text')}", batch_exam_groups_path(@batch) %> </li>
+    <% end %>
+
+    <li><%= link_to "#{t('edit_text')}", edit_course_batch_path(@course, @batch) %></li>
+    <li><%= link_to("#{t('delete_text')}", [@course, @batch], :method => 'delete', :confirm => "#{t('delete_confirm_msg')}") %></li>
+
+
+    <li>
+      <a href="#" class="drops" id="link_one"><%= t('manage') %> &#9660;</a>
+      <ul id="box_one" class="scriptaculously" style="display:none;">
+        <li><%= link_to "#{t('subject')}", :controller=>"batch_transfers", :action=>'subject_transfer', :id=>@batch %></li>
+        <li><%= link_to "#{t('electives')}", batch_elective_groups_path(@batch) %></li>
+        <li><%= link_to "#{t('assign_tutor')}",:action=>'assign_tutor', :id=>@batch %></li>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice]  %> </p>
+  <% end %>
+
+  <% unless flash[:warn_notice].nil? %>
+    <div id="errorExplanation" class="errorExplanation"><%= flash[:warn_notice] %> </div>
+  <% end %>
+
+  <% unless flash[:subject_import].nil? %>
+    <div class="flash-msg" style="text-align: left;"><%= t('subject_transfer_message') %>:<br /> <%= flash[:subject_import].join("")%></div>
+  <% end %>
+
+  <% unless flash[:no_subject_error].nil? %>
+    <div class="flash-msg"><%= flash[:no_subject_error] %></div>
+  <% end %>
+
+  <% unless flash[:fees_import].blank? %>
+    <div class="flash-msg" style="text-align: left;"><%= t('fee_import_message') %>:<br /> <%= flash[:fees_import].join("")%></div>
+  <% end %>
+
+  <% if @fee_import_error %>
+    <div class="flash-msg"><%= t('no_fee_import_message') %></div>
+  <% end %>
+
+  <div class="box">
+    <div class="bread_crumb">
+      <%= link_to "#{t('courses_text')}", courses_path %> &raquo;
+      <%= link_to @course.full_name, @course %> &raquo;
+      <%= t('batch') %> <%= @batch.name %>
+    </div>
+
+
+    <table id="listing" width="100%">
+      <tr class="tr-head">
+        <td><%= t('sl_no') %></td>
+        <td><%= t('name') %></td>
+        <td><%= t('admission_number') %></td>
+      </tr>
+      <% @slno = 0 %>
+      <% @students.each do |student| %>
+        <% @slno= @slno + 1 %>
+        <tr class="tr-<%= cycle('odd', 'even')%>">
+          <td class="col-1"><%=  @slno %></td>
+          <td class="col-2"><%= link_to student.full_name,{:controller=>'student',:action=>'profile',:id=>student.id} %></td>
+          <td class="col-3"><%= student.admission_no %> </td>
+        </tr>
+      <% end %>
+    </table>
+
+    <div id="extender"></div>
+  </div>
+</div>
+

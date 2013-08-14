@@ -1,0 +1,141 @@
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1 style="text-transform:capitalize"><%=h @plan.subject.name %></h1>
+  <h3>Ponderacion</h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="inner-tab-menu">
+	<ul>
+		<li><%= link_to 'Editar', edit_plan_path(@plan) %></li>
+	</ul>
+</div>
+
+<div id="page-yield">
+	<% unless flash[:notice].nil? %> 
+		<p class="flash-msg"> <%= flash[:notice] %> </p> 
+	<% end %>
+
+	<div id="application-list">
+		<table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+			<tbody>
+			<tr class="tr-head">
+				<td>Examen 1</td>
+				<td>Acumulado</td>
+				<td>Examen 2</td>
+				<td>Acumulado</td>
+				<td>Examen 3</td>
+				<td>Acumulado</td>
+				<td>Examen 4</td>
+				<td>Acumulado</td>
+			</tr>
+			<tr class="tr-blank"></tr>
+			<tr class="tr-read-even">
+				<td class="col-1"><%= @plan.examen_1 %></td>
+				<td class="col-1"><%= @plan.acumulado_1 %></td>
+				<td class="col-1"><%= @plan.examen_2 %></td>
+				<td class="col-1"><%= @plan.acumulado_2 %></td>
+				<td class="col-1"><%= @plan.examen_3 %></td>
+				<td class="col-1"><%= @plan.acumulado_3 %></td>
+				<td class="col-1"><%= @plan.examen_4 %></td>
+				<td class="col-1"><%= @plan.acumulado_4 %></td>
+			</tr>
+			</tbody>	
+		</table>
+	</div>
+</div>
+
+<div id="content-header">
+	<%= image_tag("/images/examination/show_exam.png") %>
+	<h1>Calificaciones</h1>
+	<h3>Alumnos</h3>
+</div>
+
+<div id="page-yield">
+	<div id="application-list">
+	<table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+		<tr class="tr-head">
+			<td></td>
+			<td colspan="3">Primer Parcial</td>
+			<td colspan="3">Segundo Parcial</td>
+			<td colspan="3">Tercer Parcial</td>
+			<td colspan="3">Cuarto Parcial</td>
+			<td colspan="2">Total General</td>
+		</tr>
+		<tr class="tr-blank"></tr>
+		<tr class="tr-head">
+			<td>Nombre</td>
+
+			<td>Examen</td>
+			<td>Acumulado</td>
+			<td>Total</td>
+
+			<td>Examen</td>
+			<td>Acumulado</td>
+			<td>Total</td>
+
+			<td>Examen</td>
+			<td>Acumulado</td>
+			<td>Total</td>
+
+			<td>Examen</td>
+			<td>Acumulado</td>
+			<td>Total</td>
+
+			<td>Promedio</td>
+			<td>Accion</td>
+		</tr>
+		<tr class="tr-blank"></tr>
+		<% subjectId = @plan.subject.id %>
+		<% @plan.subject.batch.students.each do |student| %>
+		<tr class="tr-read-<%= cycle('odd', 'even') %>">
+			<td class="col-1" style="text-transform:capitalize">
+				<%= student.first_name %> <%=student.last_name%>
+			</td>		
+			<% student_note = student.notas.find_by_subject_id(subjectId) %>
+			<% if student_note %>
+				<% total_1 = student_note.examen_1 + student_note.acumulado_1 %>
+				<% total_2 = student_note.examen_2 + student_note.acumulado_2 %>
+				<% total_3 = student_note.examen_3 + student_note.acumulado_3 %>
+				<% total_4 = student_note.examen_4 + student_note.acumulado_4 %>
+				<td class="col-1"><%= student_note.examen_1 %></td>
+				<td class="col-1"><%= student_note.acumulado_1 %></td>
+				<td class="col-1"><%= total_1 %></td>
+				<td class="col-1"><%= student_note.examen_2 %></td>
+				<td class="col-1"><%= student_note.acumulado_2 %></td>
+				<td class="col-1"><%= total_2 %></td>
+				<td class="col-1"><%= student_note.examen_3 %></td>
+				<td class="col-1"><%= student_note.acumulado_3 %></td>
+				<td class="col-1"><%= total_3 %></td>
+				<td class="col-1"><%= student_note.examen_4 %></td>
+				<td class="col-1"><%= student_note.acumulado_4 %></td>
+				<td class="col-1"><%= total_4 %></td>
+
+				<td class="col-1"><%= (total_1 + total_2 + total_3 + total_4)/4 %></td>
+				<td class="col-1"><%= link_to "Calificar", edit_nota_path(student_note.id) %></td>
+			<% else %>
+				<td class="col-1">0.0</td>
+				<td class="col-1">0.0</td>
+				<td class="col-1">N/A</td>
+				<td class="col-1">0.0</td>
+				<td class="col-1">0.0</td>
+				<td class="col-1">N/A</td>
+				<td class="col-1">0.0</td>
+				<td class="col-1">0.0</td>
+				<td class="col-1">N/A</td>
+				<td class="col-1">0.0</td>
+				<td class="col-1">0.0</td>
+				<td class="col-1">N/A</td>
+
+				<td class="col-1">N/A</td>
+				<td class="col-1"><%= link_to "Calificar", new_student_score_path(:id => subjectId, 
+																													:id2 => student.id) %></td>
+			<% end %>
+		</tr>
+		<tr class="tr-blank"></tr>
+		<% end %>
+	</table>
+	</div>
+</div>

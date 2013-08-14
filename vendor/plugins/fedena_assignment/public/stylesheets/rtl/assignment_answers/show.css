@@ -1,0 +1,99 @@
+.assignment-question{
+    background-color: #EEE;
+    padding:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+#answer-container{
+    padding: 30px ;
+}
+.assignment-answer{
+    background-color: #EEE;
+    padding:10px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    margin: 10px 0px;
+}
+.assignment-answer-title{
+    font-weight: bold;
+    font-size: 16px;
+}
+.assignment-answer-content{
+    padding :5px;
+}
+#attachment{
+    background: url("../../../images/paperclip.png") no-repeat right ;
+    padding-right: 35px;
+    height: 35px;
+}
+#attachment a{
+    text-decoration: none;
+    color:#000
+}
+#attachment a:hover {
+    text-decoration: underline;
+}
+.answer-details label{
+    color:#999999;
+    float:right;
+    font-size:13px;
+    font-weight:bold;
+    width:120px;
+}
+#student-name  {
+    float:right;
+    color:#BB0000;
+    font-size:13px;
+    font-weight:bold
+}
+#submitted-date{
+    float:right;
+    color:#BB0000;
+    font-size:13px;
+    font-weight:bold
+}
+.answer-details{
+    height: auto;
+    overflow: hidden;
+}
+.label-div-pair{
+    padding: 3px ;
+    height: auto;
+    overflow: hidden;
+}
+.submit-button {
+    margin-right:40px;
+    padding: 7px 10px;
+    color: #fff;
+    background: #27292B;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    font-weight: bold;
+    font-size: 14px;
+    border:none;
+    font-family: arial;
+    cursor:pointer;
+    text-decoration: none;
+}
+.submit-button:hover{
+    background:  #373B3F;
+}
+#evaluate-answer{
+    height:40px;
+    margin-top:20px;
+    padding-right:  280px;
+    padding-top:10px;
+}
+.assignment-question a,#answer-status a{
+    text-decoration: none;
+    color:#000
+}
+.assignment-question a:hover,#answer-status a:hover {
+    text-decoration: underline;
+}
+#answer-status {
+color:#BB0000;
+float:right;
+font-size:13px;
+font-weight:bold;
+}

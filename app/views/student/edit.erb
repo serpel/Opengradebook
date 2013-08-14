@@ -1,0 +1,237 @@
+
+<div id="content-header">
+<%= image_tag("/images/admission/admission_page_logo.jpg") %>
+  <h1><%= t('edit_details') %></h1>
+  <h3><%= t('student_details') %></h3>
+  <div id="app-back-button">
+      <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+  <% form_for :student, :url => {:action => 'edit'}, :html => {:multipart => true} do |s| %>
+    <%= error_messages_for 'student' %>
+    <div id="admission1-form">
+      <div id="necessary-field-notification"><%= t('legend1') %><span class="necessary-field">*</span> <%= t('legend2') %></div>
+
+      <div id="autofill_area">
+
+        <div class="label-field-pair-edit">
+          <label for="master_student_admission_no"><%= t('admission_no') %><span class="necessary-field">*</span></label>
+          <div class="text-input-bg"><%= s.text_field :admission_no %></div>
+        </div>
+
+        <div class="label-field-pair-edit">
+          <label for="master_student_admission_date"><%= t('admission_date') %></label>
+          <div class="text-input-bg">
+            <%= calendar_date_select_tag 'student[admission_date]', I18n.l(@student.admission_date,:format=>:default),
+              :year_range => 15.years.ago..5.years.from_now,:popup => "force" %>
+          </div>
+        </div>
+
+        <div class="label-field-pair-edit">
+           <label for="master_student_aactive"><%= t('active') %><span class="necessary-field">*</span></label>
+           <div class="text-input-bg"><%= s.check_box :is_active %></div>
+        </div>
+
+        <div class="extender"></div>
+
+      </div>
+
+      <span class="span-sub-heading"><%= t('personal_details') %></span>
+
+      <hr class="sub-heading"></hr>
+
+      <div class="label-field-pair">
+        <label for="master_student_first_name"><%= t('first_name') %><span class="necessary-field">*</span></label>
+        <div class="text-input-bg"><%= s.text_field :first_name %></div>
+      </div>
+
+      <hr class="label-underline"></hr>
+
+      <div class="label-field-pair">
+        <label for="master_student_first_name"><%= t('middle_name') %></label>
+        <div class="text-input-bg"><%= s.text_field :middle_name %></div>
+      </div>
+
+      <hr class="label-underline"></hr>
+
+      <div class="label-field-pair">
+        <label for="master_student_first_name"><%= t('last_name') %></label>
+        <div class="text-input-bg"><%= s.text_field :last_name %></div>
+      </div>
+      <hr class="label-underline"></hr>
+
+
+      <div id="admission1_form_vertical_block_left">
+
+        <div class="label-field-pair">
+          <label for="master_student_grade"><%= t('course_and_batch') %><span class="necessary-field">*</span></label>
+          <div class="text-input-bg"><%= s.select :batch_id, @batches.map {|b| [b.full_name, b.id]} %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_date_of_birth"><%= t('date_of_birth') %><span class="necessary-field">*</span></label>
+          <div class="text-input-bg">
+            <%= calendar_date_select_tag 'student[date_of_birth]',
+              I18n.l(@student.date_of_birth,:format=>:default), :year_range => 40.years.ago..0.years.ago ,:readonly=>true,:popup => "force"  %>
+          </div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair-gender">
+
+          <label class="label-gender-edit" for="master_student_gender"><%= t('gender') %></label>
+          <div class="edit_student_gender">
+            <label class="label_for_gender" for="master_student_gender_true"><%= t('male') %></label>
+            <%= s.radio_button  "gender", "m" %>
+            <label class="label_for_gender" for="master_student_gender_false"><%= t('female') %></label>
+            <%= s.radio_button  "gender", "f" %>
+          </div>
+
+          <div class="extender"></div>
+
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_blood_group"><%= t('blood_group') %></label>
+          <div class="text-input-bg"><%= select :student, :blood_group, ["#{t('unknown')}","A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"],{ :prompt => "#{t('select_blood_group')}" },
+              :selected => @student.blood_group %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_birth_place"><%= t('birth_place') %></label>
+          <div class="text-input-bg"><%= s.text_field :birth_place, :value =>@student.birth_place %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_nationality"><%= t('nationality') %></label>
+          <div class="text-input-bg"><%= select :student, :nationality_id, Country.all.map {|c| [c.name, c.id]}, :selected => @student.nationality.id %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_birth_place"><%= t('mother_tongue') %></label>
+          <div class="text-input-bg"><%= s.text_field :language, :value => @student.language %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_religion"><%= t('religion') %></label>
+          <div class="text-input-bg"><%= s.text_field :religion, :value =>@student.religion %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_category"><%= t('category') %></label>
+          <div class="text-input-bg"><%= select :student, :student_category_id, @student_categories.map {|c| [c.name, c.id]}, { :prompt => 'Select category' } %></div>
+        </div>
+      </div>
+      <br/>
+
+      <span class="span-sub-heading"><%= t('contact_details') %></span>
+      <hr class="sub-heading"></hr>
+
+      <div id="admission1_form_vertical_block_right">
+
+        <div class="label-field-pair">
+          <label for="master_student_city"><%= t('address_line1') %></label>
+          <div class="text-input-bg"><%= s.text_field :address_line1, :value => @student.address_line1 %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_city"><%= t('address_line2') %></label>
+          <div class="text-input-bg"><%= s.text_field :address_line2, :value => @student.address_line2 %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_city"><%= t('city') %></label>
+          <div class="text-input-bg"><%= s.text_field :city, :value => @student.city %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_state"><%= t('state') %></label>
+          <div class="text-input-bg"><%= s.text_field :state, :value =>@student.state %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_pin_code"><%= t('zip') %></label>
+          <div class="text-input-bg"><%= s.text_field :pin_code, :value =>@student.pin_code %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_country"><%= t('country') %></label>
+          <div class="text-input-bg"><%= select :student, :country_id, Country.all.map {|c| [c.name, c.id]}, :selected => @student.country.id %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_phone1"><%= t('phone') %></label>
+          <div class="text-input-bg"><%= s.text_field :phone1, :value =>@student.phone1 %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_phone2"><%= t('mobile') %></label>
+          <div class="text-input-bg"><%= s.text_field :phone2, :value =>@student.phone2 %></div>
+        </div>
+
+        <hr class="label-underline"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_email"><%= t('email') %></label>
+          <div class="text-input-bg"><%= s.text_field :email, :value => @student.email %></div>
+        </div>
+        <!--<% if @application_sms_enabled.is_enabled == true %>
+        <hr class="label-underline"></hr>
+        <div class="label-field-pair">
+          <label for="student_sms"><%= t('enable_sms_feature') %></label>
+          <div class="text-input-bg"><%= s.check_box :is_sms_enabled %></div>
+        </div>
+        <% end %>-->
+        <br/>
+
+        <span class="span-sub-heading"><%= t('upload_photo') %></span>
+        <hr class="sub-heading"></hr>
+
+        <div class="label-field-pair">
+          <label for="master_student_image_file"><%= t('upload_photo') %> (<%= t('max_size') %>)</label>
+          <div class="text-input-bg"><%= s.file_field :photo, :size=>12 %></div>
+        </div>
+      </div>
+       <div class="extender"></div>
+    </div>
+
+    <%= submit_tag "", :class => "submit_button", :value => "► #{t('update')}" %>
+  <% end %>
+
+</div>

@@ -1,0 +1,63 @@
+<%-# Fedena
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1><%= t('exams_text') %></h1>
+  <h3><%= t('settings') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+  <div class="box">
+    <%  if permitted_to? :index,:grading_levels %>
+      <div class="link-box">
+        <div class="link-heading"><%= link_to "#{t('set_grading_levels')}" ,:controller=>'grading_levels',:action=>'index' %> </div>
+        <div class="link-descr"><%= t('set_grading_levels') %></div>
+      </div>
+    <% end %>
+    <%  if permitted_to? :index,:ranking_levels %>
+      <div class="link-box">
+        <div class="link-heading"><%= link_to "#{t('ranking_levels_text')}" ,:controller=>'ranking_levels',:action=>'index' %> </div>
+        <div class="link-descr"><%= t('manage_ranking_levels') %></div>
+      </div>
+    <% end %>
+    <%  if permitted_to? :index,:class_designations %>
+      <div class="link-box">
+        <div class="link-heading"><%= link_to "#{t('class_designations_text')}" ,:controller=>'class_designations',:action=>'index' %> </div>
+        <div class="link-descr"><%= t('manage_class_designations') %></div>
+      </div>
+    <% end %>
+    <%  if Configuration.cce_enabled? %>
+      <%  if permitted_to? :index,:cce_settings %>
+        <div class="link-box">
+          <div class="link-heading"><%= link_to "#{t('cce_sttings')}" ,:controller=>'cce_settings',:action=>'index' %> </div>
+          <div class="link-descr"><%= t('manage_cce_settings') %></div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

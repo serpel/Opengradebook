@@ -1,0 +1,46 @@
+<div id="content-header">
+  <%= image_tag("/images/assignment/assignment.png") %>
+  <h1><%= "#{t('assignment_text')}"%></h1>
+  <h3><%= "#{t('answer')}"%> </h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<% unless flash[:notice].nil? %> <p class="flash-msg"> <%= flash[:notice] %> </p> <% end %>
+<div id="answer-container">
+  <h4><%= "#{t('assignment_text')}"%></h4>
+  <div class="assignment-question"><%= link_to@assignment_answer.assignment.title.to_s , @assignment %></div>
+  <h4><%= "#{t('answer')}"%></h4>
+  <div class="assignment-answer">
+    <div class="assignment-answer-title"><%= @assignment_answer.title.to_s   %></div>
+    <div class="assignment-answer-content"><%= @assignment_answer.content.to_s %></div>
+    <% unless @assignment_answer.attachment_file_name.nil? %> <div id="attachment"><%= link_to @assignment_answer.attachment_file_name.to_s, :controller => "assignment_answers", :action => "download_attachment" , :assignment_answer=>@assignment_answer.id %></div><%  end %>
+  </div>
+
+  <div class="answer-details">
+    <div class="label-div-pair"><label for="student-name"><%= "#{t('submitted_by')}"%></label><div id="student-name"> <%= @assignment_answer.student.full_name %></div></div>
+    <div class="label-div-pair"><label for="submitted-date"><%= "#{t('submitted_on')}"%> </label><div id="submitted-date"><%= @assignment_answer.created_at.strftime("%I:%M %p, %d %B, %Y")%></div></div>
+    <% if @current_user.student? %>
+      <% if @current_user.student_record.id == @assignment_answer.student_id %>
+        <div class="label-div-pair"><label for="answer-status"><%= "#{t('status')}"%></label>
+          <div id="answer-status">
+            <% if @assignment_answer.status == "0"  %>
+              <%= "#{t('this_answer_yet_to_be_evaluated')}"%>
+            <% else %>
+              <%= "#{t('the_assignment_is')}"%>  <%= @assignment_answer.status.capitalize   %> <%=  link_to  "(#{t('resubmit_answer')})" ,  edit_assignment_assignment_answer_path(@assignment,@assignment_answer)  unless @assignment_answer.status=="ACCEPTED"%>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div id="evaluate-answer">
+    <% if @current_user.employee? %>
+      <% if @current_user.employee_record.id == @assignment_answer.assignment.employee_id %>
+        <% unless @assignment_answer.status=="ACCEPTED" %>  <%= link_to "#{t('accept_answer')}",  {:action => "evaluate_assignment" ,:id=>@assignment_answer.id,:status=>"ACCEPTED"},:class=>"submit-button" %><% end %>
+        <% unless @assignment_answer.status=="REJECTED" %>  <%= link_to "#{t('reject_answer')}",  { :action => "evaluate_assignment" ,:id=>@assignment_answer.id,:status=>"REJECTED" },:class=>"submit-button" %><% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

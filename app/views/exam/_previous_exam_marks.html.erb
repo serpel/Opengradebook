@@ -1,0 +1,55 @@
+<%-# Fedena
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+
+<% @employee_subjects=[] %>
+<% @employee_subjects= @current_user.employee_record.subjects.map { |n| n.id} if @current_user.employee?  %>
+<% unless @exam_group.exam_type == 'Grades' %>
+  <table id="listing">
+    <tr class="tr-head">
+      <td class="col-2"><%= t('subject') %></td>
+      <td class="col-1"><%= t('max_mark') %></td>
+      <td class="col-1"><%= t('min_mark') %></td>
+    </tr>
+    <% @exam_group.exams.each do |exam| %>
+      <% @exam = exam %>
+      <% if @employee_subjects.include?(exam.subject.id) or @current_user.admin? or @current_user.privileges.map{|p| p.name}.include?('ExaminationControl') or @current_user.privileges.map{|p| p.name}.include?('EnterResults') %>
+        <tr class="tr-<%= cycle('odd', 'even') %>">
+          <% @exam = exam %>
+          <td class="col-2"><%= link_to exam.subject.name, {:controller=>"exam", :action=>"edit_previous_marks", :exam_id=>exam.id} %></td>
+          <td class="col-1"><span><%= exam.maximum_marks %></span></td>
+          <td class="col-1"><span><%= exam.minimum_marks %></span></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+<% else %>
+  <table id="listing" width="100%">
+    <tr class="tr-head">
+      <td class="col-3"><%= t('subject') %></td>
+    </tr>
+    <% @exam_group.exams.each do |exam| %>
+      <% if @employee_subjects.include?("#{exam.subject.id}") or @current_user.admin?  or @current_user.privileges.map{|p| p.name}.include?("ExaminationControl") or @current_user.privileges.map{|p| p.name}.include?("EnterResults") %>
+        <tr class="tr-<%= cycle('odd', 'even') %>">
+          <% @exam = exam %>
+          <td class="col-3"><%= link_to exam.subject.name, {:controller=>"exam", :action=>"edit_previous_marks", :exam_id=>exam.id} %></td>
+        </tr>
+      <% end %>
+    <% end %>
+  </table>
+<% end %>

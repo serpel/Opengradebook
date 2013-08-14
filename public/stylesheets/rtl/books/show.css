@@ -1,0 +1,117 @@
+
+.name{
+    color: #999999;
+    float: right;
+    width: 160px;
+    font-size: 14px;
+}
+
+.val {
+    width:auto;
+    color: #bb0000;
+    font-size: 12pt;
+    font-family: arial;
+}
+
+.val span{
+    margin-left:12px;
+    color: black;
+    float:right;
+}
+.submit_button {
+    padding: 7px 10px;
+    color: #fff;
+    background: #27292B;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    font-weight: bold;
+    font-size: 14px;
+    border:none;
+    font-family: arial;
+    cursor:pointer;
+    margin: 0 auto;
+    text-decoration: none;
+    float:right;
+}
+.submit_button:hover{
+    background:  #373B3F;
+}
+.reserve_button {
+    padding: 7px 10px;
+    color: #fff;
+    background: #27292B;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    font-weight: bold;
+    font-size: 14px;
+    border:none;
+    font-family: arial;
+    cursor:pointer;
+    margin: 0 auto;
+    margin-left:20px;
+    text-decoration: none;
+    float:right;
+}
+.reserve_button:hover{
+    background:  #373B3F;
+}
+.links{
+    width:540px;
+    margin:auto;
+    padding-top:30px;
+    clear:both;
+}
+.detail_box{
+    width:950px;
+    margin:auto;
+}
+#book_reserve{
+    margin-top:40px;
+}
+#book_reserve p{
+    color:#bb0000;
+    font-weight:bold;
+}
+
+.borrowed{
+    width:530px;
+    margin:auto;
+}
+
+.reserved-by{
+    font-weight: bold;
+    color: #bb0000;
+    height:36px;
+}
+span.row_{
+    float:right;
+    width:440px;
+}
+.val .taglist{
+    width:240px;
+    word-wrap: break-word;
+    color: #bb0000;
+}
+.reserved-by-h{
+    display: block;
+    float: right;
+    padding-left: 20px;
+}
+#reserved-by{
+    display: block;
+    width: 865px;
+}
+#reserved-by p{
+    font-size: 14pt;
+    font-weight: normal;
+    margin: 3px;
+    padding-right: 250px;
+}
+.reserved-time{
+    color:#000;
+    font-size: 14px;
+}
+#reserved-by a{
+    color:#bb0000;
+    text-decoration: none;
+}

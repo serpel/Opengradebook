@@ -1,0 +1,12 @@
+
+
+<ul id="school-list">
+
+      <% @student_schools.each do |c| %>
+      <li class="list<%=cycle('odd', 'even')%>">
+        <div class="school-name"><%= c.school_name %></div>
+        <div class="school-edit"><%= link_to_remote "#{t('edit_text')}", :url => { :action => 'school_edit', :id => c.id } %> </div><div class="school-delete"><%= link_to_remote "#{t('delete_text')}", :url => { :action => 'school_delete', :id => c.id } , :confirm =>"#{t('delete_confirm_msg')}"%></div>
+      </li>
+     <% end %>
+      
+</ul>

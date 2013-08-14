@@ -1,0 +1,40 @@
+<%-# Fedena
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+
+<% if Configuration.find_by_config_key('StudentAttendanceType').config_value=='Daily' %>
+  <% @absent = Attendance.find_by_student_id_and_month_date(@student.id, @absentee.month_date) %>
+  <% unless @absent.nil? %>
+    <%#= link_to_remote('X', {:url => edit_attendance_path(@absent), :method => 'get'}, :class=> 'absent') %>
+<a class="absent" id="<%= @absent.id %>">X</a>
+  <% else %>
+    <%#= link_to_remote('S',
+      {:url => {:controller =>'attendances', :action => 'new', :id=> @absentee.month_date, :id2 => @student.id}}, :class=>'present') %>
+<a class="present" id="<%= @student.id %>" date="<%= @absentee.month_date %>">O</a>
+  <% end %>
+<% else %>
+  <% @absent = SubjectLeave.find_by_student_id_and_subject_id_and_month_date_and_class_timing_id(@student.id, @absentee.subject_id,@absentee.month_date,@absentee.class_timing_id) %>
+  <% unless @absent.nil? %>
+    <a class="absent" id="<%= @absent.id %>">X</a>
+    <%#= link_to_remote('X', {:url => edit_attendance_path(@absent), :method => 'get'}, :class=> 'absent') %>
+  <% else %>
+    <a class="present" id="<%= @student.id %>" date="<%= @absentee.month_date %>" tt_entry="<%= @tte_entry.id %>">O</a>
+    <%#= link_to_remote('S',
+    {:url => {:controller =>'attendances', :action => 'new', :id=> @absentee.month_date, :id2 => @student.id}}, :class=>'present') %>
+  <% end %>
+<% end %>

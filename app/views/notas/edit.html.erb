@@ -1,0 +1,67 @@
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1>Calificando</h1>
+	<% student = Student.find(@nota.student_id)%>
+  <h3 style="text-transform:capitalize"><%= student.first_name %> <%= student.last_name %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+  <div id="application-list">
+
+		<% form_for(@nota) do |f| %>
+			<%= f.error_messages %>
+
+			<p style="display:none">
+				<%= f.label :subject_id %><br />
+				<%= f.text_field :subject_id %>
+			</p>
+			<p style="display:none">
+				<%= f.label :student_id %><br />
+				<%= f.text_field :student_id %>
+			</p>
+			<p>
+				<%= f.label "Examen 1" %><br />
+				<%= f.text_field :examen_1 %>
+			</p>
+			<p>
+				<%= f.label "Acumulado 1" %><br />
+				<%= f.text_field :acumulado_1 %>
+			</p>
+			<p>
+				<%= f.label "Examen 2" %><br />
+				<%= f.text_field :examen_2 %>
+			</p>
+			<p>
+				<%= f.label "Acumulado 2" %><br />
+				<%= f.text_field :acumulado_2 %>
+			</p>
+			<p>
+				<%= f.label "Examen 3" %><br />
+				<%= f.text_field :examen_3 %>
+			</p>
+			<p>
+				<%= f.label "Acumulado 3" %><br />
+				<%= f.text_field :acumulado_3 %>
+			</p>
+			<p>
+				<%= f.label "Examen 4" %><br />
+				<%= f.text_field :examen_4 %>
+			</p>
+			<p>
+				<%= f.label "Acumulado 4" %><br />
+				<%= f.text_field :acumulado_4 %>
+			</p>
+			<p>
+				<%= f.submit 'Calificar' %>
+			</p>
+		<% end %>
+	</div>
+</div>

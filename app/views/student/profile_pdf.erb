@@ -1,0 +1,103 @@
+<%-# Fedena
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+
+<%-
+#page breaking implemented page
+#'available_sections' marks beginning of a pdf page, all the contents within a 'section' class beneath -
+#the 'available_section' will be taken to another div with a class 'page' dynamically by the javascript -
+#written in layouts/pdf.html.erb. 'page' has style for page-break-after:auto property which makes sure -
+#content within class 'section' breaks on each page if its the last content and no space left in current page
+#warning: the 'page' div is created directly below html , so style your pdf keeping that in mind.
+#point to note: make an easy guess the length of content a page can hold, and make sure each 'section' will -
+#not exceed the a page size, like we did below for student_additional_fields, we force a new table to be drawn -
+#each time the row count reaches 28, as 28 being the max number of rows an A4 can hold.
+#avoid creating deeper nests, make 'section' simpler.
+-%>
+
+<div id="page-yield" class="available_sections">
+  <div class="hor_line"></div>
+  <div id="student_profile_heading" class="section">
+    <div id ="student_main_info">
+      <h2> <%= @student.full_name %>  </h2>
+      <h4><%= t('student_profile') %></h4>
+    </div>
+  </div>
+
+  <table id="pdf-table" width="100%" cellspacing="0" class="section">
+    <tr class="odd"><td class="col-pdf"><%= t('admission_number') %></td><td class="col-pdf"><%= @student.admission_no unless @student.admission_no.nil? %></td></tr>
+    <tr class="even"><td class="col-pdf"><%= t('admission_date') %></td><td class="col-pdf"><%= I18n.l(@student.admission_date,:format=>:normal) unless @student.admission_date.nil? %></td></tr>
+    <tr class="odd"><td class="col-pdf"><%= t('batch') %></td><td class="col-pdf"><%= @student.batch.name unless @student.batch.name.nil? %></td></tr>
+    <tr class="even"><td class="col-pdf"><%= t('course_text') %></td><td class="col-pdf"><%= @student.batch.course.full_name unless @student.batch.course.full_name.nil? %></td></tr>
+    <tr class="odd"><td><%= t('date_of_birth') %></td><td class="right"><%= I18n.l(@student.date_of_birth,:format=>:normal) unless @student.date_of_birth.nil? %></td></tr>
+    <tr class="even"><td><%= t('blood_group') %></td><td class="right"><%= @student.blood_group %></td></tr>
+    <tr class="odd"><td><%= t('gender') %></td><td class="right"><%= t("#{@student.gender_as_text.downcase}") %></td></tr>
+    <tr class="even"><td><%= t('nationality') %></td><td class="right"><%= @student.nationality.name unless @student.nationality_id.nil? %></td></tr>
+    <tr class="odd"><td><%= t('language') %></td><td class="right"><%= @student.language %></td></tr>
+
+    <tr class="even"><td><%= t('category') %></td><td class="right"><%= @student.student_category.name unless @student.student_category.nil? %></td></tr>
+    <tr class="odd"><td><%= t('religion') %></td><td class="right"><%= @student.religion %></td></tr>
+    <tr class="even"><td><%= t('address') %></td><td class="right"><%= @student.address_line1%><%= ', ' unless @student.address_line1.blank? %><%=  @student.address_line2 %></td></tr>
+    <tr class="odd"><td><%= t('city') %></td><td class="right"><%= @student.city %></td></tr>
+    <tr class="even"><td><%= t('state') %></td><td class="right"><%= @student.state %></td></tr>
+    <tr class="odd"><td><%= t('zip') %></td><td class="right"><%= @student.pin_code %></td></tr>
+    <tr class="even"><td><%= t('country') %></td><td class="right"><%= @student.country.name unless @student.country_id.nil? %></td></tr>
+    <tr class="odd"><td><%= t('phone') %></td><td class="right"><%= @student.phone1 %></td></tr>
+    <tr class="even"><td><%= t('mobile') %></td><td class="right"><%= @student.phone2 %></td></tr>
+    <tr class="odd"><td><%= t('email') %></td><td class="right"><%= @student.email %></td></tr>
+    <tr class="even"><td><%= t('group_tutor') %></td><td class="right">
+        <% unless @student.batch.employee_id.nil? %>
+          <% @assigned_employees = Employee.find(:all,:conditions=>"FIND_IN_SET(id,\"#{@student.batch.employee_id}\")")  %>
+
+          <% @assigned_employees.each do |e| %>
+            <%= e.full_name %>
+            <br/>
+          <% end %>
+        </td></tr>
+
+    <% end  %>
+
+    <tr class="even"><td><%= t('immediate_contact') %></td><td class="right">
+        <%= @immediate_contact.full_name unless @immediate_contact.nil? %> <%= "(" + @immediate_contact.mobile_phone + ")" if @immediate_contact and !@immediate_contact.mobile_phone.empty? %>
+      </td></tr>
+    <% c = 'odd'  %>
+  </table>
+
+  <table id="pdf-table" width="100%" cellspacing="0" class="section">
+    <% unless  @additional_fields.empty? %>
+      <% @additional_fields.each_with_index do |field,i| %>
+        <% if (i+1)%28 == 0 %>
+        </table>
+      <%#*</div>%>
+      <%#*<div id="new_profile_info_top" class="section">%>
+        <table id="pdf-table" width="100%" cellspacing="0" class="section">
+        <% end %>
+        <tr class="<%= cycle(c,(["odd","even"]-[c]).first) %>">
+          <td class="col-pdf"><%= field.name %></td>
+          <td class="col-pdf">
+            <% detail = StudentAdditionalDetail.find_by_additional_field_id_and_student_id(field.id,@student.id) %>
+            <%= detail.additional_info unless detail.nil? %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    <tr class="<%= cycle(c,(["odd","even"]-[c]).first) %>">
+      <td class="col-pdf"><%= t('previous_institution') %></td>
+      <td class="col-pdf"><%= @previous_data.institution unless @previous_data.nil?%></td></tr>
+  </table>
+</div>

@@ -1,0 +1,4 @@
+page.replace_html 'flash-box', :text => "<p class='flash-msg'>Library card settings deleted successfully</p>"
+page.replace_html 'card_setting', :partial => 'library_card_setting'
+
+

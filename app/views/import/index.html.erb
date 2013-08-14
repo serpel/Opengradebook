@@ -1,0 +1,41 @@
+
+
+<div id="content-header">
+ <%= image_tag("/images/student_details/student_details_logo.jpg") %>
+  <h1><%= t('student_details') %> </h1>
+  <h3><%= t('view_details') %> </h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+    <% form_tag({:action => 'import_csv'}, {:multipart => true}) do %>
+
+      <div class="label-field-pair-select-class">
+        <label for="student-detail-select-class"><%= t('select_a_batch') %> </label>
+        <div class="text-input-bg"><%= select :course, :course_id,
+            @batches.map {|b| [b.full_name, b.id]},
+            {:prompt => "#{t('select_a_batch')}"} %></div>
+        <%= image_tag("loader.gif",
+          :align => "absmiddle",
+          :border => 0,
+          :id => "loader",
+          :style =>"display: none;" ) %>
+      </div>
+
+      <div class="label-field-pair-select-class">
+        <label><%= t('import_file') %></label>
+        <div class="text-input-bg">
+          <%= file_field_tag 'file', :size => 60%></div>
+      </div>
+
+      <%= submit_tag t('import'),:class => "submit_button" %>
+
+    <%end%>
+</div>

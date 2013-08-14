@@ -1,0 +1,141 @@
+<%-#
+#Copyright 2010 Foradian Technologies Private Limited
+#
+#This product includes software developed at
+#Project Fedena - http://www.projectfedena.org/
+#
+#Licensed under the Apache License, Version 2.0 (the "License");
+#you may not use this file except in compliance with the License.
+#You may obtain a copy of the License at
+#
+#  http://www.apache.org/licenses/LICENSE-2.0
+#
+#Unless required by applicable law or agreed to in writing,
+#software distributed under the License is distributed on an
+#"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#KIND, either express or implied.  See the License for the
+#specific language governing permissions and limitations
+#under the License. -%>
+<div id="content-header">
+  <%= image_tag("/images/library/library_small.png") %>
+  <h1><%= "#{t('library_text')}"%></h1>
+  <h3><%= "#{t('book_renewal')}"%></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+  <% unless flash[:warn_notice].nil? %>
+    <div id="errorExplanation" class="errorExplanation">
+      <ul>
+        <li>
+          <%= flash[:warn_notice] %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+  <% if @movement.nil? %>
+    <div class="search_form">
+      <% form_for :search  do |f| %>
+        <div class="label-field-pair">
+          <label for="book number"><%= "#{t('book_number')}"%></label>
+          <div class="text-input-bg">
+            <%= f.text_field :name %>
+          </div>
+        </div>
+        <%= f.submit "#{t('search_text')}",  :class => "submit_button"  %>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="renewal-form">
+      <% unless @reserved.blank? %>
+        <p class="red"><%= "#{t('this_book_has_been_reserved_by')}"%> <strong><%= @reserved.user.full_name %></strong>
+          <br/><%= "#{t('on_text')}"%> <%= @reserved.reserved_on %></p>
+      <% end %>
+      <% form_for :issue, :url=>{:action=>'update_renewal', :id=>@movement.id},:html=>{:onsubmit=>"return validate()"} do |f| %>
+        <% if Date.today > @movement.due_date and @movement.user.student? %>
+          <span id="exceeded"><%= "#{t('due_date_has_been_exceeded')}"%></span>
+          <div class="label-field-pair">
+            <label for="book number"><%= "#{t('enter_fine_amount')}"%></label>
+            <div class="text-input-bg">
+              <%= text_field_tag :fine %>
+            </div>
+          </div>
+        <% end %>
+        <div class="label-field-pair">
+          <label for="book number"><%= "#{t('book_number')}"%> </label>
+          <div class="text-input-bg">
+            <%= text_field :library,:book_number, :value=>@book.book_number, :disabled=>true %>
+            <%= f.hidden_field :book_id, :value=>@book.id %>
+          </div>
+        </div>
+        <div class="label-field-pair">
+          <label for="book number"><%= "#{t('book_title')}"%> </label>
+          <div class="text-input-bg">
+            <%= text_field :library, :book_title, :value=>@book.title, :disabled=>true %>
+          </div>
+        </div>
+        <div class="label-field-pair">
+          <label for="book number"><%= "#{t('name')}"%> </label>
+          <div class="text-input-bg">
+            <%= text_field :library, :name, :value=>@movement.user.full_name, :disabled=>true  %>
+            <%= f.hidden_field :user_id, :value=>@movement.user_id%>
+          </div>
+        </div>
+        <div class="label-field-pair">
+          <% label="#{t('admission_no')}."
+          label="#{t('employee_no')}." if @movement.user.employee?
+        %>
+          <%= label_tag label  %>
+          <div class="text-input-bg">
+            <%= text_field :library, :name, :value=>@movement.user.username, :disabled=>true  %>
+          </div>
+        </div>
+        <div class="label-field-pair">
+          <label for="book number"><%= "#{t('issue_date')}"%></label>
+          <div class="text-input-bg">
+            <%= calendar_date_select_tag 'issue[issue_date]', I18n.l(@movement.issue_date,:format=>:default), :disabled=>true%>
+          </div>
+        </div>
+        <div class="label-field-pair">
+          <label for="book number"><%= "#{t('due_date')}"%> </label>
+          <div class="text-input-bg">
+            <%= calendar_date_select_tag 'issue[due_date]', I18n.l(@movement.due_date + @time_period.to_i,:format=>:default),:readonly=>true,:popup=>"force"%>
+          </div>
+        </div>
+    <%#unless @book.BookReservation  %>
+        <%= f.submit "#{t('renew')}", :class=>"renew_button" ,:confirm => "#{t('delete_confirm_msg')}"%>
+    <%# else %>
+    <%#*<p>This book has reserved</p>%>
+    <%# end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function validate()
+  {
+    if($('fine').value == "")
+    {
+      alert("Please enter fine amount");
+      return false;
+    }
+    else
+    {
+      if(isNaN($('fine').value)== false)
+      {
+        return true;
+      }
+      else
+      {
+        alert("Please enter numeric value for fine");
+        return false;
+      }
+    }
+  }
+</script>

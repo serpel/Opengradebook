@@ -1,0 +1,20 @@
+<h2>Mis subjects</h2>
+
+<table>
+	<tr>
+		<th>Subject Name</th>
+		<th></th>
+		<th></th>
+	</tr>
+	<% @employee.subjects.each do |subject| %>
+	<tr>
+		<td><%=subject.name%></td>
+		<% if subject.plans.size > 0 %>
+			<td><%= link_to "edit_plan", edit_plan_path(subject.plans.first.id) %></td>
+      <td><%= link_to "show_plan", plan_path(subject.plans.first.id) %></td>
+		<%else%>
+			<td><%= link_to "new_plan", new_subject_plan_path(:id=>subject.id) %></td>
+		<%end%>
+	</tr>
+	<% end %>
+</table>

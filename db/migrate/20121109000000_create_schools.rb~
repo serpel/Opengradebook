@@ -1,0 +1,13 @@
+class CreateSchools < ActiveRecord::Migration
+  def self.up
+
+    create_table :schools_courses do |t|
+      t.references :schools
+      t.references :courses
+    end
+  end
+
+  def self.down
+    drop_table :schools_courses
+  end
+end

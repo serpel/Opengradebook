@@ -1,0 +1,3 @@
+
+page.replace_html 'student-school-form', :partial => 'student_school_edit_form'
+page.replace_html 'student-school-list',""

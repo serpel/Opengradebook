@@ -1,0 +1,13 @@
+
+
+<div class="label-field-pair">
+  <label for="course"><%= t('select_a_course') %></label>
+  <div class="text-input-bg">
+
+    <%= select :select_course, :course, @courses.to_a.map { |s| [s['code'].to_s + " " + s.full_name, s.id] },
+      {:prompt => "#{t('select_a_course')}"},
+      {:onChange => "#{remote_function(:url => {:action => "to_students"}, :with => "'course_is='+value",
+      :before => "Element.show('loader')",
+      :success => "Element.hide('loader')")}"} %>
+  </div>
+</div>

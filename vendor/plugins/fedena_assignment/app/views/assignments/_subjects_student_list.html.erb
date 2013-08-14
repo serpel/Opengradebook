@@ -1,0 +1,20 @@
+<% unless @students.nil? %>
+  <% unless @students.empty? %>
+    <% @assigned_students ||= [] %>
+    <div class="scrollable">
+        <div class="select_all">
+          <%= "#{t('select')}:"%> <%= link_to_function "#{t('all')}", "$$('input.right').each(function(checkbox) { checkbox.checked = true; });" %>,
+          <%= link_to_function "#{t('none')}", "$$('input.right').each(function(checkbox) { checkbox.checked = false; });" %>
+        </div>
+      <div id="scrollable-list">
+
+        <% @students.each do |s| %>
+          <div class="listitem">
+            <div class="student_name"> <%= s.full_name %> </div>
+            <div class="check_box"><%= check_box_tag "assignment[student_ids][]", s.id,@assigned_students.include?(s),:class=>"right" %></div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end  %>
+</div>

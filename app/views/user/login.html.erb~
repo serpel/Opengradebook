@@ -1,0 +1,62 @@
+
+
+
+<div id="wrapper">
+  
+  <div id="top_logo">
+    <%= image_tag current_school_detail.logo.url %>
+  </div>
+
+  <div id="login_area_bg">
+
+    <% form_for :user do |form| %>
+
+      <div id="login_area">
+        <label for="username"><%= t('username') %></label>
+        <div id="username_textbox_bg">
+          <%= form.text_field :username,
+            :maxlength => 40%>
+        </div>
+
+        <label for="password"><%= t('password') %></label>
+        <div id="password_textbox_bg">
+          <%= form.password_field :password %>
+        </div>
+
+        <div id="notice-box">
+          <% if !flash.empty? %>
+            <div id="notice"><%= flash[:notice] %></div>
+          <% end %>
+        </div>
+
+        <div id="submit_area">
+          <%= submit_tag t('login'), :class => "submit" %>
+        </div>
+
+        <label for="forgot_password" class="forgot_password_link">
+          <%= link_to t('forgot_password'),
+            :controller => "user",
+            :action => "forgot_password" %>
+        </label>
+
+
+      </div>
+    </div>
+  <% end %>
+  <div id="help_forgot_pw">
+
+  </div>
+  <div class="clearfooter"></div>
+</div>
+
+<div id="footer">
+  <div id="footer_logo">
+    <div id="powered_by">
+      <%= t('powered_by') %> <a href=<%= "#{FEDENA_SETTINGS[:company_url]}" %> target="_blank"><%= FEDENA_SETTINGS[:company_name] %></a>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  document.getElementById('user_username').focus();
+</script>

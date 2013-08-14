@@ -1,0 +1,46 @@
+<div id="content-header">
+  <%= image_tag("/images/assignment/assignment.png") %>
+  <h1><%= "#{t('assignments_text')}"%></h1>
+  <h3><%= "#{t('submit_an_answer')}"%></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+
+
+
+
+<% unless flash[:notice].nil? %>
+  <p class="flash-msg"> <%= flash[:notice] %> </p>
+<% end %>
+<div class="form-container">
+  <% form_for [@assignment,@assignment_answer] , :html => { :multipart => true } do |f| %>
+    <%= error_messages_for :assignment,:assignment_answer %>
+    <div class="assignment_container">
+      <div class="assignment_form">
+
+        <div class="label-field-pair">
+          <label  for="assignment_title"><%= "#{t('title')}"%></label>
+          <div class="text-input-bg"><%= f.text_field :title %></div>
+        </div>
+
+        <div class="label-field-pair " id="assignment_description">
+          <label ><%= "#{t('content')}"%></label>
+          <div  class="text-input-bg"><%= f.text_area  :content %></div>
+        </div>
+
+        <div class="label-field-pair">
+          <label ><%= "#{t('attach_a_file')}"%></label>
+          <div  class="text-input-bg" id="assignment-attachment"><%= f.file_field  :attachment %></div>
+        </div>
+
+        <%= f.submit "#{t('submit_answer')}" ,:class=>"submit_button"%>
+      </div>
+
+
+    </div>
+
+
+  <% end %>
+</div>

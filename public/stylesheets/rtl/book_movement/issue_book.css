@@ -1,0 +1,149 @@
+#search_box_bg{
+    border-right: 1px solid #CCCCCC;
+    float: right;
+    width: 450px;
+    padding-right:20px;
+}
+#search_box_bg label{color:#555;font-size:14px; font-weight: bold;padding-bottom: 10px;display:block;}
+#search_textbox input[type=text]{
+    background : #eee;
+    border : 1px solid #c6c6c6;
+    width : 180px;
+    height:22px;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+}
+#user_name{
+    float:right;
+
+}
+.radio_button{
+    margin-top:0px;
+    height:25px;
+    color:#555;
+    float:right;
+    font-size:13px;
+}
+.submit_button {
+    margin-top:10px;
+    margin-right:210px;
+    padding: 7px 10px;
+    color: #fff;
+    background: #27292B;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    font-weight: bold;
+    font-size: 14px;
+    border:none;
+    font-family: arial;
+    cursor:pointer;
+}
+.submit_button:hover{
+    background:  #373B3F;
+}
+.search_button {
+    margin-top:-5px;
+    margin-right:5px;
+    padding: 7px 10px;
+    color: #fff;
+    background: #27292B;
+    -moz-border-radius:10px;
+    -webkit-border-radius:10px;
+    font-weight: bold;
+    font-size: 14px;
+    border:none;
+    font-family: arial;
+    float:right;
+    cursor:pointer;
+}
+.search_button:hover{
+    background:  #373B3F;
+}
+#user_list{
+    float: right;
+    font-size: 12px;
+    height: 300px;
+    margin: 25px 0 0 auto;
+    overflow: auto;
+    padding-top: 0;
+    width: 445px;
+}
+#user_list a{
+    color:#000;
+    text-decoration:none;
+}
+#user_list a:hover{
+    color:#9E0F15;
+    text-decoration:underline;
+}
+.user-wrapper{
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+.name{
+    color: #999999;
+    float: right;
+    width: 206px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.val {
+    width:auto;
+    color: #bb0000;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.val span{
+    margin-left:12px;
+    color: black;
+    float:right;
+}
+#search_textbox input:focus{
+    background: #FFFFFF;
+    border:1px solid #9E0F15;
+}
+.issue_form{
+    margin:0 auto;
+    margin-right: 27px;
+    width:475px;
+    float:right;
+    
+}
+
+#page-yield-bookissue {
+    margin : 30px 0;
+}
+
+.ad-number{
+    float: right;
+    height: auto;
+    text-align: right;
+    width: 68px;
+}
+.fullname{
+    width:155px;
+    height: auto;
+    float: right;
+
+}
+
+.batch-fullname{
+    width:183px;
+    height: auto;
+    float: right;
+    color: #F2181F;
+
+}
+.val .cont {
+    color: #BB0000;
+    width: 240px;
+    word-wrap: break-word;
+}
+div.pack{
+    clear:both;
+    height: 30px;
+}
+#search_textbox{
+}

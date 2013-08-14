@@ -1,0 +1,180 @@
+.link-box {
+    margin:10px 40px;
+    width:270px;
+    float:right;
+    height:80px;
+}
+.link-heading a {
+    font-weight:bold;
+    color:#900;
+}
+.link-descr {
+    margin-top:5px;
+    color:#666;
+    text-align:justify;
+    font-size:14px;
+}
+#box{
+    width:700px;
+    margin:0px auto;
+}
+.box{
+    width:770px;
+    margin:0px auto;
+}
+.next a{
+    float:right;
+    -moz-border-radius:40px;
+    -webkit-border-radius:15px;
+    width:25px;
+    height:25px;
+    padding:5px;
+    background: #fff;
+    text-align:left;
+    color:#121212;
+    font-size:22px;
+    text-decoration:none;
+    outline:none;
+    display:block;
+}
+.prev a{
+    float:right;
+    -moz-border-radius:40px;
+    -webkit-border-radius:15px;
+    width:25px;
+    height:25px;
+    padding:5px;
+    background: #fff;
+    text-align:right;
+    color:#121212;
+    font-size:22px;
+    text-decoration:none;
+    outline:none;
+    display:block;
+}
+.next a:hover, .prev a:hover{
+    color: #9B0C12;
+}
+.month{
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    width:400px;
+    background: #fff;
+    padding:6px 0;
+    text-align:center;
+    float:right;
+    font-size:16px;
+    color:#121212;
+    font-weight:bold;
+   margin:0px 6px;
+}
+#register{
+    background: #C3D9FF;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+.header{
+    width:520px;
+    margin:0px auto;
+    padding:4px 0 1px;
+}
+
+#inner-tab-menu ul li{
+ width: 150px;
+}
+table#listing td.col-1 {
+padding:5px 10px 5px 5px;
+width:5%;
+}
+table#listing td.col-2 {
+padding:5px 10px 5px 5px;
+width:1%;
+}
+
+
+.student_list{
+}
+.header{
+    list-style-type: none;
+    font-weight: bold;
+}
+li.student_names, li.student_names a{
+    text-decoration: none;
+    /*    margin-top: 5px;*/
+    color: black;
+    width:100%;
+    min-width:100%;
+    display: block;
+    padding: 2px 0 2px 0;
+}
+.student_list{
+    list-style-type: none;
+    clear : both;
+    width: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    font-size: 13px;
+    padding: 0px;
+    float: right;
+}
+
+.student_list a:hover{
+    text-decoration: none;
+    background-color:  #F1F6FF;
+    width:100%;
+
+}
+.student_list a:active{
+    text-decoration: none;
+    /*    font-weight: bold;*/
+}
+.active-link{
+    font-weight: bold;
+    color: #C00 !important;
+}
+.student-name{
+    height: 28px;
+}
+#exam_wise_report{
+    /*    float: left;*/
+    margin-right:  230px;
+}
+.list_name{
+    font-weight: bold;
+}
+table#listing td{
+    font-size: 13px;
+    font-weight: bold;
+}
+table#listing tr.tr-head {
+    color: #C00;
+    font-size: 13px;
+}
+.student{
+    font-weight: bold;
+    text-align: right !important;
+    margin-right: 10px;
+}
+/************giving border and padding to outer div instead of table***************/
+#score-table{
+    background: #C3D9FF;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    padding: 20px 20px;
+}
+table#listing{
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    padding: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.custom_header{
+    margin: 0 auto;
+    padding: 5px;
+    /*    text-align: center;*/
+    background: #fff;
+}
+/*************************************************************************************/

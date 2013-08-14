@@ -1,0 +1,2 @@
+page.replace_html 'modal-box', :partial => 'new'
+page << "Modalbox.show($('modal-box'), {title: '#{t('add_library_card_setting')}', width: 500});"

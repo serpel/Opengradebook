@@ -1,0 +1,47 @@
+
+class StudentController < ApplicationController
+  filter_access_to :all
+  before_filter :login_required
+   
+
+  def index
+  end
+
+  def import_csv
+
+    if( params[:file].nil? or params[:file].empty? )
+      @filename = params[:file].read
+      @original_filename = params[:file].original_filename
+
+    
+      FasterCSV.new(@filename, {:headers=>true,'UTF-8', ',').each do |row|
+        @samples[i] = row
+     
+        i += 1
+        if i >= sample_count
+          break
+        end
+     end # do
+  end
+
+  def list_students_by_course
+    @students = Student.find_all_by_batch_id(params[:batch_id], :order => 'first_name ASC')
+    render(:update) { |page| page.replace_html 'students', :partial => 'students_by_course' }
+  end
+
+  def list_batches
+    unless params[:course_id] == ''
+      @batches = Batch.find(:all, :conditions=>"course_id = #{params[:course_id]}",:order=>"id DESC")
+    else
+      @batches = []
+    end
+    render(:update) do |page|
+      page.replace_html 'course_batches', :partial=> 'list_batches'
+    end
+  end
+
+  private
+  def find_student
+    @student = Student.find params[:id]
+  end
+end

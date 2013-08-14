@@ -1,0 +1,88 @@
+<div id="content-header">
+  <%= image_tag("/images/academics.png") %>
+  <h1>Calificaciones</h1>
+  <h3>Materias</h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+	<div id="application-list">
+		<table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+			<tr class="tr-head">
+				<td></td>
+				<td colspan="3">Primer Parcial</td>
+				<td colspan="3">Segundo Parcial</td>
+				<td colspan="3">Tercer Parcial</td>
+				<td colspan="3">Cuarto Parcial</td>
+				<td colspan="2">Total General</td>
+			</tr>
+			<tr class="tr-blank"></tr>
+			<tr class="tr-head">
+				<td>Materia</td>
+
+				<td>Examen</td>
+				<td>Acumulado</td>
+				<td>Total</td>
+
+				<td>Examen</td>
+				<td>Acumulado</td>
+				<td>Total</td>
+
+				<td>Examen</td>
+				<td>Acumulado</td>
+				<td>Total</td>
+
+				<td>Examen</td>
+				<td>Acumulado</td>
+				<td>Total</td>
+
+				<td>Promedio</td>
+			</tr>
+			<tr class="tr-blank"></tr>
+			<% @subjects.each do |subject| %>
+			<tr class="tr-read-<%= cycle('odd', 'even') %>">
+				<td class="col-1" style="text-transform:capitalize"><%= subject.name %></td>
+				<% student_note = @student_scores.find_by_subject_id(subject.id) %>
+				<% if student_note %>
+					<% total_1 = student_note.examen_1 + student_note.acumulado_1 %>
+					<% total_2 = student_note.examen_2 + student_note.acumulado_2 %>
+					<% total_3 = student_note.examen_3 + student_note.acumulado_3 %>
+					<% total_4 = student_note.examen_4 + student_note.acumulado_4 %>
+					<td class="col-1"><%= student_note.examen_1 %></td>
+					<td class="col-1"><%= student_note.acumulado_1 %></td>
+					<td class="col-1"><%= total_1 %></td>
+					<td class="col-1"><%= student_note.examen_2 %></td>
+					<td class="col-1"><%= student_note.acumulado_2 %></td>
+					<td class="col-1"><%= total_2 %></td>
+					<td class="col-1"><%= student_note.examen_3 %></td>
+					<td class="col-1"><%= student_note.acumulado_3 %></td>
+					<td class="col-1"><%= total_3 %></td>
+					<td class="col-1"><%= student_note.examen_4 %></td>
+					<td class="col-1"><%= student_note.acumulado_4 %></td>
+					<td class="col-1"><%= total_4 %></td>
+
+					<td class="col-1"><%= (total_1 + total_2 + total_3 + total_4)/4 %></td>
+				<% else %>
+					<td class="col-1">0.0</td>
+					<td class="col-1">0.0</td>
+					<td class="col-1">N/A</td>
+					<td class="col-1">0.0</td>
+					<td class="col-1">0.0</td>
+					<td class="col-1">N/A</td>
+					<td class="col-1">0.0</td>
+					<td class="col-1">0.0</td>
+					<td class="col-1">N/A</td>
+					<td class="col-1">0.0</td>
+					<td class="col-1">0.0</td>
+					<td class="col-1">N/A</td>
+
+					<td class="col-1">N/A</td>
+				<% end %>
+			</tr>
+			<tr class="tr-blank"></tr>
+			<% end %>
+		</table>
+	</div>
+</div>

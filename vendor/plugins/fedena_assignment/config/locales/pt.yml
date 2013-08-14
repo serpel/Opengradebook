@@ -1,0 +1,68 @@
+pt:
+  activerecord:
+    attributes:
+      assignment:
+        title: "Título"
+        content: "Conteúdo"
+        student_list: "Lista de alunos"
+        duedate: "dia de entrega"
+
+      assignment_answer:
+        title: "Título"
+        content: "Conteúdo"
+
+  new_assignment_sucessfuly_created: "Nova tarefa criada com sucesso"
+  assignment_details_updated: "Detalhes da tarefa atualizados"
+  assignment_sucessfully_deleted: "Tarefa APAGADO com sucesso"
+  you_do_not_have_permission_to_delete_this_assignment: "Você não tem permissão para apagar esta tarefa"
+  you_are_not_allowed_to_download_that_file: "Você não tem permissão para baixar o arquivo"
+  assignment_text: "Tarefa"
+  assignments_text: "Tarefas"
+  submit_answer: "Enviar Resposta"
+  attach_a_file: "Anexar um ficheiro"
+  on: "Em"
+
+  assignments:
+    on_text: "Em "
+    change_subject: "Alterar Disciplina"
+    create_new_assignment: "Criar nova tarefa"
+    all_assignments: "Todas tarefas"
+    there_are_no_subjects_assigned_to_this_employee: "Não há nenhuma disciplina atribuídos a esse funcionário"
+    you_have_not_been_assigned_any_assignments: "Vocês não foram atribuídos quaisquer tarefas"
+    create_a_new_assignment: "Criar uma nova tarefa"
+    assignment_already_due: "Tarefa em atraso "
+    due_in: ""
+    delete_assignment: "Tarefas APAGADAS"
+    delete_this_assignment: "Tem certeza que quer apagar esta tarefa? Isso também irá excluir todas as respostas apresentadas a essa tarefa."
+    assigned: "Atribuido"
+    answered: "Respondida"
+    resubmit: "Reenviar"
+    answer_this_assignment: "Responder a esta tarefa"
+    rejected: "Rejeitado"
+    hostel_accepted: "ACEITO"
+    update_assignment: "Atualizar tarefa"
+    edit_assignment: "Editar tarefa"
+    no_assignments_for_this_subject_have_been_created: "Nenhuma tarefa criado para esta disciplina"
+    no_students: "Sem estudantes"
+
+  assignment_answers:
+    assignment_submitted: "Tarefa enviada"
+    you_are_not_allowed_to_view_that_page: "Você não está autorizado a ver essa página"
+    you_cannot_edit_the_assignment_once_it_is_accepted: "Você não pode editar a tarefa uma vez que é aceito"
+    you_cannot_edit_this_assignment: "Você não pode editar esta tarefa"
+    assignment_successfuly_updated: "Tarefa atualizada com sucesso"
+    failed_to_update_assignment: "Falha ao atualizar tarefa"
+    failed_to_set_status_of_assignment: "Falha ao definir o estado da tarefa"
+    you_cannot_approve_or_reject_this_assignment: "Você não pode aprovar ou rejeitar esta atribuição"
+    assignment_text: "Tarefa"
+    edit_answer: "Editar resposta"
+    submit_an_answer: "Submeter uma resposta"
+    reject_answer: "Rejeitar resposta"
+    accept_answer: "Aceitar resposta"
+    the_assignment_is: "A Taresfa esta"
+    resubmit_answer: "Resubmeter resposta"
+    this_answer_yet_to_be_evaluated: "Esta resposta ainda está para ser avaliado"
+    submitted_on: "Enviado no"
+    submitted_by: "Enviado por"
+    answer: "Resposta"
+

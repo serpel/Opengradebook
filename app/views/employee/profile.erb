@@ -1,0 +1,92 @@
+
+<% current_username = @current_user.username %>
+<% profile_employee_no = @employee.employee_number %>
+
+<div id="content-header">
+  <%= image_tag("/images/HR/show_hr.png") %>
+  <h1><%= t('employee_profile') %></h1>
+  <h3><%= t('details') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+
+<div id="nav">
+  <ul>
+    <li>
+      <a href="#" class="drops" id="link_one"><%= t('profile_text') %> &#9660;</a>
+      <ul id="box_one" class="scriptaculously" style="display:none;">
+        <li><%= link_to_remote "#{t('general')}", :url => {:action => "profile_general", :id => @employee.id}, :update => "profile-infos" %></li>
+        <li><%= link_to_remote "#{t('personal')}", :url => {:action => "profile_personal", :id => @employee.id}, :update => "profile-infos" %></li>
+        <li><%= link_to_remote "#{t('address')}", :url => {:action => "profile_address", :id => @employee.id}, :update => "profile-infos" %></li>
+        <li><%= link_to_remote "#{t('contact')}", :url => {:action => "profile_contact", :id => @employee.id}, :update => "profile-infos" %></li>
+        <li><%= link_to_remote "#{t('additional_info')}", :url => {:action => "profile_additional_details", :id => @employee.id}, :update => "profile-infos" %></li>
+      </ul>
+    </li>
+
+    <% if current_username == profile_employee_no %>
+      <% if @new_reminder_count.size == 0 %>
+        <li><%= link_to        "#{t('reminder_text')}", :controller=>"reminder", :action=>"index"%></li>
+      <% else %>
+        <li><%= link_to        "#{t('reminder_text')}(#{@new_reminder_count.size})", :controller=>"reminder", :action=>"index"%></li>
+      <% end %>
+    <%end%>
+    <% if @current_user.admin? %>
+      <li>
+      <%= link_to "#{t('delete_text')}" ,:action=>'remove',:id=>@employee.id %>
+      </li>
+    <% end %>
+    <li>
+      <a href="#" class="drops" id="link_four"><%= t('more') %>&#9660;</a>
+          <ul id="box_four" class="scriptaculously" style="display:none;">
+        <% FedenaPlugin::ADDITIONAL_LINKS[:employee_profile_more_menu].each do |mod| %>
+          <li><%= link_to "#{t(mod[:title])}",mod[:destination].merge(:id=>@employee.id) %></li>
+        <% end %>
+      </ul>
+    </li>
+  </ul>
+
+</div>
+
+
+
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+  <div id="employee_profile_heading">
+
+    <div id="profile_picture_display">
+      <% if @employee.photo.file? %>
+        <%= image_tag @employee.photo.url %>
+      <% else %>
+        <%= image_tag "HR/default_employee.png" %>
+      <% end %>
+    </div>
+
+    <div id ="employee_main_info">
+      <h3> <%= @employee.full_name %>  </h3>
+      <h4> <%= t('employee_id') %> : <%= @employee.employee_number %> </h4>
+    </div>
+
+    <div id="profile-general-info">
+
+
+    </div>
+    <div class="extender"></div>
+
+  </div>
+
+
+
+
+  <div id="profile-infos">
+    <%=   render :partial => "general" %>
+
+  </div>
+  <div class="extender"> </div>
+</div>
