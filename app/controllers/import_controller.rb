@@ -55,7 +55,7 @@ class ImportController < ApplicationController
 
             gu.country_id = 73
             _st = Student.find_by_admission_no st.admission_no
-            gu.ward_id = _st.id unless _st.nil? == false
+            gu.ward_id = _st.id 
 
             gu.validate
             gu.create_guardian_user(_st)
