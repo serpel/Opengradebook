@@ -15,59 +15,62 @@ class ImportController < ApplicationController
       filename = params[:file].read
       n, errs = 0, []
       #@last_admitted_student = Student.find(:last)
-      
-      CSV.parse(filename) do |row|
-        n += 1
-        next if n == 1 or row.join.blank?
 
-        st = Student.new
-        st.admission_no = row[0]
-        st.first_name = row[1]
-        st.last_name = row[2]
-        st.date_of_birth = row[3]
-        st.email = row[4]
-        st.batch_id = params[:course][:course_id]
-        
-        #by Default take this parameter from local configuration
-        st.is_sms_enabled = 1
-        st.country_id = 73
-        st.nationality_id = 73
-        st.admission_date = DateTime.now.strftime('%m/%d/%Y')
-        st.is_active = 1
-        st.gender = 'm'
-        #st.batch_id = 1
+      begin
+        CSV.parse(filename) do |row|
+          n += 1
+          next if n == 1 or row.join.blank?
 
-        begin
-          st.create_user_and_validate
-          st.save!
-        rescue Exception => e
-          errs << e.to_s + " '" + st.admission_no + "' "
+          today = '01/01/1999'
+
+          begin
+            st = Student.new
+            st.admission_no = row[0].to_s
+            st.first_name = row[1].to_s
+            st.last_name = row[2].to_s
+            st.date_of_birth = row[3].to_s.empty? ? today : row[3].to_s
+            st.email = row[4].to_s
+            st.batch_id = params[:course][:course_id].to_s
+
+            #by Default take this parameter from local configuration
+            st.is_sms_enabled = 1
+            st.country_id = 73
+            st.nationality_id = 73
+            st.admission_date = DateTime.now.strftime('%m/%d/%Y')
+            st.is_active = 1
+            st.gender = 'm'
+
+            st.create_user_and_validate
+            st.save!
+          rescue Exception => e
+            errs << e.to_s + " '" + st.admission_no + "' "
+          end
+
+          begin
+            gu = Guardian.new
+            gu.first_name = row[5]
+            gu.last_name = row[6]
+            gu.relation = row[7]
+            gu.email = row[8]
+
+            gu.country_id = 73
+            _st = Student.find_by_admission_no st.admission_no
+            gu.ward_id = _st.id unless _st.nil? == false
+
+            gu.validate
+            gu.create_guardian_user(_st)
+            gu.save!
+
+          rescue Exception => e
+            errs << e.to_s + " '" + gu.name + " " + gu.last_name + " ' "
+          end
+
         end
-        
-        gu = Guardian.new
-        gu.first_name = row[5]
-        gu.last_name = row[6]
-        gu.relation = row[7]
-        gu.email = row[8]
-        #params default
-        gu.country_id = 73;
-        _st = Student.find_by_admission_no st.admission_no
-        gu.ward_id = _st.id
-
-        begin
-          gu.validate
-          gu.create_guardian_user(_st)
-          gu.save!
-          
-        rescue Exception => e
-          errs << e.to_s + " '" + gu.name + " " + gu.last_name + " ' "
-        end
-        
+      rescue Exception => e
+          flash[:notice] = errs.to_s
       end
 
-      if errs.any?
-        flash[:notice] = errs.to_s
-      else
+      if errs.empty?
         flash[:notice] = "Successfull "
       end
 

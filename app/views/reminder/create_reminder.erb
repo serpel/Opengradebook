@@ -109,29 +109,34 @@
         </div>
       </div>
       <div class="extender"></div>
+        
+      <!--<div class="to-options">
+        <%= link_to_remote "#{t('reminder_to_student')}", :url=>{:controller=>"reminder",:action=>"select_student_course"},:update=>"select-student-course", :html=>{:class=>"themed_text"} %>
+      </div>-->
+
+      <% if !@user.student? %>
+
         <div class="to-options">
           <h4>
           <%=  "#{t('reminder_to_student')}" %>
           </h4>
         </div>
-      <!--<div class="to-options">
-        <%= link_to_remote "#{t('reminder_to_student')}", :url=>{:controller=>"reminder",:action=>"select_student_course"},:update=>"select-student-course", :html=>{:class=>"themed_text"} %>
-      </div>-->
+      
+        <div class="extender"></div>
+        <div id="select-student-course">
+          <%  @user = current_user %>
+          <%=  render :partial=> "select_student_course" %>
+        </div>
+      
+        <div class="label-field-to">
+            <div id="to_users2"></div>
+        </div>
+        <div class="extender"></div>
 
-      <div class="extender"></div>
-      <div id="select-student-course">
-        <%  @user = current_user %>
-        <%=  render :partial=> "select_student_course" %>
-      </div>
-      
-      <div class="label-field-to">
-          <div id="to_users2"></div>
-      </div>
-      <div class="extender"></div>
-      
-      <div class="label-field-to">
-          <div id="to_users3"></div>
-      </div>
+        <div class="label-field-to">
+            <div id="to_users3"></div>
+        </div>
+      <% end %>
       
     </div>
     <div class="message">

@@ -28,7 +28,7 @@ end
        @courses = Course.find_all_by_school_id(current_school)
     elsif @user.student? or @user.parent?
        @courses = current_course
-       
+       @departments = EmployeeDepartment.find(:all, :conditions=>"status = true")
     end
 
      

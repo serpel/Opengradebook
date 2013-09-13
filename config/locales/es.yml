@@ -349,7 +349,6 @@ es: # locale
   adm_no: "No. del Adm"
   view_profile: "Ver Perfil"
   select_a_category: "Seleccionar una categoría"
-  select_a_batch: "Seleccionar un grupo"
   select_a_course: "Seleccionar un curso"
   create_text: "Crear"
   student_text: "Estudiante"
@@ -1869,7 +1868,6 @@ es: # locale
   basestart_date_is_lower_than_end_date: "Fecha de finalización es menor que la fecha de inicio"
   baseend_date_is_lower_than_end_date: "Fecha de finalización es menor que la fecha de hoy"
   time_period:  "Período"
-  select_a_batch: "Seleccionar un grupo"
   select_employee: "Seleccionar empleado"
   assign_multiple_teachers: "Asignar varios profesores"
   new_timetable: "Horario Nuevo"
@@ -2310,7 +2308,9 @@ es: # locale
       # the method name (does not include "entrega")
     comment_notification:
       subject: "Nuevo comentario"
-
+  
+  import:
+    select_a_batch: "Seleccionar un grupo"
 ## Translations for the autosuggest menu.
   autosuggest_menu:
     search_employees: "Buscar empleados"
@@ -2403,3 +2403,4 @@ es: # locale
     homework: "Tareas"
     calendar: "Calendario"
     school: "Escuela"
+
