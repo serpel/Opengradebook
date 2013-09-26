@@ -98,8 +98,8 @@
         </div>
        <div class="extender"></div>
         <div id="select-employee-department">
-          <%  @user = current_user %>        
-          <%=   render :partial=>"select_employee_department" %>
+          <% @user = current_user %>        
+          <%= render :partial=>"select_employee_department" %>
         </div>
        <% end %>
 
@@ -136,8 +136,7 @@
         <div class="label-field-to">
             <div id="to_users3"></div>
         </div>
-      <% end %>
-      
+      <% end %>     
     </div>
     <div class="message">
       <div id="recipient-list"></div>

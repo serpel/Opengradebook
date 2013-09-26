@@ -25,7 +25,7 @@ end
        @code = Employee.find_by_employee_number @user['username']
        @departments = EmployeeDepartment.find_all_by_id @code['employee_department_id']
 
-       @courses = Course.find_all_by_school_id(current_school)
+       @courses = Course.find_all_by_school_id_and_is_deleted(current_school,"0")
     elsif @user.student? or @user.parent?
        @courses = current_course
        @departments = EmployeeDepartment.find(:all, :conditions=>"status = true")

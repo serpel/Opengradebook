@@ -145,6 +145,9 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new params[:course]
+    
+    # Course have the same batch name
+    #@course.batch_groups['name'] = @course['course_name']
     if @course.save
       flash[:notice] = "#{t('flash1')}"
       redirect_to :action=>'manage_course'
