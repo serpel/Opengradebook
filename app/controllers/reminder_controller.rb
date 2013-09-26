@@ -108,17 +108,24 @@ end
     end
 
     course = Course.find(params[:course_is])
-    batch = Batch.find_by_course_id course.id
-    students = batch.students
 
-    #Guardians from selected batch students
-    @guardians = Array.new
-    students.each do |s|
-      tmp = s.guardians.map { |g| g.user.id unless g.user.nil? }
-      tmp.delete nil    
-      @guardians.push(tmp)
+    students = []
+    @guardians = []
+    if !course.nil?
+       batch = Batch.find_by_course_id_and_is_deleted(course.id, "false")
+       students = batch.students 
+
+      #Guardians from selected batch students
+      students.each do |s|
+        #tmp = s.guardians.map { |g| g.user.id unless g.user.nil? }
+        #tmp.delete nil
+        tmp = s.guardians.collect { |i| i.user }
+        tmp.compact!
+        if !tmp.empty?
+          @guardians << tmp
+        end
+      end
     end
-    
 
     @to_users = students.map { |s| s.user.id unless s.user.nil? }
     @to_users.delete nil
