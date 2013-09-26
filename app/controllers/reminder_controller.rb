@@ -19,13 +19,13 @@ end
     
     if @user.admin?
        @departments = EmployeeDepartment.find(:all, :conditions=>"status = true")
-       @courses = Course.find(:all, :conditions=>"is_deleted = false")
+       @courses = Course.find(:all, :conditions=>"is_deleted = false", :order => "code asc")
     elsif @user.employee?
        # Employee courses and depeartments
        @code = Employee.find_by_employee_number @user['username']
        @departments = EmployeeDepartment.find_all_by_id @code['employee_department_id']
 
-       @courses = Course.find_all_by_school_id_and_is_deleted(current_school,"0")
+       @courses = Course.find_all_by_school_id_and_is_deleted(current_school,"0", :order => "code asc")
     elsif @user.student? or @user.parent?
        @courses = current_course
        @departments = EmployeeDepartment.find(:all, :conditions=>"status = true")
