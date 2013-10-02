@@ -6,11 +6,36 @@ class EmployeeController < ApplicationController
   before_filter :protect_other_employee_data, :only => [:individual_payslip_pdf,:timetable,:timetable_pdf,:profile_payroll_details,\
       :view_payslip ]
   before_filter :limit_employee_profile_access , :only => [:profile,:profile_pdf]
+  
+  def get_subjects_by_course
 
+    @courses = Course.find(:all)
+
+    if params[:course_id] == "" or params[:course_id].nil?
+       id = 8
+    else
+       id = params[:course_id]
+    end
+    
+    @current_user = current_user
+    @employee = Employee.find_by_employee_number(@current_user.username)
+    @my_subjects = Subject.find(:all,
+                                :joins => "inner join batches b on b.id = subjects.batch_id
+                                                  and b.is_deleted = false
+                                                  and b.is_active = true
+                                           inner join courses c on c.id = b.course_id
+                                                  and c.is_deleted = false
+                                                  and c.id = " + id.to_s + " "+
+                                          "inner join employees_subjects d on d.subject_id = subjects.id
+                                                  and d.employee_id = \'"+@employee.id.to_s+"\'")
+  end
+  
   def get_subjects
     @current_user = current_user
     @employee = Employee.find_by_employee_number(@current_user.username)
     @my_subjects = @employee.subjects
+
+    #get_subjects_by_course
   end
 	
   def add_category

@@ -23,12 +23,17 @@ end
     elsif @user.employee?
        # Employee courses and depeartments
        @code = Employee.find_by_employee_number @user['username']
-       @departments = EmployeeDepartment.find_all_by_id @code['employee_department_id']
-
+       @departments = EmployeeDepartment.find_all_by_id_and_status(@code['employee_department_id'],"1")
        @courses = Course.find_all_by_school_id_and_is_deleted(current_school,"0", :order => "code asc")
     elsif @user.student? or @user.parent?
        @courses = current_course
-       @departments = EmployeeDepartment.find(:all, :conditions=>"status = true")
+      # TODO: agregar filtro de departamente de empleados
+      if !@courses.empty?
+        #emp_sub = @courses[0].employees_subjects
+        #emp = Employee.find(emp_sub['employee_id'])
+        #@departments = EmployeeDepartment.find_all_by_id_and_status(emp['employee_department_id'],"true")
+        @departments = EmployeeDepartment.find(:all, :conditions=>"status = true and code = 'Admin'")
+       end
     end
 
      

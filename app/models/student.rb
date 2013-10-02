@@ -5,7 +5,7 @@ class Student < ActiveRecord::Base
   include CceReportMod
     
   belongs_to :country
-  belongs_to :batch,:dependent=>:destroy
+  belongs_to :batch
   belongs_to :student_category
   belongs_to :nationality, :class_name => 'Country'
   belongs_to :user

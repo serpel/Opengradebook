@@ -53,9 +53,9 @@ table{
     width:970px;
     margin:0 auto;
     background: #c3d9ff;
-    -moz-border-radius:10px;
-    -webkit-border-radius:10px;
-    padding:20px;
+    -moz-border-radius:0px;
+    -webkit-border-radius:0px;
+    padding:1px;
 }
 tr.tr-head{
     background: #fff;

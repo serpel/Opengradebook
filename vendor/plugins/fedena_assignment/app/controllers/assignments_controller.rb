@@ -4,9 +4,14 @@ class AssignmentsController < ApplicationController
   
   def index
     @current_user = current_user
-    if    @current_user.employee?
-      @subjects = current_user.employee_record.subjects
-      @subjects.reject! {|s| !s.batch.is_active}
+    if @current_user.employee?
+      begin
+        @subjects = current_user.employee_record.subjects
+        @subjects.reject! {|s| !s.batch.is_active}
+      rescue
+        flash[:notice] = "#{"Some Batchs are invalids, contact with Admin!"}"
+        redirect_to :controller => "user", :action => "dashboard"
+      end
     elsif @current_user.student?
       @assignments = Assignment.for_student current_user.student_record.id
     elsif @current_user.parent?      
