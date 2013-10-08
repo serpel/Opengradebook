@@ -1,3 +1,30 @@
+<!--<script type="text/javascript" >
+
+jQuery( document ).ready(function( $ ) {
+  // Code that uses jQuery's $ can follow here.
+
+  $('a.example').click(function(){   //bind handlers
+   var url = $(this).attr('href');
+   showDialog(url);
+
+   return false;
+});
+
+$("#targetDiv").dialog({  //create dialog, but keep it closed
+   autoOpen: false,
+   height: 300,
+   width: 350,
+   modal: true
+});
+
+function showDialog(url){  //load content and open dialog
+    $("#targetDiv").load(url);
+    $("#targetDiv").dialog("open");
+}
+});
+  
+</script>-->
+
 <div id="content-header">
   <%= image_tag("/images/examination/show_exam.png") %>
   <h1 style="text-transform:capitalize"><%=h @plan.subject.name %></h1>
@@ -9,42 +36,43 @@
 
 
 <div id="inner-tab-menu">
-	<ul>
-		<li><%= link_to 'Editar', edit_plan_path(@plan) %></li>
-	</ul>
 </div>
 
 <div id="page-yield">
-	<% unless flash[:notice].nil? %> 
-		<p class="flash-msg"> <%= flash[:notice] %> </p> 
-	<% end %>
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
 
-	<div id="application-list">
-		<table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0">
-			<tbody>
-			<tr class="tr-head">
-				<td>Examen 1</td>
-				<td>Acumulado</td>
-				<td>Examen 2</td>
-				<td>Acumulado</td>
-				<td>Examen 3</td>
-				<td>Acumulado</td>
-				<td>Examen 4</td>
-				<td>Acumulado</td>
-			</tr>			
-			<tr class="tr-read-even">
-				<td class="col-1"><%= @plan.examen_1 %></td>
-				<td class="col-1"><%= @plan.acumulado_1 %></td>
-				<td class="col-1"><%= @plan.examen_2 %></td>
-				<td class="col-1"><%= @plan.acumulado_2 %></td>
-				<td class="col-1"><%= @plan.examen_3 %></td>
-				<td class="col-1"><%= @plan.acumulado_3 %></td>
-				<td class="col-1"><%= @plan.examen_4 %></td>
-				<td class="col-1"><%= @plan.acumulado_4 %></td>
-			</tr>
-			</tbody>	
-		</table>
-	</div>
+  <div id="targetDiv"></div>
+  
+  <div id="application-list">
+    <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0">
+      <tbody>
+        <tr class="tr-head">
+          <td>Examen 1</td>
+          <td>Acumulado</td>
+          <td>Examen 2</td>
+          <td>Acumulado</td>
+          <td>Examen 3</td>
+          <td>Acumulado</td>
+          <td>Examen 4</td>
+          <td>Acumulado</td>
+          <td>Accion</td>
+        </tr>
+        <tr class="tr-read-even">
+          <td class="col-1"><%= @plan.examen_1.nil? ? 0:@plan.examen_1%></td>
+          <td class="col-1"><%= @plan.acumulado_1.nil? ? 0:@plan.acumulado_1 %></td>
+          <td class="col-1"><%= @plan.examen_2.nil? ? 0:@plan.examen_2 %></td>
+          <td class="col-1"><%= @plan.acumulado_2.nil? ? 0:@plan.acumulado_2 %></td>
+          <td class="col-1"><%= @plan.examen_3.nil? ? 0:@plan.examen_3 %></td>
+          <td class="col-1"><%= @plan.acumulado_3.nil? ? 0:@plan.acumulado_3 %></td>
+          <td class="col-1"><%= @plan.examen_4.nil? ? 0:@plan.examen_4 %></td>
+          <td class="col-1"><%= @plan.acumulado_4.nil? ? 0:@plan.examen_4 %></td>
+          <td class="col-1"><%= link_to 'Editar', edit_plan_path(@plan) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <div id="content-header">
@@ -88,8 +116,8 @@
 			<td>Accion</td>
 		</tr>
 		<% subjectId = @plan.subject.id %>
-                <% st = @plan.subject.batch.students.sort_by { |a| a.first_and_last_name.downcase } %>
-		<% st.each do |student| %>
+                <%# @st.sort_by { |a| a.first_and_last_name.downcase } %>
+		<% @st.each do |student| %>
 		<tr class="tr-read-<%= cycle('odd', 'even') %>">
 			<td class="col-1" style="text-transform:capitalize">
                            <%= student.first_and_last_name %>
@@ -114,7 +142,7 @@
 				<td class="col-1"><%= total_4.round(2) %></td>
 
 				<td class="col-1"><%= ((total_1 + total_2 + total_3 + total_4)/4).round(2) %></td>
-				<td class="col-1"><%= link_to "Calificar", edit_nota_path(sn.id) %></td>
+				<td class="col-1"><%= link_to "Calificar", edit_nota_path(sn.id), :class => "example" %></td>
 			<% else %>
 				<td class="col-1">0.0</td>
 				<td class="col-1">0.0</td>
@@ -130,8 +158,7 @@
 				<td class="col-1">N/A</td>
 
 				<td class="col-1">N/A</td>
-				<td class="col-1"><%= link_to "Calificar", new_student_score_path(:id => subjectId, 
-																													:id2 => student.id) %></td>
+				<td class="col-1"><%= link_to "Calificar", new_student_score_path(:id => subjectId, :id2 => student.id), :class => "example" %></td>
 			<% end %>
 		</tr>
 		<tr class="tr-blank"></tr>

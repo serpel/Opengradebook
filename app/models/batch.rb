@@ -58,7 +58,17 @@ class Batch < ActiveRecord::Base
   
   def inactivate
     update_attribute(:is_deleted, true)
-    self.employees_subjects.destroy_all
+    
+    #self.subjects.destroy
+    #subjects.destroy
+    self.subjects.each { |s| s.is_deleted = nil }
+
+    self.subjects.update_attributes(:is_deleted => true)
+    #subjects.each { |e| e.is_deleted = 1 }
+    self.subjects.reload
+
+    i = 1
+    #self.employees_subjects.destroy
   end
 
   def grading_level_list

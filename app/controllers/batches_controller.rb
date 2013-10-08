@@ -165,14 +165,28 @@ class BatchesController < ApplicationController
   end
 
   def destroy
-    if @batch.students.empty? and @batch.subjects.empty?
-      @batch.inactivate
+#    if @batch.students.empty? and @batch.subjects.empty?
+#      @batch.inactivate
+#      flash[:notice] = "#{t('flash4')}"
+#      redirect_to @course
+#    else
+#      flash[:warn_notice] = "<p>#{t('batches.flash5')}</p>" unless @batch.students.empty?
+#      flash[:warn_notice] = "<p>#{t('batches.flash6')}</p>" unless @batch.subjects.empty?
+#      redirect_to [@course, @batch]
+#    end
+    begin
+      if @batch.students.empty?
+         @batch.inactivate
+      else
+         @batch.students.each { |s| s.batch_id = nil  }
+         @batch.students.reload
+         @batch.inactivate
+      end
       flash[:notice] = "#{t('flash4')}"
       redirect_to @course
-    else
-      flash[:warn_notice] = "<p>#{t('batches.flash5')}</p>" unless @batch.students.empty?
-      flash[:warn_notice] = "<p>#{t('batches.flash6')}</p>" unless @batch.subjects.empty?
-      redirect_to [@course, @batch]
+    rescue Exception => e
+       flash[:warn_notice] = "<p>Error: Can't delete batch, contact Admin!</p>"
+       redirect_to [@course, @batch]
     end
   end
 

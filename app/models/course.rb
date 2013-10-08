@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
   validates_presence_of :course_name, :code, :school_id
   validate :presence_of_initial_batch, :on => :create
 
-  has_many :batches
+  has_many :batches, :dependent => :destroy
   has_many :batch_groups
   has_many :ranking_levels
   has_many :class_designations

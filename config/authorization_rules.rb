@@ -2400,7 +2400,9 @@ authorization do
       :individual_payslip_pdf,
       :show,
       :profile_pdf,
-			:get_subjects
+			:get_subjects,
+      :select_a_batch,
+      :subjects_by_batch
     ]
     has_permission_on [:timetable],:to => [:employee_timetable,:update_employee_tt]
     has_permission_on [:news],

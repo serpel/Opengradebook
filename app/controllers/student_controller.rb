@@ -12,15 +12,21 @@ class StudentController < ApplicationController
   ]
 
   def get_scores
-  	@student = Student.find(params[:id])
-
-    if @student.is_active?
-      @subjects = @student.batch.subjects
-      @student_scores = @student.notas
-    else
-        flash[:notice] = "#{t('test')}"
-        redirect_to :controller => "student", :action => "index"
-    end  
+    begin
+      @student = Student.find(params[:id])
+      @subjects = []
+      @student_scores = []
+      if @student.is_active?
+        @subjects = @student.batch.subjects.select { |e| e.is_deleted == false }
+        @student_scores = @student.notas
+      else
+          flash[:notice] = "Error: Student is disable, Contact with Admin."
+          redirect_to :controller => "user", :action => "dashboard"
+      end
+    rescue Exception => e
+      flash[:notice] = "Error: getting scores, Contact with Admin, Details: " + e.to_s
+      redirect_to :controller => "user", :action => "dashboard"
+    end
   end
   
   def academic_report_all
@@ -614,7 +620,7 @@ class StudentController < ApplicationController
   end
 
   def view_all
-    @batches = Batch.active
+    @batches = Batch.active.select { |e| e.is_deleted == false }.sort_by { |s| s.id }
   end
 
   def advanced_search

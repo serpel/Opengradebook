@@ -7,9 +7,10 @@ class AssignmentsController < ApplicationController
     if @current_user.employee?
       begin
         @subjects = current_user.employee_record.subjects
-        @subjects.reject! {|s| !s.batch.is_active}
-      rescue
-        flash[:notice] = "#{"Some Batchs are invalids, contact with Admin!"}"
+        @subjects = @subjects.sort_by { |obj| obj.batch_id }
+        @subjects.reject! {|s| s.batch.nil? ? true:(!s.batch.is_active)}
+      rescue Exception => e
+        flash[:notice] = "#{"Some Batchs are invalids, contact with Admin!"} Details: " + e.to_s
         redirect_to :controller => "user", :action => "dashboard"
       end
     elsif @current_user.student?
@@ -37,8 +38,8 @@ class AssignmentsController < ApplicationController
   def new
     if current_user.employee?
       @subjects = current_user.employee_record.subjects
-      
-      @subjects.reject! {|s| !s.batch.is_active}
+      @subjects = @subjects.sort_by { |obj| obj.batch_id }
+      @subjects.reject! {|s| s.batch.nil? ? true:(!s.batch.is_active)}
       @assignment= Assignment.new
       unless params[:subject_id].nil?
         subject = Subject.find_by_id(params[:subject_id])
@@ -153,7 +154,7 @@ class AssignmentsController < ApplicationController
     if current_user.employee?
       @subjects = current_user.employee_record.subjects
       
-      @subjects.reject! {|s| !s.batch.is_active}
+      @subjects.reject! {|s| s.batch.nil? ? true:(!s.batch.is_active)}
     end
   end
   def update

@@ -18,6 +18,7 @@ class PlansController < ApplicationController
   def show
     begin
       @plan = Plan.find(params[:id])
+      @st = Student.find_all_by_batch_id(@plan.subject.batch, :conditions => {:is_deleted => false}, :order => "lower(first_name) asc, lower(last_name) asc, gender asc")
 
       respond_to do |format|
         format.html # show.html.erb
@@ -25,8 +26,8 @@ class PlansController < ApplicationController
       end
       
     rescue Exception => e
-      flash[:notice] = "Plan with id " + params[:id].to_s + " not exist!"
-      redirect_to :controller => "employee", :action => "get_subjects", :status => 303    
+      flash[:notice] = "Error: Something Wrong, was happenig with Plan :" + params[:id].to_s + ", Contact with Admin! Details : " + e.to_s
+      redirect_to :controller => "employee", :action => "get_subjects", :notice => "error"
     end
   end
 

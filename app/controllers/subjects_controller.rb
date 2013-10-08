@@ -80,7 +80,7 @@ class SubjectsController < ApplicationController
     if params[:batch_id] == ''
       @subjects = []
     else
-      @batch = Batch.find params[:batch_id]
+      @batch = Batch.find(params[:batch_id], :conditions =>{:is_deleted=>false, :is_active=>true})
       @subjects = @batch.normal_batch_subject
       @elective_groups = ElectiveGroup.find_all_by_batch_id(params[:batch_id], :conditions =>{:is_deleted=>false})
     end

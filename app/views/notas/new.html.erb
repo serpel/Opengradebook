@@ -14,54 +14,44 @@
     <p class="flash-msg"> <%= flash[:notice] %> </p>
   <% end %>
 
-  <div id="application-list">
+    <div id="application-list">
 
-		<% form_for(@nota) do |f| %>
-			<%= f.error_messages %>
+      <% form_for(@nota) do |f| %>
+        <%= f.error_messages %>
 
-			<p style="display:none">
-				<%= f.label :subject_id %><br />
-				<%= f.text_field :subject_id, :value => params[:id] %>
-			</p>
-			<p style="display:none">
-				<%= f.label :student_id %><br />
-				<%= f.text_field :student_id, :value => params[:id2] %>
-			</p>
-			<p>
-				<%= f.label "Examen 1" %><br />
-				<%= f.text_field :examen_1 %>
-			</p>
-			<p>
-				<%= f.label "Acumulado 1" %><br />
-				<%= f.text_field :acumulado_1 %>
-			</p>
-			<p>
-				<%= f.label "Examen 2" %><br />
-				<%= f.text_field :examen_2 %>
-			</p>
-			<p>
-				<%= f.label "Acumulado 2" %><br />
-				<%= f.text_field :acumulado_2 %>
-			</p>
-			<p>
-				<%= f.label "Examen 3" %><br />
-				<%= f.text_field :examen_3 %>
-			</p>
-			<p>
-				<%= f.label "Acumulado 3" %><br />
-				<%= f.text_field :acumulado_3 %>
-			</p>
-			<p>
-				<%= f.label "Examen 4" %><br />
-				<%= f.text_field :examen_4 %>
-			</p>
-			<p>
-				<%= f.label "Acumulado 4" %><br />
-				<%= f.text_field :acumulado_4 %>
-			</p>
-			<p>
-				<%= f.submit 'Calificar' %>
-			</p>
-		<% end %>
-	</div>
+        <p style="display:none">
+          <%= f.label :subject_id %><br />
+          <%= f.text_field :subject_id, :value => params[:id] %>
+        </p>
+        <p style="display:none">
+          <%= f.label :student_id %><br />
+          <%= f.text_field :student_id, :value => params[:id2] %>
+        </p>
+        <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0">
+          <tr class="tr-head">
+            <td><%= f.label "Examen 1" %></td>
+            <td><%= f.label "Acumulado 1" %></td>
+            <td><%= f.label "Examen 2" %></td>
+            <td><%= f.label "Acumulado 2" %></td>
+            <td><%= f.label "Examen 3" %></td>
+            <td><%= f.label "Acumulado 3" %></td>
+            <td><%= f.label "Examen 4" %></td>
+            <td><%= f.label "Acumulado 4" %></td>
+            <td>Accion</td>
+          </tr>
+          <tr class="tr-read-even">
+            <td class="col-0"><%= f.text_field :examen_1, :size => 8 %></td>
+            <td class="col-0"><%= f.text_field :acumulado_1, :size => 10 %></td>
+            <td class="col-0"><%= f.text_field :examen_2, :size => 8 %></td>
+            <td class="col-0"><%= f.text_field :acumulado_2, :size => 10 %></td>
+            <td class="col-0"><%= f.text_field :examen_3, :size => 8 %></td>
+            <td class="col-0"><%= f.text_field :acumulado_3, :size => 10 %></td>
+            <td class="col-0"><%= f.text_field :examen_4, :size => 8 %></td>
+            <td class="col-0"><%= f.text_field :acumulado_4, :size => 10 %></td>
+            <td><%= f.submit 'Calificar' %></td>
+          </tr>
+          <tr class="tr-blank"></tr>
+        </table>
+      <% end %>
+    </div>
 </div>

@@ -1,0 +1,34 @@
+<table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+  <tbody>
+    <tr class="tr-head">
+      <td>Materias</td>
+      <td colspan="2">Acciones</td>
+    </tr>
+    <tr class="tr-blank"></tr>
+
+    <% @my_subjects.each do |subject| %>
+      <% if subject.plans.size > 0 %>
+        <% subject_plan = subject.plans.first %>
+      <% end %>
+      <tr class="tr-read-<%= cycle('odd', 'even') %>">
+        <td class="col-1" style="text-transform:capitalize">
+          <% if subject.plans.size > 0 %>
+            <%= link_to subject.name, plan_path(subject_plan.id) %>
+          <%else%>
+            <%=subject.name%>
+          <% end %>
+        </td>
+        <% if subject.plans.size > 0 %>
+          <td class="col-1">
+            <%= link_to "Editar", :controller => "plans", :action => "edit", :id=>subject_plan.id %> |
+            <%= link_to "Calificar", :controller => "plans", :action => "show", :id=>subject_plan.id %>
+          </td>
+          <!--<td class="col-1"><%= link_to "Mostrar Ponderacion", plan_path(subject_plan.id) %></td>-->
+        <% else %>
+          <td class="col-1"><%= link_to "Crear", new_subject_ponderation_path(:id=>subject.id) %></td>
+        <% end %>
+      </tr>
+      <tr class="tr-blank"></tr>
+    <% end %>
+  </tbody>
+</table>

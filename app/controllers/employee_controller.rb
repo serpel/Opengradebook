@@ -7,35 +7,41 @@ class EmployeeController < ApplicationController
       :view_payslip ]
   before_filter :limit_employee_profile_access , :only => [:profile,:profile_pdf]
   
-  def get_subjects_by_course
-
-    @courses = Course.find(:all)
-
-    if params[:course_id] == "" or params[:course_id].nil?
-       id = 8
-    else
-       id = params[:course_id]
-    end
-    
-    @current_user = current_user
-    @employee = Employee.find_by_employee_number(@current_user.username)
-    @my_subjects = Subject.find(:all,
-                                :joins => "inner join batches b on b.id = subjects.batch_id
-                                                  and b.is_deleted = false
-                                                  and b.is_active = true
-                                           inner join courses c on c.id = b.course_id
-                                                  and c.is_deleted = false
-                                                  and c.id = " + id.to_s + " "+
-                                          "inner join employees_subjects d on d.subject_id = subjects.id
-                                                  and d.employee_id = \'"+@employee.id.to_s+"\'")
-  end
-  
   def get_subjects
-    @current_user = current_user
-    @employee = Employee.find_by_employee_number(@current_user.username)
-    @my_subjects = @employee.subjects
+    begin
+      @current_user = current_user
+      @employee = Employee.find_by_employee_number(@current_user.username)
+      @my_subjects = @employee.subjects.select { |s| s.is_deleted == false }
+      b = @my_subjects.map { |a| a.batch_id }.uniq
+      @batches = Batch.find_all_by_id(b, :conditions => { :is_deleted => false, :is_active => true })
 
-    #get_subjects_by_course
+      if b.count > 0
+        @my_subjects = @my_subjects.select { |s| s.batch_id == b.first.to_i }
+      end
+      
+    rescue Exception => e
+      flash[:notice] = "Error: getting batches, contact Admin! Details: "+ e.to_s
+      redirect_to :controller => "user", :action => "dashboard"
+    end
+  end
+
+  def subjects_by_batch
+    begin
+      #default value = 0
+      b_id = params[:id].nil? ? 0:params[:id].to_i
+      @current_user = current_user
+      @employee = Employee.find_by_employee_number(@current_user.username)
+      @my_subjects = @employee.subjects.select { |s| s.is_deleted == false and s.batch_id == b_id }
+
+      b = @employee.subjects.select { |s| s.is_deleted == false }.map { |a| a.batch_id }.uniq
+      @batches = Batch.find_all_by_id(b, :conditions => { :is_deleted => false, :is_active => true })
+
+      render(:update) { |page| page.replace_html 'subjects', :partial => 'subjects_by_batch' }
+      
+    rescue Exception => e
+      flash[:notice] = "Error: getting batches, contact Admin! Details: " + e.to_s
+      redirect_to :controller => "user", :action => "dashboard"
+    end
   end
 	
   def add_category
