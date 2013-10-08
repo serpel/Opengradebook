@@ -128,18 +128,18 @@ function showDialog(url){  //load content and open dialog
 				<% total_2 = (sn.examen_2.nil? ? 0:sn.examen_2) + (sn.acumulado_2.nil? ? 0:sn.acumulado_2) %>
 				<% total_3 = (sn.examen_3.nil? ? 0:sn.examen_3) + (sn.acumulado_3.nil? ? 0:sn.acumulado_3) %>
 				<% total_4 = (sn.examen_4.nil? ? 0:sn.examen_4) + (sn.acumulado_4.nil? ? 0:sn.acumulado_4) %>
-				<td class="col-1"><%= sn.examen_1.nil? ? 0:sn.examen_1.round(2) %></td>
-				<td class="col-1"><%= sn.acumulado_1.nil? ? 0:sn.acumulado_1.round(2) %></td>
-                                <td class="col-1"><%= total_1.round(2) %></td>
-				<td class="col-1"><%= sn.examen_2.nil? ? 0:sn.examen_2.round(2) %></td>
-				<td class="col-1"><%= sn.acumulado_2.nil? ? 0:sn.acumulado_2.round(2) %></td>
-				<td class="col-1"><%= total_2.round(2) %></td>
-				<td class="col-1"><%= sn.examen_3.nil? ? 0:sn.examen_3.round(2) %></td>
-				<td class="col-1"><%= sn.acumulado_3.nil? ? 0:sn.acumulado_3.round(2) %></td>
-				<td class="col-1"><%= total_3.round(2) %></td>
-				<td class="col-1"><%= sn.examen_4.nil? ? 0:sn.examen_4.round(2) %></td>
-				<td class="col-1"><%= sn.acumulado_4.nil? ? 0:sn.acumulado_4.round(2) %></td>
-				<td class="col-1"><%= total_4.round(2) %></td>
+				<td class="col-1"><%= sn.examen_1.nil? ? 0:(sn.examen_1) %></td>
+				<td class="col-1"><%= sn.acumulado_1.nil? ? 0:(sn.acumulado_1) %></td>
+                                <td class="col-1"><%= total_1 %></td>
+				<td class="col-1"><%= sn.examen_2.nil? ? 0:(sn.examen_2) %></td>
+				<td class="col-1"><%= sn.acumulado_2.nil? ? 0:(sn.acumulado_2) %></td>
+				<td class="col-1"><%= total_2 %></td>
+				<td class="col-1"><%= sn.examen_3.nil? ? 0:(sn.examen_3) %></td>
+				<td class="col-1"><%= sn.acumulado_3.nil? ? 0:(sn.acumulado_3) %></td>
+				<td class="col-1"><%= total_3 %></td>
+				<td class="col-1"><%= sn.examen_4.nil? ? 0:(sn.examen_4) %></td>
+				<td class="col-1"><%= sn.acumulado_4.nil? ? 0:(sn.acumulado_4) %></td>
+				<td class="col-1"><%= total_4 %></td>
 
 				<td class="col-1"><%= ((total_1 + total_2 + total_3 + total_4)/4).round(2) %></td>
 				<td class="col-1"><%= link_to "Calificar", edit_nota_path(sn.id), :class => "example" %></td>
