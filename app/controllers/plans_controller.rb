@@ -17,8 +17,14 @@ class PlansController < ApplicationController
   # GET /plans/1.xml
   def show
     begin
-      @plan = Plan.find(params[:id])
-      @st = Student.find_all_by_batch_id(@plan.subject.batch, :conditions => {:is_deleted => false}, :order => "lower(first_name) asc, lower(last_name) asc, gender asc")
+    
+      id = params[:id].nil? ? 0:params[:id]
+      
+      @plan = Plan.find(id)
+      @plan = @plan.nil? ? 0:@plan
+      
+      @st = Student.find_all_by_batch_id(@plan.subject.batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
+      @st = @st.nil? ? 0:@st
 
       respond_to do |format|
         format.html # show.html.erb
@@ -26,8 +32,8 @@ class PlansController < ApplicationController
       end
       
     rescue Exception => e
-      flash[:notice] = "Error: Something Wrong, was happenig with Plan :" + params[:id].to_s + ", Contact with Admin! Details : " + e.to_s
-      redirect_to :controller => "employee", :action => "get_subjects", :notice => "error"
+      flash[:notice] = "Error: Something Wrong, was happenig with Plan :" + id.to_s + ", Contact with Admin! Details : " + e.to_s
+      redirect_to :controller => "employee", :action => "get_subjects"
     end
   end
 
