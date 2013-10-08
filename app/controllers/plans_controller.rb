@@ -21,10 +21,10 @@ class PlansController < ApplicationController
       id = params[:id].nil? ? 0:params[:id]
       
       @plan = Plan.find(id)
-      @plan = @plan.nil? ? 0:@plan
+      @plan = @plan.nil? ? Array.new:@plan
       
       @st = Student.find_all_by_batch_id(@plan.subject.batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
-      @st = @st.nil? ? 0:@st
+      @st = @st.nil? ? Array.new:@st
 
       respond_to do |format|
         format.html # show.html.erb
