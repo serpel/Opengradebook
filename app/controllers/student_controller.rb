@@ -17,7 +17,7 @@ class StudentController < ApplicationController
       @subjects = []
       @student_scores = []
       if @student.is_active?
-        @subjects = @student.batch.subjects.select { |e| e.is_deleted == false }
+        #@subjects = @student.batch.subjects.select { |e| e.is_deleted == false }
         @student_scores = @student.notas
       else
           flash[:notice] = "Error: Student is disable, Contact with Admin."
