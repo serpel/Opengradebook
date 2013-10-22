@@ -9,9 +9,11 @@ es: # locale
         batch_id: "Grupo"
         date_of_birth: "Fecha de nacimiento"
         gender: "Género"
+        empty_assignation: "No asignado"
 
       student_additional_field:
         name: "Nombre"
+        empty_assignation: "No asignado"
 
       user:
         username: "nombre de usuario"
@@ -344,6 +346,7 @@ es: # locale
     batch_transfers:
       errors_found: "Se encontró el siguiente error"
 
+  empty_assignation: "No asignado"
   sl_no: "Sl No."
   name: "Nombre"
   adm_no: "No. del Adm"
@@ -2403,4 +2406,5 @@ es: # locale
     homework: "Tareas"
     calendar: "Calendario"
     school: "Escuela"
+    empty_assignation: "No asignado"
 

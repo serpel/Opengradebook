@@ -69,19 +69,18 @@
       <tr class="even left"><td><%= t('language') %></td><td class="right"><%= @student.language %></td></tr>
 
       <tr class="odd left"><td><%= t('category') %></td><td class="right"><%= @student.student_category.name unless @student.student_category.nil? %></td></tr>
-      <!--<tr class="even left"><td><%= t('religion') %></td><td class="right"><%= @student.religion %></td></tr>-->
       <tr class="even left"><td><%= t('address') %></td><td class="right"><%= @student.address_line1%><%= ', ' unless @student.address_line1.blank? %><%=  @student.address_line2 %></td></tr>
-<%#*<tr class="even left"><td></td><td class="right"><%= @student.address_line2%>
       <tr class="odd left"><td><%= t('city') %></td><td class="right"><%= @student.city %></td></tr>
-      <!--<tr class="odd left"><td><%= t('state') %></td><td class="right"><%= @student.state %></td></tr>
-      <tr class="even left"><td><%= t('zip') %></td><td class="right"><%= @student.pin_code %></td></tr>-->
-      <tr class="even left"><td><%= t('country') %></td><td class="right"><%= @student.country.name unless @student.country_id.nil? %></td></tr>
-      <tr class="odd left"><td><%= t('phone') %></td><td class="right"><%= @student.phone1 %></td></tr>
-      <tr class="even left"><td><%= t('mobile') %></td><td class="right"><%= @student.phone2 %></td></tr>
+      <tr class="even left"><td><%= t('phone') %></td><td class="right"><%= @student.phone1 %></td></tr>
       <tr class="odd left"><td><%= t('email') %></td><td class="right"><%= @student.email %></td></tr>
+      <% if !@student.school_id.nil? %>
+        <tr class="even left"><td><%= t('school') %></td><td class="right"><%= School.find(@student.school_id).school_name %></td></tr>
+      <% else%>
+        <tr class="even left"><td><%= t('school') %></td><td class="right"><%= t('empty_assignation') %></td></tr>
+      <% end%>
       <% unless @student.batch.employee_id.nil? %>
         <% @assigned_employees = Employee.find(:all,:conditions=>"FIND_IN_SET(id,\"#{@student.batch.employee_id}\")")  %>
-        <tr class="even left"><td><%= t('group_tutor') %>(s) :</td><td class="right">
+        <tr class="odd left"><td><%= t('group_tutor') %>(s)  :</td><td class="right">
             <% @tutors = @assigned_employees.map{|e| e.full_name} %>
             <% @tutor_ids = @assigned_employees.map{|e| e.user.id} %>
             <%= link_to @tutors.join(", "),:controller=>'reminder',:action=>'create_reminder',:send_to=>@tutor_ids.join(",")  %>
@@ -92,7 +91,7 @@
         <%= render :partial=>mod.camelize.constantize.send("student_profile_hook"),:locals=>{:student=>@student} %>
       <% end %>
       <% if @sms_setting.application_sms_active %>
-        <tr class="odd left"><td><%= t('sms_alerts') %></td><td class="right"><%= @student.is_sms_enabled?? "Enabled":"Disabled" %></td></tr>
+        <tr class="even left"><td><%= t('sms_alerts') %></td><td class="right"><%= @student.is_sms_enabled?? "Enabled":"Disabled" %></td></tr>
       <% end  %>
       <tr class="even left"><td><%= t('contact_message') %></td><td class="right">
           <%= link_to @immediate_contact.full_name, :controller => "student", :action => "guardians", :id => @student.id \

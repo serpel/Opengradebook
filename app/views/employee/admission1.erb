@@ -79,11 +79,17 @@
       </div>
       <hr class="label-underline"></hr>
       <div class="label-field-pair">
+        <label for="employee_department"><%= t('school') %> <span class="necessary-field">*</span></label>
+        <div class="text-input-bg"><%= select :employee, :school_id, School.find_all_by_is_deleted(false).map {|s| [s.school_name, s.id]} %></div>
+      </div>
+
+      <hr class="label-underline"></hr>
+      <div class="label-field-pair">
         <label for="employee_department"><%= t('department') %> <span class="necessary-field">*</span></label>
         <div class="text-input-bg"><%= select :employee, :employee_department_id, @departments.map {|s| [s.name, s.id]},:prompt => "#{t('select')}"%></div>
       </div>
      
-
+      <hr class="label-underline"></hr>
       <div class="label_field_pair">
         <label class="employee_status" for="employee_status"><%= t('status') %></label>
 

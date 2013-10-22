@@ -48,25 +48,19 @@
       <hr class="sub-heading"></hr>
 
       <div class="label-field-pair">
-        <label for="master_student_first_name"><%= t('first_name') %><span class="necessary-field">*</span></label>
+        <label for="master_student_first_name"><%= t('name') %><span class="necessary-field">*</span></label>
         <div class="text-input-bg"><%= s.text_field :first_name %></div>
       </div>
 
       <hr class="label-underline"></hr>
 
+      <!--TODO: filtro de cursos cuando se selecciones escuela -->
       <div class="label-field-pair">
-        <label for="master_student_first_name"><%= t('middle_name') %></label>
-        <div class="text-input-bg"><%= s.text_field :middle_name %></div>
+          <label for="student_grade"><%= t('school') %></label>
+          <div class="text-input-bg"><%= select :student, :school_id, School.find_all_by_is_deleted(false).map {|b| [b.school_name, b.id]} %></div>
       </div>
 
       <hr class="label-underline"></hr>
-
-      <div class="label-field-pair">
-        <label for="master_student_first_name"><%= t('last_name') %></label>
-        <div class="text-input-bg"><%= s.text_field :last_name %></div>
-      </div>
-      <hr class="label-underline"></hr>
-
 
       <div id="admission1_form_vertical_block_left">
 

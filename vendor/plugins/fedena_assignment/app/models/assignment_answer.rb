@@ -9,6 +9,7 @@ class AssignmentAnswer < ActiveRecord::Base
     return true if user.admin?
     return  (user.employee_record.id==self.assignment.employee_id) if user.employee?
     return (self.student_id == user.student_record.id) if user.student?
+    return true if user.parent?
     false
   end
 end
