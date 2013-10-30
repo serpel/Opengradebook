@@ -1,6 +1,6 @@
 FEDENA_DEFAULTS = {
-  :company_name => 'Mint\'S',
-  :company_url  => 'http://www.mints-la.org'
+  :company_name => 'Intillisys',
+  :company_url  => 'http://www.google.hn'
 }
 
 USER_SETTINGS = {}
