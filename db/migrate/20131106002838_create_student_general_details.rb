@@ -13,6 +13,7 @@ class CreateStudentGeneralDetails < ActiveRecord::Migration
       t.string :morals
       t.string :conduct
       t.integer :demerit
+      t.text :comment
 
       t.timestamps
     end

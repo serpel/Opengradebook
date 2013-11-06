@@ -35,7 +35,7 @@
         <td><%= f.label "Morals" %></td>
         <td><%= f.label "Conduct" %></td>
         <td><%= f.label "Demerit" %></td>
-        <td>Accion</td>
+        <td>Action</td>
       </tr>
         <tr class="tr-read-even">
             <td class="col-0"><%= f.text_field :period, :size => 2 %></td>
@@ -54,6 +54,18 @@
         </tr>
         <tr class="tr-blank"></tr>
         </table>
+        <div class="line-separator"></div>
+          <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0"
+            <tr class="tr-head">
+              <td> <%=  f.label :comment %></td>
+              <td> Action</td>
+            </tr>
+            <tr class="tr-read-even">
+              <td> <%=  f.text_area :comment, :rows => 3, :cols => 50 %></td>
+              <td><%= f.submit 'Actualizar' %></td>
+            </tr>
+          </table>
+
       <% end %>
     </div>
 </div>

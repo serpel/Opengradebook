@@ -32,19 +32,21 @@
           <td><%= f.label "Puntuality" %></td>
           <td><%= f.label "Work Order And Appearance" %></td>
           <td><%= f.label "Social Skills" %></td>
+          <td><%= f.label "Morals" %></td>
           <td><%= f.label "Conduct" %></td>
           <td><%= f.label "Demerit" %></td>
           <td>Accion</td>
         </tr>
           <tr class="tr-read-even">
-              <td class="col-0"><%= f.text_field :period, :size => 8%></td>
-              <td class="col-0"><%= f.text_field :daysAbsent, :size => 10 %></td>
-              <td class="col-0"><%= f.text_field :daysTardy, :size => 8 %></td>
-              <td class="col-0"><%= f.text_field :effort, :size => 8 %></td>
-              <td class="col-0"><%= f.text_field :workOrderAndAppearance, :size => 10 %></td>
-              <td class="col-0"><%= f.text_field :socialSkills, :size => 10 %></td>
-              <td class="col-0"><%= f.text_field :conduct, :size => 8 %></td>
-              <td class="col-0"><%= f.text_field :demerit, :size => 8 %></td>
+              <td class="col-0"><%= f.text_field :period, :size => 4%></td>
+              <td class="col-0"><%= f.text_field :daysAbsent, :size => 6 %></td>
+              <td class="col-0"><%= f.text_field :daysTardy, :size => 6 %></td>
+              <td class="col-0"><%= f.text_field :effort, :size => 4 %></td>
+              <td class="col-0"><%= f.text_field :workOrderAndAppearance, :size => 8 %></td>
+              <td class="col-0"><%= f.text_field :socialSkills, :size => 6 %></td>
+              <td class="col-0"><%= f.text_field :morals, :size => 4 %></td>
+              <td class="col-0"><%= f.text_field :conduct, :size => 4 %></td>
+              <td class="col-0"><%= f.text_field :demerit, :size => 4 %></td>
               <td><%= f.submit 'Create' %></td>
           </tr>
           <tr class="tr-blank"></tr>
