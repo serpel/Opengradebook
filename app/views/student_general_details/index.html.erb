@@ -1,0 +1,39 @@
+<h1>Listing student general details</h1>
+<table>
+  <tr>
+    <th><b>Student</b></th>
+    <th><b>Course</b></th>
+    <th><b>Period</b></th>
+    <th><b>Days Absent</b></th>
+    <th><b>Days Tardy</b></th>
+    <th><b>Puntuality</b></th>
+    <th><b>Work Order And Appearance</b></th>
+    <th><b>Social Skills</b></th>
+    <th><b>Morals </b></th>
+    <th><b>Conduct </b></th>
+    <th><b>Demerit </b></th>
+ </tr>
+<% @student_general_details.each do |st| %>
+  <tr>
+    <td><%=h st.student_id %></td>
+    <td><%=h st.batch_id %></td>
+    <td><%=h st.period %></td>
+    <td><%=h st.daysAbsent %></td>
+    <td><%=h st.daysTardy %></td>
+    <td><%=h st.effort %></td>
+    <td><%=h st.workOrderAndAppearance %></td>
+    <td><%=h st.socialSkills %></td>
+    <td><%=h st.morals %></td>
+    <td><%=h st.conduct %></td>
+    <td><%=h st.demerit %></td>
+
+    <td><%= link_to 'Show', st %></td>
+    <td><%= link_to 'Edit', edit_student_general_detail_path(st) %></td>
+    <td><%= link_to 'Destroy', st, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New student_general_detail', new_student_general_detail_path %>

@@ -1021,3 +1021,11 @@ height: 14px;
 textarea{
     font-family: Arial !important;
 }
+
+.line-separator{
+  height:0px;
+  border-bottom:0px;
+  width: 980px;
+  float: left;
+  padding: 10px;
+}

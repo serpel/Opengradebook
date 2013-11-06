@@ -2366,6 +2366,7 @@ authorization do
 
   # employee -privileges
   role :employee do
+    has_permission_on [:student_general_details], :to => [:index, :show, :edit, :new, :create,:update, :destroy, :view_details, :view_all, :get_students, :show_all_student_details]
     has_permission_on [:plans], :to => [:index, :show, :edit, :new, :create,:update, :destroy]
     has_permission_on [:employee],
       :to => [

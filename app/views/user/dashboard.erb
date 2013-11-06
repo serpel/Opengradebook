@@ -129,11 +129,17 @@
           <%= link_to "<div class ='button-label'><p>#{t('examinations')}</p></div>", {:controller => "employee", :action => "get_subjects"},
             :class => "option_buttons", :id => "examinations_button",:title => t('exam_link_title') %>
         </div>
-  
+
         <div class="button-box">
+          <%= link_to "<div class ='button-label'><p>#{t('details_gradebook')}</p></div>", {:controller => "student_general_details", :action => "view_details", :id => 1},
+            :class => "option_buttons", :id => "examinations_button",:title => "#{t('exam_link_title')}   "  %>
+        </div>
+  
+         <div class="button-box">
           <%= link_to "<div class ='button-label'><p>#{t('calendar')}</p></div>", {:controller => "calendar", :action => "index"},
             :class => "option_buttons", :id => "calendar_button",:title => "#{t('calendar')}   "  %>
         </div>
+  
       <% end  %>
     <% end %>
 

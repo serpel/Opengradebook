@@ -228,6 +228,9 @@ en: # locale
         receiver_id: "Receiver"
         name: "Name"
 
+      student_general_details:
+        create: "Create New"
+
 
     errors:
       template:
@@ -582,7 +585,8 @@ en: # locale
   report: "Report"
   no_users: "No users found"
   student_details: "Student Details"
-  examinations: "Examinations"
+  examinations: "GradeBook"
+  details_gradebook: "Details Gradebook"
   reset: "Reset"
   select_month_and_year: "Select a month & year"
   total_working_days: "Total working days"
@@ -2315,6 +2319,11 @@ en: # locale
       # the method name (does not include "deliver")
     comment_notification:
       subject: "New Comment"
+
+## student_general_details:
+  student_general_details:
+     create: "New"
+     select_a_batch: "Select course"
 
 ## Translations for the autosuggest menu.
   autosuggest_menu:

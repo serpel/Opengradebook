@@ -19,6 +19,7 @@ class StudentController < ApplicationController
       if @student.is_active?
         #@subjects = @student.batch.subjects.select { |e| e.is_deleted == false }
         @student_scores = @student.notas
+        @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
       else
           flash[:notice] = "Error: Student is disable, Contact with Admin."
           redirect_to :controller => "user", :action => "dashboard"

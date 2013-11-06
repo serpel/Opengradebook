@@ -579,7 +579,8 @@ es: # locale
   report: "Reporte"
   no_users: "No se encontraron usuarios"
   student_details: "Detalles de estudiantes"
-  examinations: "Cuadro de Notas"
+  examinations: "Calificaciones"
+  details_gradebook: "Detalle Calificaciones"
   reset: "Reiniciar"
   select_month_and_year: "Seleccionar un mes & año"
   total_working_days: "Total días de trabajo"
@@ -2311,7 +2312,11 @@ es: # locale
       # the method name (does not include "entrega")
     comment_notification:
       subject: "Nuevo comentario"
-  
+
+  student_general_details:
+    create: "Crear nuevo"
+    select_a_batch: "Selecctionar Curso"
+   
   import:
     select_a_batch: "Seleccionar un grupo"
 ## Translations for the autosuggest menu.

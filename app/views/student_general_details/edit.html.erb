@@ -1,0 +1,59 @@
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1>Student Details</h1>
+  <% student = Student.find(@student_general_details.student_id)%>
+  <h3 style="text-transform:capitalize"><%= student.first_name %> <%= student.last_name %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+  <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+    <div id="application-list">
+      <% form_for(@student_general_details) do |f| %>
+        <%= f.error_messages %>
+        <p style="display:none">
+          <%= f.label :batch_id %><br />
+          <%= f.text_field :batch_id %>
+        </p>
+        <p style="display:none">
+          <%= f.label :student_id %><br />
+          <%= f.text_field :student_id %>
+        </p>
+      <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0">
+      <tr class="tr-head">
+        <td><%= f.label "Period" %></td>
+        <td><%= f.label "Days Absent" %></td>
+        <td><%= f.label "Days Tardy" %></td>
+        <td><%= f.label "Puntuality" %></td>
+        <td><%= f.label "Effort" %></td>
+        <td><%= f.label "Work Order And Appearance" %></td>
+        <td><%= f.label "Social Skills" %></td>
+        <td><%= f.label "Morals" %></td>
+        <td><%= f.label "Conduct" %></td>
+        <td><%= f.label "Demerit" %></td>
+        <td>Accion</td>
+      </tr>
+        <tr class="tr-read-even">
+            <td class="col-0"><%= f.text_field :period, :size => 2 %></td>
+            <td class="col-0"><%= f.text_field :daysAbsent, :size => 2 %></td>
+            <td class="col-0"><%= f.text_field :daysTardy, :size => 2 %></td>
+            <td class="col-0"><%= f.text_field :puntuality, :size => 5 %></td>
+            <td class="col-0"><%= f.text_field :effort, :size => 2 %></td>
+            <td class="col-0"><%= f.text_field :workOrderAndAppearance, :size => 10 %></td>
+            <td class="col-0"><%= f.text_field :socialSkills, :size => 2 %></td>
+            <td class="col-0"><%= f.text_field :morals, :size => 3 %></td>
+            <td class="col-0"><%= f.text_field :conduct, :size => 3 %></td>
+            <td class="col-0"><%= f.text_field :demerit, :size => 3 %></td>
+            
+            <td><%= f.submit 'Actualizar' %></td>
+
+        </tr>
+        <tr class="tr-blank"></tr>
+        </table>
+      <% end %>
+    </div>
+</div>

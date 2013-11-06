@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  student_id: 1
+  course_id: 1
+  period: 1
+  daysAbsent: 1
+  DaysTardy: 1
+  puntuality: MyString
+  effort: MyString
+  workOrderAndAppearance: MyString
+  socialSkills: MyString
+  morals: MyString
+  conduct: MyString
+
+two:
+  student_id: 1
+  course_id: 1
+  period: 1
+  daysAbsent: 1
+  DaysTardy: 1
+  puntuality: MyString
+  effort: MyString
+  workOrderAndAppearance: MyString
+  socialSkills: MyString
+  morals: MyString
+  conduct: MyString

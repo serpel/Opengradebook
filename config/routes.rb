@@ -1,6 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+
   map.resources :plans
   map.resources :notas
+  map.resources :student_general_details
 	# nuevas rutas	
   map.new_subject_ponderation "new_subject_ponderation/:id", :controller => "plans", :action => "new"
   map.new_student_score "subject/:id/new_student_score/:id2", :controller => "notas", :action => "new"
