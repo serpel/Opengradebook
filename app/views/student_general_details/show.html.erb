@@ -35,5 +35,14 @@
         <td class="col-0"><%= link_to 'Edit', edit_student_general_detail_path(@student_general_details) %></td>
       </tr>
  </table>
+  <div class="line-separator"></div>
+  <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0"
+         <tr class="tr-head">
+      <td>Comment</td>
+    </tr>
+    <tr class="tr-read-even">
+      <td><%=  @student_general_details.comment%></td>
+    </tr>
+  </table>
 </div>
 

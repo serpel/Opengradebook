@@ -30,6 +30,7 @@
           <td><%= f.label "Days Absent" %></td>
           <td><%= f.label "Days Tardy" %></td>
           <td><%= f.label "Puntuality" %></td>
+          <td><%= f.label "Effort " %></td>
           <td><%= f.label "Work Order And Appearance" %></td>
           <td><%= f.label "Social Skills" %></td>
           <td><%= f.label "Morals" %></td>
@@ -41,6 +42,7 @@
               <td class="col-0"><%= f.text_field :period, :size => 4%></td>
               <td class="col-0"><%= f.text_field :daysAbsent, :size => 6 %></td>
               <td class="col-0"><%= f.text_field :daysTardy, :size => 6 %></td>
+              <td class="col-0"><%= f.text_field :puntuality, :size => 6 %></td>
               <td class="col-0"><%= f.text_field :effort, :size => 4 %></td>
               <td class="col-0"><%= f.text_field :workOrderAndAppearance, :size => 8 %></td>
               <td class="col-0"><%= f.text_field :socialSkills, :size => 6 %></td>
@@ -50,6 +52,15 @@
               <td><%= f.submit 'Create' %></td>
           </tr>
           <tr class="tr-blank"></tr>
+        </table>
+        <div class="line-separator"></div>
+        <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0"
+               <tr class="tr-head">
+            <td> <%=  f.label :comment %></td>
+          </tr>
+          <tr class="tr-read-even">
+            <td> <%=  f.text_area :comment, :rows => 3, :cols => 50 %></td>
+          </tr>
         </table>
      <% end %>
    </div>

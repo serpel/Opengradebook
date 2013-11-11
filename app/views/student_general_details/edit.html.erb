@@ -51,21 +51,20 @@
             
             <td><%= f.submit 'Actualizar' %></td>
 
-        </tr>
-        <tr class="tr-blank"></tr>
+          </tr>
+          <tr class="tr-blank"></tr>
         </table>
-        <div class="line-separator"></div>
-          <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0"
-            <tr class="tr-head">
-              <td> <%=  f.label :comment %></td>
-              <td> Action</td>
-            </tr>
-            <tr class="tr-read-even">
-              <td> <%=  f.text_area :comment, :rows => 3, :cols => 50 %></td>
-              <td><%= f.submit 'Actualizar' %></td>
-            </tr>
-          </table>
 
+        <div class="line-separator"></div>
+        <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0"
+               <tr class="tr-head">
+            <td> <%=  f.label :comment %></td>
+          </tr>
+          <tr class="tr-read-even">
+            <td> <%=  f.text_area :comment, :rows => 3, :cols => 50 %></td>
+          </tr>
+        </table>
+  
       <% end %>
     </div>
 </div>

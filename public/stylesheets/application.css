@@ -1028,3 +1028,10 @@ textarea{
   float: left;
   padding: 10px;
 }
+
+.space-separator{
+  height:0px;
+  width: 10px;
+  float: left;
+  padding: 10px;
+}

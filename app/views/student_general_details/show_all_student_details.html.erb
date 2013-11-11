@@ -132,4 +132,21 @@
     <% end %>
   </table>
  </div>
-</div>
+
+  <div class="space-separator"></div>
+   <table id="listing" align="left" cellpadding="3" cellspacing="0">
+    <tr class="tr-head">
+      <td><b>Period</b></td>
+      <td><b>Comment</b></td>
+      <th><b>Actions</b></th>
+    </tr>
+    <% @st.each do |st| %>
+      <tr class="tr-read-even">
+        <td><%=h st.period%></td>
+        <td><%=h st.comment%></td>
+        <td class="col-0"><%= link_to 'Edit', :action => "edit", :id => st, :student_id => params[:id], :batch_id => params[:batch_id]  %>
+        |<%= link_to 'Destroy', st, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+ </div>

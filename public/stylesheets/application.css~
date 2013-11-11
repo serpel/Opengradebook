@@ -1024,8 +1024,14 @@ textarea{
 
 .line-separator{
   height:0px;
-  border-bottom:0px;
   width: 980px;
+  float: left;
+  padding: 10px;
+}
+
+.line-separator{
+  height:0px;
+  width: 10px;
   float: left;
   padding: 10px;
 }
