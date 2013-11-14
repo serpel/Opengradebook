@@ -25,17 +25,19 @@ end
        @code = Employee.find_by_employee_number @user['username']
        @departments = EmployeeDepartment.find_all_by_id_and_status(@code['employee_department_id'],"1")
        @courses = Course.find_all_by_school_id_and_is_deleted(current_school,"0", :order => "code asc")
-    elsif @user.student? or @user.parent?
+    elsif @user.student?
        @courses = current_course
-      # TODO: agregar filtro de departamente de empleados
-      if !@courses.empty?
-        #emp_sub = @courses[0].employees_subjects
-        #emp = Employee.find(emp_sub['employee_id'])
-        #@departments = EmployeeDepartment.find_all_by_id_and_status(emp['employee_department_id'],"true")
+       @departments = EmployeeDepartment.find(:all, :conditions=>"status = true and code = 'Admin'")
+    elsif @user.parent?
+      parent = Guardian.find_by_user_id(@user['id'].to_s)
+      student = Student.find(parent.ward_id)
+      if !student.school_id.nil?
+        employees = Employee.find(:all, :conditions => "status = true and school_id = "+student.school_id.to_s)
+        @departments = EmployeeDepartment.find_all_by_id(employees)
+      else
         @departments = EmployeeDepartment.find(:all, :conditions=>"status = true and code = 'Admin'")
-       end
+      end
     end
-
      
     @new_reminder_count = Reminder.find_all_by_recipient(@user.id, :conditions=>"is_read = false")
     

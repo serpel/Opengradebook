@@ -16,7 +16,7 @@ class StudentGeneralDetailsController < ApplicationController
 
   def get_students
     parameter = params[:batch_id] == nil ? -1:params[:batch_id]
-    @students = Student.find_all_by_batch_id(parameter, :order => 'first_name ASC')
+    @students = Student.find_all_by_batch_id(parameter, :order => 'gender ASC, first_name ASC')
     render(:update) { |page| page.replace_html 'students', :partial => 'students_by_course' }
   end
 
