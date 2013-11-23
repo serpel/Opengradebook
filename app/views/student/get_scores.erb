@@ -155,6 +155,7 @@
       </tr>
       <tr class="tr-head">
         <th><b>Puntuality</b></th>
+        <th><b>Effort</b></th>
         <th><b>Work Order And Appearance</b></th>
         <th><b>Social Skills</b></th>
         <th><b>Morals</b></th>
@@ -162,6 +163,7 @@
       </tr>
       <% @st.each do |st| %>
         <tr class="tr-read-even">
+          <td class="col-0"><%=h st.puntuality %></td>
           <td class="col-0"><%=h st.effort %></td>
           <td class="col-0"><%=h st.workOrderAndAppearance %></td>
           <td class="col-0"><%=h st.socialSkills %></td>

@@ -1,20 +1,3 @@
-#Fedena
-#Copyright 2011 Foradian Technologies Private Limited
-#
-#This product includes software developed at
-#Project Fedena - http://www.projectfedena.org/
-#
-#Licensed under the Apache License, Version 2.0 (the "License");
-#you may not use this file except in compliance with the License.
-#You may obtain a copy of the License at
-#
-#  http://www.apache.org/licenses/LICENSE-2.0
-#
-#Unless required by applicable law or agreed to in writing, software
-#distributed under the License is distributed on an "AS IS" BASIS,
-#WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#See the License for the specific language governing permissions and
-#limitations under the License.
 
 class EventController < ApplicationController
   before_filter :login_required
@@ -54,8 +37,19 @@ class EventController < ApplicationController
   end
 
   def select_course
+
+    user = current_user
     @event_id = params[:id]
-    @batches = Batch.active
+    @batches = []
+
+    if user.employee?
+      employee = Employee.find_by_user_id(user)
+      courses = Course.find_all_by_school_id employee.school_id
+      @batches = Batch.find_all_by_course_id_and_is_active_and_is_deleted courses, true, false
+    else
+      @batches = Batch.active
+    end
+    
     render :update do |page|
       page.replace_html 'select-option', :partial => 'select_course'
     end
@@ -96,8 +90,17 @@ class EventController < ApplicationController
   end
 
   def select_employee_department
-    @event_id = params[:id]
-    @employee_department = EmployeeDepartment.find(:all, :conditions=>"status = true")
+      @event_id = params[:id]
+      user = current_user
+      @employee_department = []
+    if user.employee?
+      employee = Employee.find_by_user_id(user)
+      employees = Employee.find_all_by_school_id employee.school_id
+      list = employees.map { |item| item.employee_department_id  }
+      @employee_department = EmployeeDepartment.find_all_by_id_and_status list, true
+    else
+      @employee_department = EmployeeDepartment.find(:all, :conditions=>"status = true")
+    end
     render :update do |page|
       page.replace_html 'select-options', :partial => 'select_employee_department'
     end

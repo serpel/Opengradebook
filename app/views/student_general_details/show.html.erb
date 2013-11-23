@@ -15,6 +15,7 @@
         <td>Days Absent</td>
         <td>Days Tardy</td>
         <td>Puntuality</td>
+        <td>Effort</td>
         <td>Work Order And Appearance</td>
         <td>Social Skills</td>
         <td>Morals</td>
@@ -27,6 +28,7 @@
         <td class="col-0"> <%=h @student_general_details.daysAbsent %></td>
         <td class="col-0"> <%=h @student_general_details.daysTardy %></td>
         <td class="col-0"> <%=h @student_general_details.puntuality %></td>
+        <td class="col-0"> <%=h @student_general_details.effort %></td>
         <td class="col-0"> <%=h @student_general_details.workOrderAndAppearance %></td>
         <td class="col-0"> <%=h @student_general_details.socialSkills %></td>
         <td class="col-0"> <%=h @student_general_details.morals %></td>
@@ -41,7 +43,7 @@
       <td>Comment</td>
     </tr>
     <tr class="tr-read-even">
-      <td><%=  @student_general_details.comment%></td>
+      <td><%= @student_general_details.comment%></td>
     </tr>
   </table>
 </div>

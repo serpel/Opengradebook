@@ -428,13 +428,25 @@ class StudentController < ApplicationController
   end
 
   def search_ajax
+    user = current_user
+    
     if params[:option] == "active"
-      if params[:query].length>= 3
-        @students = Student.find(:all,
+      if params[:query].length>= 3 and user.employee?
+          employee = Employee.find_by_user_id(user.id)
+          sts = Student.find(:all,
+          :conditions => ["first_name LIKE ? OR middle_name LIKE ? OR last_name LIKE ?
+                           OR admission_no = ? OR (concat(first_name, \" \", last_name) LIKE ? ) ",
+            "#{params[:query]}%","#{params[:query]}%","#{params[:query]}%",
+            "#{params[:query]}", "#{params[:query]}"],
+          :order => "batch_id asc,first_name asc",:include =>  [{:batch=>:course}]) unless params[:query] == ''
+          
+          @students = sts.select { |s| s.school_id == employee.school_id }
+      elsif params[:query].length>= 3
+          @students = Student.find(:all,
           :conditions => ["first_name LIKE ? OR middle_name LIKE ? OR last_name LIKE ?
                             OR admission_no = ? OR (concat(first_name, \" \", last_name) LIKE ? ) ",
             "#{params[:query]}%","#{params[:query]}%","#{params[:query]}%",
-            "#{params[:query]}", "#{params[:query]}" ],
+            "#{params[:query]}", "#{params[:query]}"],
           :order => "batch_id asc,first_name asc",:include =>  [{:batch=>:course}]) unless params[:query] == ''
       else
         @students = Student.find(:all,
@@ -621,7 +633,16 @@ class StudentController < ApplicationController
   end
 
   def view_all
-    @batches = Batch.active.select { |e| e.is_deleted == false }.sort_by { |s| s.id }
+    user = current_user
+    @batches = []
+
+    if user.employee?
+      employee = Employee.find_by_user_id(user)
+      courses = Course.find_all_by_school_id(employee.school_id)
+      @batches = Batch.find_all_by_course_id(courses)
+    else
+      @batches = Batch.active.select { |e| e.is_deleted == false }.sort_by { |s| s.id }
+    end
   end
 
   def advanced_search
