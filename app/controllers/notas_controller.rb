@@ -1,6 +1,5 @@
 class NotasController < ApplicationController
   require 'csv'
-  require 'writeexcel'
   
   # GET /notas
   # GET /notas.xml
