@@ -230,8 +230,26 @@ en: # locale
 
       student_general_details:
         create: "Create New"
+        select_a_batch: "Select a batch"
 
-
+      plans:
+        exam1: "Exam 1"
+        exam2: "Exam 2"
+        exam3: "Exam 3"
+        exam4: "Exam 4"
+        acum: "Accumulative"
+        acum1: "Accumulative 1"
+        acum2: "Accumulative 2"
+        acum3: "Accumulative 3"
+        acum4: "Accumulative 4"
+        options: "options"
+        actions: "actions"
+        partial1: "Partial 1"
+        partial2: "Partial 2"
+        partial3: "Partial 3"
+        partial4: "Partial 4"
+        grade_text: "grade"
+        
     errors:
       template:
         header:
@@ -586,7 +604,10 @@ en: # locale
   no_users: "No users found"
   student_details: "Student Details"
   examinations: "GradeBook"
+  gradebook: "Gradebook"
+  gradebooks: "Gradebooks"
   details_gradebook: "Details Gradebook"
+  gradebook_by_grade: "Gradebook by grade"
   reset: "Reset"
   select_month_and_year: "Select a month & year"
   total_working_days: "Total working days"
@@ -822,6 +843,14 @@ en: # locale
   append_some_students: "Add students to courses"
   student_schools: "Institutions"
   add_student_school: "Manage Institutions"
+  new_message: "New Message"
+  new_homework: "New Homework"
+  new_event: "New Event"
+  gradebook_published: "Gradebook published"
+  grade_text: "Your gradebook has been updated"
+  assigment: "subject"
+  login_text: "Please login for more information."
+  replay_text: "This is an automatically generated email, please do not reply to this email."
 
   configuration_text: "Configuration"
   general_settings: "General Settings"

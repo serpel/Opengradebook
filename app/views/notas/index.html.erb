@@ -14,23 +14,23 @@
     <th>Acumulado 4</th>
   </tr>
 
-<% @notas.each do |nota| %>
+<#% @notas.each do |nota| %>
   <tr>
-    <td><%=h nota.subject_id %></td>
-    <td><%=h nota.student_id %></td>
-    <td><%=h nota.examen_1 %></td>
-		<td><%=h nota.acumulado_1 %></td>
-    <td><%=h nota.examen_2 %></td>
-		<td><%=h nota.acumulado_2 %></td>
-    <td><%=h nota.examen_3 %></td>
-		<td><%=h nota.acumulado_3 %></td>
-    <td><%=h nota.examen_4 %></td>
-		<td><%=h nota.acumulado_4 %></td>
-    <td><%= link_to 'Show', nota %></td>
-    <td><%= link_to 'Edit', edit_nota_path(nota) %></td>
-    <td><%= link_to 'Destroy', nota, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%=h @notas.subject_id %></td>
+    <td><%=h @notas.student_id %></td>
+    <td><%=h @notas.examen_1 %></td>
+		<td><%=h @notas.acumulado_1 %></td>
+    <td><%=h @notas.examen_2 %></td>
+		<td><%=h @notas.acumulado_2 %></td>
+    <td><%=h @notas.examen_3 %></td>
+		<td><%=h @notas.acumulado_3 %></td>
+    <td><%=h @notas.examen_4 %></td>
+		<td><%=h @notas.acumulado_4 %></td>
+    <td><%= link_to 'Show', @notas %></td>
+    <td><%= link_to 'Edit', edit_nota_path(@notas) %></td>
+    <td><%= link_to 'Destroy', @notas, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
-<% end %>
+<%# end %>
 </table>
 
 <br />

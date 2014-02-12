@@ -16,13 +16,11 @@ class PlansController < ApplicationController
   # GET /plans/1
   # GET /plans/1.xml
   def show
-    begin
-    
-      id = params[:id].nil? ? 0:params[:id]
-      
-      @plan = Plan.find(id)
+    begin  
+      @id = params[:id].nil? ? 0:params[:id]
+      @plan = Plan.find(@id)
       @plan = @plan.nil? ? ([]):@plan
-      
+   
       @st = Student.find_all_by_batch_id(@plan.subject.batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
       @st = @st.nil? ? ([]):@st
 
@@ -32,8 +30,8 @@ class PlansController < ApplicationController
       end
       
     rescue Exception => e
-      flash[:notice] = "Error: Something Wrong, was happenig with Plan :" + id.to_s + ", Contact with Admin! Details : " + e.to_s
-      redirect_to :controller => "employee", :action => "get_subjects"
+      flash[:notice] = "Error: Something Wrong, was happenig with Plan :" + id.to_s + "\nContact with Admin! Details : " + e.to_s
+      redirect_to :controller => "user", :action => "dashboard"
     end
   end
 
@@ -58,7 +56,7 @@ class PlansController < ApplicationController
     begin
       @plan = Plan.find(params[:id])
     rescue Exception => e
-       flash[:notice] = " Error: plan can't be edited!"
+       flash[:notice] = " Error: plan can't be edited! " + e.to_s
        redirect_to :controller => "employee", :action => "get_subjects", :status => 303
     end
   end
@@ -126,8 +124,23 @@ class PlansController < ApplicationController
 		end
 
     rescue Exception => e
-       flash[:notice] = " Error: plan can't be updated!"
+       flash[:notice] = " Error: plan can't be updated!\nDetails: " + e.to_s
        redirect_to :controller => "employee", :action => "get_subjects", :status => 303
+    end
+  end
+
+  def export
+      id = params[:id].nil? ? 0:params[:id]
+      @plan = Plan.find(id)
+      @plan = @plan.nil? ? ([]):@plan
+
+      @st = Student.find_all_by_batch_id(@plan.subject.batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
+      @st = @st.nil? ? ([]):@st
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xls { render :template => 'plans/show.rhtml' }
+      format.xml { render :template => 'plans/show.rhtml' }
     end
   end
 

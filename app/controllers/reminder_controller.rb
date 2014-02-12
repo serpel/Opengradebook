@@ -13,6 +13,7 @@ end
 
   def create_reminder
 
+    url = "#{request.protocol}#{request.host_with_port}"
     @user = current_user   
     @courses = []
     @departments = []
@@ -43,15 +44,30 @@ end
     
     unless params[:send_to].nil?
       recipients_array = params[:send_to].split(",").collect{ |s| s.to_i }
-      @recipients = User.find(recipients_array)
     end
     if request.post?
       unless params[:reminder][:body] == "" or params[:recipients] == ""
         recipients_array = params[:recipients].split(",").collect{ |s| s.to_i }
+        @recipients = User.find(recipients_array)
+        #@recipients = @recipients.reject{ |arr| arr.all?(&:blank?) }
         Delayed::Job.enqueue(DelayedReminderJob.new( :sender_id  => @user.id,
             :recipient_ids => recipients_array,
             :subject=>params[:reminder][:subject],
-            :body=>params[:reminder][:body] ))
+            :body=>params[:reminder][:body],
+            :recipients => @recipients,
+            :sender => @user,
+            :url => url))
+
+        sender = User.find_by_username('admin').email
+        subject = "#{t('new_message')} - " + params[:reminder][:subject]
+        to = []
+        to << @recipients.map{ |r| r.email }.select { |s| !s.empty? }.uniq
+        body = params[:reminder][:body]
+
+        if to.count > 0
+          Delayed::Job.enqueue(ImboxMailJob.new(sender,to,subject,body))
+        end
+
         flash[:notice] = "#{t('flash1')}"
         redirect_to :controller=>"reminder", :action=>"create_reminder"
       else

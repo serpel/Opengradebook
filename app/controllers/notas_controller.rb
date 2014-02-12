@@ -1,12 +1,15 @@
 class NotasController < ApplicationController
+  require 'csv'
+  require 'writeexcel'
+  
   # GET /notas
   # GET /notas.xml
   def index
-    @notas = Nota.all
+    @notas = Nota.find 14
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @notas }
+      format.csv  { render :text => @notas.to_csv }
     end
   end
 
@@ -76,6 +79,22 @@ class NotasController < ApplicationController
 			redirect_to new_student_score_path(:id => @nota.subject_id, :id2 => @nota.student_id)
 		else
 			if @nota.save
+        current_subject = Subject.find(@nota.subject_id)
+        sender = current_user.email
+        student = Student.find(@nota.student_id, :conditions => {:is_deleted => false})
+        guardians = student.guardians
+
+        to = []
+        to << student.email unless student == nil
+        to << guardians.map{ |g| g.email }.select{ |s| !s.empty? }.uniq unless guardians == nil
+        to.reject! { |i| i.empty? or i.nil? }
+
+        subject = "#{t('gradebook_published')} - " + current_subject.name
+        body = "#{t('grade_text')},\r\n" + "#{t('assigment')}: " + current_subject.name
+
+        if to.count > 0
+          Delayed::Job.enqueue(GradebookMailJob.new(sender,to,subject,body))
+        end
 		    flash[:notice] = 'Alumno calificado con exito.'
 				redirect_to ("/plans/"+@plan.id.to_s) 
 		  else
@@ -99,6 +118,25 @@ class NotasController < ApplicationController
 			render :action => "edit"
 		else
       if @nota.update_attributes(params[:nota])
+
+        #student notification
+        current_subject = Subject.find(@nota.subject_id)
+        sender = current_user.email
+        student = Student.find(@nota.student_id, :conditions => {:is_deleted => false})
+        guardians = student.guardians
+
+        to = []
+        to << student.email unless student == nil
+        to << guardians.map{ |g| g.email }.select{ |s| !s.empty? }.uniq unless guardians == nil
+        to.reject! { |i| i.empty? or i.nil? }
+        
+        subject = "#{t('gradebook_published')} - " + current_subject.name
+        body = "#{t('grade_text')},\r\n" + "#{t('assigment')}: " + current_subject.name
+
+        if to.count > 0
+          Delayed::Job.enqueue(GradebookMailJob.new(sender,to,subject,body))
+        end
+        
         flash[:notice] = 'Alumno calificado con exito.'
 				redirect_to ("/plans/"+@plan.id.to_s) 
       else
@@ -106,6 +144,62 @@ class NotasController < ApplicationController
 				render :action => "edit" 
       end
 		end
+  end
+
+  # GET /notas/by_grade/14
+  def get_grades_notes
+    begin
+      @course_id = params[:id].nil? ? 0:params[:id]
+
+      @batch = Batch.active.find(@course_id)
+      @batch = @batch.nil? ? ([]):@batch
+
+      @subjects = @batch.subjects
+      @subjects = @subjects.nil? ? ([]):@subjects
+
+      @students = Student.find_all_by_batch_id(@batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
+      @students = @students.nil? ? ([]):@students
+
+      render(:update) { |page| page.replace_html 'students', :partial => 'notes_by_grade' }
+
+    rescue Exception => e
+      flash[:notice] = "Error: Something Wrong, 'get_grades_notes': " + @course_id.to_s + "\r\nDetails : " + e.to_s
+      redirect_to :controller => "user", :action => "dashboard"
+    end
+  end
+
+  def by_grade
+    begin
+      employee = Employee.find_by_employee_number(current_user.username)
+      subjects = employee.subjects.select { |s| s.is_deleted == false }
+      batche_ids = subjects.map { |a| a.batch_id }.uniq
+      batches = Batch.find_all_by_id(batche_ids, :conditions => { :is_deleted => false})
+      course_ids = batches.map { |b| b.course_id }.uniq
+      @courses = Course.find_all_by_id(course_ids, :conditions => { :is_deleted => false})
+    rescue Exception => e
+      flash[:notice] = "Error: getting students grades, contact Admin! Details: "+ e.to_s
+      redirect_to :controller => "user", :action => "dashboard"
+    end
+  end
+
+  def export_csv
+
+      course_id = params[:id].nil? ? 0:params[:id]
+
+      @batch = Batch.active.find(course_id)
+      @batch = @batch.nil? ? ([]):@batch
+
+      @subjects = @batch.subjects
+      @subjects = @subjects.nil? ? ([]):@subjects
+
+      @students = Student.find_all_by_batch_id(@batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
+      @students = @students.nil? ? ([]):@students
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xls { render :template => 'notas/show.rhtml',:name => 'test' }
+      format.pdf { render :template => 'notas/show.rhtml' }
+    end
   end
 
   # DELETE /notas/1

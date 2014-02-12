@@ -106,7 +106,7 @@ class UserTest < ActiveSupport::TestCase
     end
 
     should 'accept valid email addresses' do
-      emails = ["nithin@gmail.com", "info@projectfedena.org"]
+      emails = ["serpel.js@gmail.com", "serpel.js@gmail.com"]
       emails.each do |email|
         @user.email = email
         assert @user.valid?

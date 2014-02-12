@@ -1,0 +1,40 @@
+
+
+          <table id="listing" cellpadding="1" cellspacing="1">
+            <thead>
+		<tr>
+			<th rowspan="2">Name</th>
+                        <% @subjects.each  do |subject| %>
+                        <th colspan="4"><%= subject.name %></th>
+                        <% end %>
+                        <th>Avg</th>
+		</tr>
+                <tr>
+                  <% @subjects.each  do |subject| %>
+                     <th class="subcategory">I</th>
+                     <th class="subcategory">II</th>
+                     <th class="subcategory">III</th>
+                     <th class="subcategory">IV</th>
+                  <% end %>
+                </tr>
+            </thead>
+            <tbody>
+		<% @students.each do |student| %>
+		<tr class="tr-read-<%= cycle('odd', 'even') %>">
+			<td class="col-1" style="text-transform:capitalize">
+                           <%= student.first_and_last_name %>
+			</td>
+                        <% avg = 0 %>
+			<% @subjects.each do |subject| %>
+                           <% nota = student.notas.find_by_subject_id(subject) %>
+                             <td class="col-1"><%= !nota.nil? ? nota.total_parcial(1) : 0 %></td>
+                             <td class="col-1"><%= !nota.nil? ? nota.total_parcial(2) : 0 %></td>
+                             <td class="col-1"><%= !nota.nil? ? nota.total_parcial(3) : 0 %></td>
+                             <td class="col-1"><%= !nota.nil? ? nota.total_parcial(4) : 0 %></td>
+                             <% avg += !nota.nil? ? nota.total_average : 0 %>
+                        <% end %>
+                       <td class="col-1"><%= (avg / (@subjects.count)).round 1 %></td>
+		</tr>
+               <% end %>
+           </tbody>
+	</table>

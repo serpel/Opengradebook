@@ -1,5 +1,5 @@
 FEDENA_DEFAULTS = {
-  :company_name => 'Intillisys',
+  :company_name => 'Intellisys',
   :company_url  => 'http://www.google.hn'
 }
 

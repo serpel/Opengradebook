@@ -11,23 +11,7 @@ $('table tr').last().addClass('row-last');
 
 </script>
 
-<div id="content-header">
-  <%= image_tag("/images/examination/show_exam.png") %>
-  <h1 style="text-transform:capitalize"><%=h @plan.subject.name %></h1>
-  <h3>Ponderacion</h3>
-  <div id="app-back-button">
-    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
-  </div>
-</div>
-
 <div id="page-yield">
-  <% unless flash[:notice].nil? %>
-    <p class="flash-msg"> <%= flash[:notice] %> </p>
-  <% end %>
-</div>
-
-<div id="page-yield">
-  <div><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'plans', :action => 'export', :id=>@id.to_s+'.xls' } %></div>
   <div id="application-list" class="wrapper">
     <table id="listing" cellpadding="1" cellspacing="1">
        <thead>
@@ -40,7 +24,6 @@ $('table tr').last().addClass('row-last');
             <th><%= "#{t('acum')}" %></th>
             <th><%= "#{t('exam4')}" %></th>
             <th><%= "#{t('acum')}" %></th>
-            <th><%= "#{t('actions')}" %></th>
         </tr>
        </thead>
        <tbody>
@@ -53,7 +36,6 @@ $('table tr').last().addClass('row-last');
             <td class="col-1"><%= @plan.acumulado_3.nil? ? 0:@plan.acumulado_3 %></td>
             <td class="col-1"><%= @plan.examen_4.nil? ? 0:@plan.examen_4 %></td>
             <td class="col-1"><%= @plan.acumulado_4.nil? ? 0:@plan.acumulado_4 %></td>
-            <td class="col-1"><%= link_to 'Editar', edit_plan_path(@plan) %></td>
           </tr>
       </tbody>
     </table>
@@ -81,7 +63,6 @@ $('table tr').last().addClass('row-last');
             <th><%= "#{t('total')}" %></th>
           <% end %>
           <th><%= "#{t('average')}" %></th>
-          <th><%= "#{t('options')}" %></th>
 	</tr>
       </thead>
       <tbody>
@@ -95,12 +76,6 @@ $('table tr').last().addClass('row-last');
                   <td class="col-1"><%=  nota != nil ? nota.total_parcial(l+1) : 0.0 %></td>
                <% end %>
                <td class="col-1"><%= nota != nil ? nota.total_average.round(1) : 0.0 %></td>
-
-               <% if nota %>
-                  <td class="col-1"><%= link_to "#{t('grade_text')}", edit_nota_path(nota.id), :class => "example" %></td>
-               <% else %>
-                  <td class="col-1"><%= link_to "#{t('grade_text')}", new_student_score_path(:id => @plan.subject, :id2 => student.id), :class => "example" %></td>
-               <% end %>
          </tr>
       <% end %>
       </tbody>

@@ -101,6 +101,7 @@ class AssignmentsController < ApplicationController
   end
 
   def create
+    url = "#{request.protocol}#{request.host_with_port}"
     student_ids = params[:assignment][:student_ids]
     params[:assignment].delete(:student_ids)
     @subject = Subject.find_by_id(params[:assignment][:subject_id])
@@ -109,6 +110,17 @@ class AssignmentsController < ApplicationController
     @assignment.employee = current_user.employee_record
     unless @subject.nil?
       if @assignment.save
+        subject = "#{t('new_homework')} - "+@subject.name+": "+@assignment.title
+        students = Student.find_all_by_id(student_ids, :conditions => { :is_deleted => false})
+        to = []
+        students.each do |s|
+          to << s.guardians.map { |m| m.email }.select { |g| !g.empty? }.uniq unless s == nil
+        end
+        to << students.map { |m| m.email }.select { |s| !s.empty? }.uniq unless students == nil
+        
+        if to.count > 0
+          Delayed::Job.enqueue(HomeWorkMailJob.new(current_user,to,subject,@assignment.content))
+        end
         flash[:notice] = "#{t('new_assignment_sucessfuly_created')}"
         redirect_to :action=>:index
       else

@@ -1,9 +1,7 @@
 default: "es"
 available:
-  ar: "العربية"
   en: "English"
   es: "Español"
-  hi: "हिंदी"
   de: "Deutsch"
   pt: "português"
   mr: "मराठी"

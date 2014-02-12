@@ -152,6 +152,7 @@ class EventController < ApplicationController
     reminder_subject = "#{t('new_event')} : #{event.title}"
     reminder_body = " #{t('event_description')} : #{event.description} <br/> #{t('start_date')} : " + event.start_date.strftime("%d/%m/%Y %I:%M %p") + " <br/> #{t('end_date')} : " + event.end_date.strftime("%d/%m/%Y %I:%M %p")
     reminder_recipient_ids = []
+    reminder_recipient_email = []
     if event.is_common == true
       if event.is_holiday == true
         @pe = PeriodEntry.find(:all, :conditions=>"month_date BETWEEN '" + event.start_date.strftime("%Y-%m-%d") + "' AND '" +  event.end_date.strftime("%Y-%m-%d") +"'")
@@ -163,6 +164,7 @@ class EventController < ApplicationController
       end
       @users = User.find(:all)
       reminder_recipient_ids << @users.map(&:id)
+      reminder_recipient_email << @users.map(&:email)
       sms_setting = SmsSetting.new()
       if sms_setting.application_sms_active and sms_setting.event_news_sms_active
         recipients = []
@@ -209,6 +211,7 @@ class EventController < ApplicationController
           @batch_students = Student.find(:all, :conditions=>"batch_id = #{b.batch_id}")
           @batch_students.each do |s|
             reminder_recipient_ids << s.user_id
+            reminder_recipient_email << s.email
           end
         end
       end
@@ -218,6 +221,7 @@ class EventController < ApplicationController
           @dept_emp = Employee.find(:all, :conditions=>"employee_department_id = #{d.employee_department_id}")
           @dept_emp.each do |e|
             reminder_recipient_ids << e.user_id
+            reminder_recipient_email << e.email
           end
         end
       end
@@ -226,7 +230,15 @@ class EventController < ApplicationController
         :recipient_ids => reminder_recipient_ids,
         :subject=>reminder_subject,
         :body=>reminder_body ))
-    redirect_to :controller=>'calendar',:action=>'index'
+
+    admin = User.find_by_username('admin').email
+    to = []
+    to << reminder_recipient_email.reject { |c| c.empty? or c.nil? }.uniq
+    if !admin.empty? and to.count > 0
+       Delayed::Job.enqueue(EventMailJob.new(admin,to,reminder_subject,reminder_body))
+    end
+    
+   redirect_to :controller=>'calendar',:action=>'index'
   end
 
   def cancel_event
