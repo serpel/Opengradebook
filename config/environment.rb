@@ -22,10 +22,10 @@ ActionMailer::Base.default_charset = "utf-8"
 
 ActionMailer::Base.smtp_settings = {
    :enable_starttls_auto => true,
-   :address => "smtp.gmail.com",
-   :port => 587,
-   :domain => "gmail.com",
-   :user_name => "inedsps@gmail.com",
-   :password => "lrocghost",
+   :address => "smtpout.secureserver.net",
+   :port => 80,
+   :domain => "inedhn.com",
+   :user_name => "inedsps@inedhn.com",
+   :password => "inedsps123",
    :authentication => :plain
 }
