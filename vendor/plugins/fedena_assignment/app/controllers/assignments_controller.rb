@@ -119,7 +119,7 @@ class AssignmentsController < ApplicationController
         to << students.map { |m| m.email }.select { |s| !s.empty? }.uniq unless students == nil
         
         if to.count > 0
-          Delayed::Job.enqueue(HomeWorkMailJob.new(current_user,to,subject,@assignment.content))
+          Delayed::Job.enqueue(HomeWorkMailJob.new(current_user.email,to,subject,@assignment.content))
         end
         flash[:notice] = "#{t('new_assignment_sucessfuly_created')}"
         redirect_to :action=>:index

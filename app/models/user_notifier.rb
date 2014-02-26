@@ -48,9 +48,14 @@ class UserNotifier < ActionMailer::Base
   end
 
   def homework_event(sender,recipients,subject,body)
-    @user = User.find sender
+    #@user = User.find sender
+    if sender == "" or sender == nil
+      sender = User.find_by_username('admin').email
+      sender ||= "noreply@#{get_domain(current_url)}"
+    end
+
     @recipients = recipients
-    @from       = @user.email
+    @from       = sender
     @subject    = subject
     @sent_on    = Time.now
     @template   = '/user_notifier/create_event'
