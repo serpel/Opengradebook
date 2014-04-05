@@ -58,7 +58,7 @@ class StudentGeneralDetailsController < ApplicationController
   # GET /student_general_details/new
   # GET /student_general_details/new.xml
   def new
-    @student_general_details = StudentGeneralDetail.new
+    @student_general_details = StudentGeneralDetail.new(params[:id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -74,7 +74,7 @@ class StudentGeneralDetailsController < ApplicationController
   # POST /student_general_details
   # POST /student_general_details.xml
   def create
-    @student_general_details = StudentGeneralDetail.new(params[:student_general_detail])
+     @student_general_details = StudentGeneralDetail.new(params[:student_general_detail])
 
     respond_to do |format|
       if @student_general_details.save
