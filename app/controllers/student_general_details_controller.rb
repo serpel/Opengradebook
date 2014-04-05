@@ -45,10 +45,8 @@ class StudentGeneralDetailsController < ApplicationController
     end
   end
 
-  def show_all_student_details
-    
+  def show_all_student_details   
     @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(params[:batch_id], params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @st }
@@ -58,10 +56,10 @@ class StudentGeneralDetailsController < ApplicationController
   # GET /student_general_details/new
   # GET /student_general_details/new.xml
   def new
-    @student_general_details = StudentGeneralDetail.new(params[:id])
+    @student_general_details = StudentGeneralDetail.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html 
       format.xml  { render :xml => @student_general_details }
     end
   end
@@ -74,12 +72,12 @@ class StudentGeneralDetailsController < ApplicationController
   # POST /student_general_details
   # POST /student_general_details.xml
   def create
-     @student_general_details = StudentGeneralDetail.new(params[:student_general_detail])
+    @student_general_details = StudentGeneralDetail.new(params[:student_general_detail])
 
     respond_to do |format|
       if @student_general_details.save
         flash[:notice] = 'StudentGeneralDetail was successfully created.'
-        format.html { redirect_to(@student_general_details) }
+        format.html { redirect_to @student_general_details }
         format.xml  { render :xml => @student_general_details, :status => :created, :location => @student_general_details }
       else
         format.html { render :action => "new" }
@@ -107,13 +105,11 @@ class StudentGeneralDetailsController < ApplicationController
 
   # DELETE /student_general_details/1
   # DELETE /student_general_details/1.xml
-  def destroy
+  def delete
     @student_general_details = StudentGeneralDetail.find(params[:id])
     @student_general_details.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(student_general_details_url) }
-      format.xml  { head :ok }
-    end
+    redirect_to :back
+    #redirect_to :action => "show_all_student_details", :student_id=>params[:id], :batch_id=>params[:batch_id]
   end
 end

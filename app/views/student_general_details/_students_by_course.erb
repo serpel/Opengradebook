@@ -33,7 +33,7 @@
         <%  if r.student_general_details.size > 0  %>
           <td class="col-7">
             <%=  link_to  "#{t('show')}", :controller => "student_general_details",
-                 :action => "show_all_student_details", :id => r.id, :batch_id => r.batch_id %>
+                 :action => "show_all_student_details", :id => r.id, :student_id => r.id, :batch_id => r.batch_id %>
           </td>
         <% else %>
           <td class="col-7">
