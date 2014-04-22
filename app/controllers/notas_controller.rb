@@ -81,12 +81,16 @@ class NotasController < ApplicationController
         current_subject = Subject.find(@nota.subject_id)
         sender = current_user.email
         student = Student.find(@nota.student_id, :conditions => {:is_deleted => false})
-        guardians = student.guardians
+        guardians = student.guardians.compact.uniq
 
         to = []
-        to << student.email unless student == nil
-        to << guardians.map{ |g| g.email }.select{ |s| !s.empty? }.uniq unless guardians == nil
-        to.reject! { |i| i.empty? or i.nil? }
+        to.push student.email
+        to.concat guardians
+        to.compact!
+
+        #to << student.email unless student == nil
+        #to << guardians.map{ |g| g.email }.select{ |s| !s.empty? }.uniq unless guardians == nil
+        #to.reject! { |i| i.empty? or i.nil? }
 
         subject = "#{t('gradebook_published')} - " + current_subject.name
         body = "#{t('grade_text')},\r\n" + "#{t('assigment')}: " + current_subject.name
@@ -122,16 +126,19 @@ class NotasController < ApplicationController
         current_subject = Subject.find(@nota.subject_id)
         sender = current_user.email
         student = Student.find(@nota.student_id, :conditions => {:is_deleted => false})
-        guardians = student.guardians
+        guardians = student.guardians.compact.uniq
 
         to = []
-        to << student.email unless student == nil
-        to << guardians.map{ |g| g.email }.select{ |s| !s.empty? }.uniq unless guardians == nil
-        to.reject! { |i| i.empty? or i.nil? }
+        to.push student.email
+        to.concat guardians.map{ |g| g.email }
+        to.compact!
+        
+        #to << guardians.map{ |g| g.email }.select{ |s| !s.empty?  }.uniq unless guardians == nil
+        #to.reject! { |i| i.empty? or i.nil? }
         
         subject = "#{t('gradebook_published')} - " + current_subject.name
         body = "#{t('grade_text')},\r\n" + "#{t('assigment')}: " + current_subject.name
-
+        
         if to.count > 0
           Delayed::Job.enqueue(GradebookMailJob.new(sender,to,subject,body))
         end
