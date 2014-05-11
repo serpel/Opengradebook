@@ -11,25 +11,11 @@ $('table tr').last().addClass('row-last');
 
 </script>
 
-<div id="content-header">
-  <%= image_tag("/images/examination/show_exam.png") %>
-  <h1><%= "#{t('gradebooks')}" %></h1>
-  <div id="app-back-button">
-    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
-  </div>
-</div>
+<h3><%= "#{t('gradebooks')}" %></h3>
 
 <div id="page-yield">
-  <% unless flash[:notice].nil? %>
-    <p class="flash-msg"> <%= flash[:notice] %> </p>
-  <% end %>
-  <div id="buttoncontainer">
-    <%=  link_to  "#{t('create')}", :controller => "student_general_details",
-                 :action => "new", :student_id => params[:id], :batch_id => params[:batch_id] %>
-    | <%= link_to "#{t('export')}", {:controller => 'student_general_details', :action => 'show_all_student_details', :id=>@id.to_s+'.xls' } %>
-  </div>
   <div id="application-list">
-    <table id="listing">
+    <table id="listing" cellpadding="1" cellspacing="1">
       <thead>
         <tr>
           <th></th>
@@ -52,36 +38,50 @@ $('table tr').last().addClass('row-last');
         <% @student_scores.each do |student_note| %>
           <tr class="tr-read-<%= cycle('odd', 'even') %>">
             <% sub = Subject.find(student_note.subject_id) %>
-            <td><%= sub.name %></td>
+            <td class="col-1" style="text-transform:capitalize"><%= sub.name %></td>
             <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f).round 2 %>
             <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f).round 2 %>
             <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f).round 2 %>
             <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f).round 2 %>
-            <td><%= student_note.examen_1.to_f %></td>
-            <td><%= student_note.acumulado_1.to_f %></td>
-            <td><%= total_1 %></td>
-            <td><%= student_note.examen_2.to_f %></td>
-            <td><%= student_note.acumulado_2.to_f %></td>
-            <td><%= total_2 %></td>
-            <td><%= student_note.examen_3.to_f  %></td>
-            <td><%= student_note.acumulado_3.to_f %></td>
-            <td><%= total_3 %></td>
-            <td><%= student_note.examen_4.to_f  %></td>
-            <td><%= student_note.acumulado_4.to_f  %></td>
-            <td><%= total_4 %></td>
-            <td><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
+            <td class="col-1"><%= student_note.examen_1.to_f %></td>
+            <td class="col-1"><%= student_note.acumulado_1.to_f %></td>
+            <td class="col-1"><%= total_1 %></td>
+            <td class="col-1"><%= student_note.examen_2.to_f %></td>
+            <td class="col-1"><%= student_note.acumulado_2.to_f %></td>
+            <td class="col-1"><%= total_2 %></td>
+            <td class="col-1"><%= student_note.examen_3.to_f  %></td>
+            <td class="col-1"><%= student_note.acumulado_3.to_f %></td>
+            <td class="col-1"><%= total_3 %></td>
+            <td class="col-1"><%= student_note.examen_4.to_f  %></td>
+            <td class="col-1"><%= student_note.acumulado_4.to_f  %></td>
+            <td class="col-1"><%= total_4 %></td>
+
+            <td class="col-1"><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
             <% if @student_scores.count == 0 %>
-              <% 4.times do |l| %>
-                <td colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></td>
-              <% end %>
+              <td class="col-1">0.0</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">N/A</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">N/A</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">N/A</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">N/A</td>
+              <td class="col-1">N/A</td>
             <% end %>
           </tr>
+          <tr class="tr-blank"></tr>
         <% end %>
       </tbody>
     </table>
   </div>
 
   <h3><%= "#{t('details')}" %></h3>
+  
+  <div class="line"></div>
 
   <div id="application-list1" class="leftTable">
     <table id="listing">
@@ -119,31 +119,27 @@ $('table tr').last().addClass('row-last');
   </div>
 
   <div class="line"></div>
-
+    
   <div id="application-list2" class="leftTable">
     <table id="listing">
       <thead>
         <tr>
-          <th colspan="5">Attendance Record</th>
+          <th colspan="4">Attendance Record</th>
         </tr>
         <tr>
             <th>Period</th>
             <th>Days Absent</th>
             <th>Days Tardy</th>
             <th>Demerit</th>
-            <th></th>
         </tr>
       </thead>
       <tbody>
       <% @st.each do |st| %>
         <tr class="tr-read-even">
-          <td><%=h st.period %></td>
-          <td><%=h st.daysAbsent %></td>
-          <td><%=h st.daysTardy %></td>
-          <td><%=h st.demerit %></td>
-          <td><%= link_to 'Edit', :controller => "student_general_details", :action => "edit",
-                :id => st, :student_id => params[:id], :batch_id => params[:batch_id]  %>
-              |<%= link_to 'Delete', :action => 'delete', :id => st %></td>
+          <td class="col-0"><%=h st.period %></td>
+          <td class="col-0"><%=h st.daysAbsent %></td>
+          <td class="col-0"><%=h st.daysTardy %></td>
+          <td class="col-0"><%=h st.demerit %></td>
         </tr>
       <% end %>
       </tbody>
@@ -154,38 +150,34 @@ $('table tr').last().addClass('row-last');
     <table id="listing" >
       <thead>
       <tr>
-        <th colspan="8">Behavior</th>
+        <th colspan="6">Behavior</th>
       </tr>
-      <tr>
-        <th><b>Punctuality</b></th>
+      <tr class="tr-head">
+        <th><b>Puntuality</b></th>
         <th><b>Effort</b></th>
         <th><b>Work Order And Appearance</b></th>
         <th><b>Social Skills</b></th>
         <th><b>Morals</b></th>
         <th><b>Conduct</b></th>
-        <th><b>Comment</b></th>
-        <th></th>
       </tr>
       </thead>
       <tbody>
       <% @st.each do |st| %>
         <tr class="tr-read-even">
-          <td><%=h st.puntuality %></td>
-          <td><%=h st.effort %></td>
-          <td><%=h st.workOrderAndAppearance %></td>
-          <td><%=h st.socialSkills %></td>
-          <td><%=h st.morals %></td>
-          <td><%=h st.conduct %></td>
-          <td><%=h st.comment%></td>
-          <td class="col-0"><%= link_to 'Edit',  :action => "edit", :id => st, :student_id => params[:id], :batch_id => params[:batch_id]  %>
-        |<%= link_to 'Delete', :action => 'delete', :id => st %></td>
-      </tr>
+          <td class="col-0"><%=h st.puntuality %></td>
+          <td class="col-0"><%=h st.effort %></td>
+          <td class="col-0"><%=h st.workOrderAndAppearance %></td>
+          <td class="col-0"><%=h st.socialSkills %></td>
+          <td class="col-0"><%=h st.morals %></td>
+          <td class="col-0"><%=h st.conduct %></td>
+        </tr>
       <% end %>
       </tbody>
     </table>
   </div>
-
+  
   <div class="line"></div>
+
   <!--
   <div id="application-list4" class="leftTable" >
     <table id="listing">
@@ -205,6 +197,7 @@ $('table tr').last().addClass('row-last');
       </tbody>
     </table>
   </div>
+ -->
 
  <div id="application-list4" class="leftTable">
    <table id="listing">
@@ -224,5 +217,7 @@ $('table tr').last().addClass('row-last');
     </tbody>
   </table>
 </div>
-  -->
+  
 </div>
+
+

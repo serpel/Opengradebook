@@ -1,98 +1,96 @@
-<div id="content-header">
-  <%= image_tag("/images/academics.png") %>
-  <h1>Calificaciones</h1>
-  <h3>Materias</h3>
-  <div id="app-back-button">
-    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
-  </div>
-</div>
+<script type="text/javascript" >
+$('table tr').each(function(){
+  $(this).find('th').first().addClass('first');
+  $(this).find('th').last().addClass('last');
+  $(this).find('td').first().addClass('first');
+  $(this).find('td').last().addClass('last');
+});
+
+$('table tr').first().addClass('row-first');
+$('table tr').last().addClass('row-last');
+
+</script>
+
+<h3><%= "#{t('gradebooks')}" %></h3>
+
 <div id="page-yield">
+   <% unless flash[:notice].nil? %>
+    <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+  <div><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'student', :action => 'get_scores', :id=>@id.to_s+'.xls' } %></div>
   <div id="application-list">
-    <table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
-      <tr class="tr-head">
-        <td></td>
-        <td colspan="3">Primer Parcial</td>
-        <td colspan="3">Segundo Parcial</td>
-        <td colspan="3">Tercer Parcial</td>
-        <td colspan="3">Cuarto Parcial</td>
-        <td colspan="2">Total General</td>
-      </tr>
-      <tr class="tr-blank"></tr>
-      <tr class="tr-head">
-        <td>Materia</td>
-
-        <td>Examen</td>
-        <td>Acumulado</td>
-        <td>Total</td>
-
-        <td>Examen</td>
-        <td>Acumulado</td>
-        <td>Total</td>
-
-        <td>Examen</td>
-        <td>Acumulado</td>
-        <td>Total</td>
-
-        <td>Examen</td>
-        <td>Acumulado</td>
-        <td>Total</td>
-
-        <td>Promedio</td>
-      </tr>
-      <tr class="tr-blank"></tr>
-      <% @student_scores.each do |student_note| %>
-        <tr class="tr-read-<%= cycle('odd', 'even') %>">
-          <% sub = Subject.find(student_note.subject_id) %>
-          <td class="col-1" style="text-transform:capitalize"><%= sub.name %></td>
-          <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f).round 2 %>
-          <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f).round 2 %>
-          <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f).round 2 %>
-          <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f).round 2 %>
-          <td class="col-1"><%= student_note.examen_1.to_f %></td>
-          <td class="col-1"><%= student_note.acumulado_1.to_f %></td>
-          <td class="col-1"><%= total_1 %></td>
-          <td class="col-1"><%= student_note.examen_2.to_f %></td>
-          <td class="col-1"><%= student_note.acumulado_2.to_f %></td>
-          <td class="col-1"><%= total_2 %></td>
-          <td class="col-1"><%= student_note.examen_3.to_f  %></td>
-          <td class="col-1"><%= student_note.acumulado_3.to_f %></td>
-          <td class="col-1"><%= total_3 %></td>
-          <td class="col-1"><%= student_note.examen_4.to_f  %></td>
-          <td class="col-1"><%= student_note.acumulado_4.to_f  %></td>
-          <td class="col-1"><%= total_4 %></td>
-
-          <td class="col-1"><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
-          <% if @student_scores.count == 0 %>
-            <td class="col-1">0.0</td>
-            <td class="col-1">0.0</td>
-            <td class="col-1">N/A</td>
-            <td class="col-1">0.0</td>
-            <td class="col-1">0.0</td>
-            <td class="col-1">N/A</td>
-            <td class="col-1">0.0</td>
-            <td class="col-1">0.0</td>
-            <td class="col-1">N/A</td>
-            <td class="col-1">0.0</td>
-            <td class="col-1">0.0</td>
-            <td class="col-1">N/A</td>
-
-            <td class="col-1">N/A</td>
+    <table id="listing" cellpadding="1" cellspacing="1">
+      <thead>
+        <tr>
+          <th></th>
+          <% 4.times do |l| %>
+            <th colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></th>
           <% end %>
+          <th></th>
         </tr>
-        <tr class="tr-blank"></tr>
-      <% end %>
+        <tr>
+          <th><%= "#{t('assigment')}" %></th>
+          <% 4.times do |l| %>
+            <th><%= "#{t('exam'+(l+1).to_s)}" %></th>
+            <th><%= "#{t('acum'+(l+1).to_s)}" %></th>
+            <th><%= "#{t('total')}" %></th>
+          <% end %>
+          <th><%= "#{t('average')}" %></th>
+       </tr>
+      </thead>
+      <tbody>
+        <% @student_scores.each do |student_note| %>
+          <tr class="tr-read-<%= cycle('odd', 'even') %>">
+            <% sub = Subject.find(student_note.subject_id) %>
+            <td class="col-1" style="text-transform:capitalize"><%= sub.name %></td>
+            <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f).round 2 %>
+            <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f).round 2 %>
+            <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f).round 2 %>
+            <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f).round 2 %>
+            <td class="col-1"><%= student_note.examen_1.to_f %></td>
+            <td class="col-1"><%= student_note.acumulado_1.to_f %></td>
+            <td class="col-1"><%= total_1 %></td>
+            <td class="col-1"><%= student_note.examen_2.to_f %></td>
+            <td class="col-1"><%= student_note.acumulado_2.to_f %></td>
+            <td class="col-1"><%= total_2 %></td>
+            <td class="col-1"><%= student_note.examen_3.to_f  %></td>
+            <td class="col-1"><%= student_note.acumulado_3.to_f %></td>
+            <td class="col-1"><%= total_3 %></td>
+            <td class="col-1"><%= student_note.examen_4.to_f  %></td>
+            <td class="col-1"><%= student_note.acumulado_4.to_f  %></td>
+            <td class="col-1"><%= total_4 %></td>
+
+            <td class="col-1"><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
+            <% if @student_scores.count == 0 %>
+              <td class="col-1">0.0</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">N/A</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">N/A</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">N/A</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">0.0</td>
+              <td class="col-1">N/A</td>
+              <td class="col-1">N/A</td>
+            <% end %>
+          </tr>
+          <tr class="tr-blank"></tr>
+        <% end %>
+      </tbody>
     </table>
   </div>
- 
-  <div class="line-separator"></div>
 
-   <div id="application-list">
-    <table id="listing" align="left" cellpadding="3" cellspacing="0">
+  <h3><%= "#{t('details')}" %></h3>
+  
+  <div class="line"></div>
+
+  <div id="application-list1" class="leftTable">
+    <table id="listing">
       <tr>
         <th>Evaluation Key</th>
-      </tr>
-      <tr class="tr-head">
-        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -124,43 +122,50 @@
     </table>
   </div>
 
- <div class="line-separator"></div>
-
-  <div id="application-list">
-    <table id="listing" align="left" cellpadding="3" cellspacing="0">
-       <tr>
-          <th>Attendance Record</th>
-       </tr>
-      <tr class="tr-head">
-        <th>Period</th>
-        <th>Days Absent</th>
-        <th>Days Tardy</th>
-      </tr>
+  <div class="line"></div>
+    
+  <div id="application-list2" class="leftTable">
+    <table id="listing">
+      <thead>
+        <tr>
+          <th colspan="4">Attendance Record</th>
+        </tr>
+        <tr>
+            <th>Period</th>
+            <th>Days Absent</th>
+            <th>Days Tardy</th>
+            <th>Demerit</th>
+        </tr>
+      </thead>
+      <tbody>
       <% @st.each do |st| %>
         <tr class="tr-read-even">
           <td class="col-0"><%=h st.period %></td>
           <td class="col-0"><%=h st.daysAbsent %></td>
           <td class="col-0"><%=h st.daysTardy %></td>
+          <td class="col-0"><%=h st.demerit %></td>
         </tr>
       <% end %>
+      </tbody>
     </table>
   </div>
-
-  <div class="space-separator"></div>
-
-  <div id="application-list">
-    <table id="listing" align="left" cellpadding="3" cellspacing="0">
+  <div class="space"></div>
+  <div id="application-list3" class="leftTable">
+    <table id="listing" >
+      <thead>
       <tr>
-        <th>Behavior</th>
+        <th colspan="6">Behavior</th>
       </tr>
       <tr class="tr-head">
-        <th><b>Puntuality</b></th>
+        <th><b>Punctuality</b></th>
         <th><b>Effort</b></th>
         <th><b>Work Order And Appearance</b></th>
         <th><b>Social Skills</b></th>
         <th><b>Morals</b></th>
         <th><b>Conduct</b></th>
       </tr>
+      </thead>
+      <tbody>
       <% @st.each do |st| %>
         <tr class="tr-read-even">
           <td class="col-0"><%=h st.puntuality %></td>
@@ -171,39 +176,51 @@
           <td class="col-0"><%=h st.conduct %></td>
         </tr>
       <% end %>
+      </tbody>
     </table>
   </div>
+  
+  <div class="line"></div>
 
-  <div class="line-separator"></div>
-
-  <div id="application-list">
-    <table id="listing" align="left" cellpadding="3" cellspacing="0">
-      <tr class="tr-head">
-        <td><b>Period</b></td>
-        <th><b>Demerit </b></th>
-      </tr>
+  <!--
+  <div id="application-list4" class="leftTable" >
+    <table id="listing">
+      <thead>
+        <tr>
+          <th><b>Period</b></th>
+          <th><b>Demerit</b></th>
+        </tr>
+      </thead>
+      <tbody>
       <% @st.each do |st| %>
         <tr class="tr-read-even">
           <td class="col-0"><%=h st.period %></td>
           <td class="col-0"><%=h st.demerit %></td>
         </tr>
       <% end %>
+      </tbody>
     </table>
   </div>
+ -->
 
-  <div class="space-separator"></div>
-   <table id="listing" align="left" cellpadding="3" cellspacing="0">
-    <tr class="tr-head">
-      <td><b>Period</b></td>
-      <td><b>Comment</b></td>
-    </tr>
-    <% @st.each do |st| %>
-      <tr class="tr-read-even">
-        <td><%=h st.period%></td>
-        <td><%=h st.comment%></td>
+ <div id="application-list4" class="leftTable">
+   <table id="listing">
+    <thead>
+      <tr class="tr-head">
+        <th><b>Period</b></th>
+        <th><b>Comment</b></th>
       </tr>
-    <% end %>
+    </thead>
+    <tbody>
+      <% @st.each do |st| %>
+        <tr class="tr-read-even">
+          <td><%=h st.period%></td>
+          <td><%=h st.comment%></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
+</div>
   
 </div>
 

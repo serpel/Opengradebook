@@ -45,11 +45,19 @@ class StudentGeneralDetailsController < ApplicationController
     end
   end
 
-  def show_all_student_details   
-    @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(params[:batch_id], params[:id])
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @st }
+  def show_all_student_details
+    begin
+      @id = params[:id]
+      @student = Student.find(params[:id])
+      @student_scores = @student.notas
+      @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, params[:id])
+      respond_to do |format|
+        format.html
+        format.xls { render :template => 'student_general_details/show_all_student_details.rhtml.erb' }
+      end
+    rescue Exception => e
+      flash[:notice] = "Error: can't find student: "+params[:id]+', details: ' + e.to_s
+      redirect_to :controller => "user", :action => "dashboard"
     end
   end
 
@@ -57,7 +65,7 @@ class StudentGeneralDetailsController < ApplicationController
   # GET /student_general_details/new.xml
   def new
     @student_general_details = StudentGeneralDetail.new
-
+    
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @student_general_details }

@@ -13,13 +13,16 @@ class StudentController < ApplicationController
 
   def get_scores
     begin
+      @id = params[:id]
       @student = Student.find(params[:id])
-      @subjects = []
-      @student_scores = []
       if @student.is_active?
-        #@subjects = @student.batch.subjects.select { |e| e.is_deleted == false }
         @student_scores = @student.notas
         @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
+
+        respond_to do |format|
+          format.html # index.html.erb
+          format.xls { render :template => 'student/get_scores.rhtml.erb' }
+        end
       else
           flash[:notice] = "Error: Student is disable, Contact with Admin."
           redirect_to :controller => "user", :action => "dashboard"
@@ -27,6 +30,23 @@ class StudentController < ApplicationController
     rescue Exception => e
       flash[:notice] = "Error: getting scores, Contact with Admin, Details: " + e.to_s
       redirect_to :controller => "user", :action => "dashboard"
+    end
+  end
+
+  def export
+    begin
+      @student = Student.find(params[:id])
+      @student_scores = @student.notas
+      @student_details = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
+
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xls { render :template => 'student/get_scores.rhtml' }
+      end
+
+    rescue Exception => e
+      flash[:notice] = "Error: exporting student grades, details: " + e.to_s
+      redirect_to :controller => "student", :action => "get_scores"
     end
   end
   

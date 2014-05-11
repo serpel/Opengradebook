@@ -2041,7 +2041,7 @@ es: # locale
     flash2: "Archivo muy grande. El archivo debe ser menor a 1 MB"
     daily_text: "Diario"
     subject_wise_text: "Por asignaturas"
-
+    
 #courses controller translation
   courses:
     school: "Institucion"
@@ -2346,6 +2346,21 @@ es: # locale
     partial3: "Parcial 3"
     partial4: "Parcial 4"
     grade_text: "calificar"
+
+  student:
+    partial1: "Parcial 1"
+    partial2: "Parcial 2"
+    partial3: "Parcial 3"
+    partial4: "Parcial 4"
+    exam1: "Examen 1"
+    exam2: "Examen 2"
+    exam3: "Examen 3"
+    exam4: "Examen 4"
+    acum: "Acumulativo"
+    acum1: "Acumulativo 1"
+    acum2: "Acumulativo 2"
+    acum3: "Acumulativo 3"
+    acum4: "Acumulativo 4"
    
   import:
     select_a_batch: "Seleccionar un grupo"
@@ -2442,4 +2457,3 @@ es: # locale
     calendar: "Calendario"
     school: "Escuela"
     empty_assignation: "No asignado"
-

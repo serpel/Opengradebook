@@ -9,6 +9,7 @@ en: # locale
         batch_id: "Batch"
         date_of_birth: "Date of birth"
         gender: "Gender"
+        empty_assignation: "No assigned"
         
 
       student_additional_field:
@@ -249,7 +250,7 @@ en: # locale
         partial3: "Partial 3"
         partial4: "Partial 4"
         grade_text: "grade"
-        
+
     errors:
       template:
         header:
@@ -2068,7 +2069,7 @@ en: # locale
     flash2: "File too large. File size should be less than 1 MB"
     daily_text: "Daily"
     subject_wise_text: "SubjectWise"
-
+    
 #courses controller translation
   courses:
     flash1: "Created course successfully"
@@ -2534,3 +2535,16 @@ en: # locale
   homework: "Homework"
   calendar: "Calendar"
   school: "School"
+  partial1: "Partial 1"
+  partial2: "Partial 2"
+  partial3: "Partial 3"
+  partial4: "Partial 4"
+  exam1: "Exam 1"
+  exam2: "Exam 2"
+  exam3: "Exam 3"
+  exam3: "Exam 4"
+  exam4: "Exam 4"
+  acum1: "Acum 1"
+  acum2: "Acum 2"
+  acum3: "Acum 3"
+  acum4: "Acum 4"
