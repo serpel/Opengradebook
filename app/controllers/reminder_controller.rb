@@ -9,9 +9,9 @@ class ReminderController < ApplicationController
     @reminders = Reminder.paginate(:page => params[:page], :conditions=>["recipient = '#{@user.id}' and is_deleted_by_recipient = false"], :order=>"created_at DESC",:include=>:user)
     @read_reminders = Reminder.find_all_by_recipient(@user.id, :conditions=>"is_read = true and is_deleted_by_recipient = false", :order=>"created_at DESC")
     @new_reminder_count = Reminder.find_all_by_recipient(@user.id, :conditions=>"is_read = false and is_deleted_by_recipient = false")
-end
+  end
 
-  def create_reminder
+   def create_reminder
 
     url = "#{request.protocol}#{request.host_with_port}"
     @user = current_user   
@@ -44,19 +44,16 @@ end
     
     unless params[:send_to].nil?
       recipients_array = params[:send_to].split(",").collect{ |s| s.to_i }
+      @recipients = User.find(recipients_array)
     end
     if request.post?
       unless params[:reminder][:body] == "" or params[:recipients] == ""
         recipients_array = params[:recipients].split(",").collect{ |s| s.to_i }
-        @recipients = User.find(recipients_array)
-        #@recipients = @recipients.reject{ |arr| arr.all?(&:blank?) }
+        
         Delayed::Job.enqueue(DelayedReminderJob.new( :sender_id  => @user.id,
             :recipient_ids => recipients_array,
             :subject=>params[:reminder][:subject],
-            :body=>params[:reminder][:body],
-            :recipients => @recipients,
-            :sender => @user,
-            :url => url))
+            :body=>params[:reminder][:body] ))
 
         sender = User.find_by_username('admin').email
         subject = "#{t('new_message')} - " + params[:reminder][:subject]
