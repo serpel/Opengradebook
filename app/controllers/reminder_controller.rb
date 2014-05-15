@@ -44,11 +44,11 @@ class ReminderController < ApplicationController
 
     unless params[:send_to].nil?
       recipients_array = params[:send_to].split(",").collect{ |s| s.to_i }
-      @recipients = User.find(recipients_array)
     end
     if request.post?
       unless params[:reminder][:body] == "" or params[:recipients] == ""
         recipients_array = params[:recipients].split(",").collect{ |s| s.to_i }
+        @recipients = User.find(recipients_array)
 
         Delayed::Job.enqueue(DelayedReminderJob.new( :sender_id  => @user.id,
             :recipient_ids => recipients_array,
