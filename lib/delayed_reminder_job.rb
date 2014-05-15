@@ -7,11 +7,8 @@ class DelayedReminderJob
     @sender_id = opts[:sender_id]
     @recipient_ids = Array(opts[:recipient_ids]).flatten.uniq
     @subject = opts[:subject]
-    @message = opts[:message]
+    #@message = opts[:message]
     @body = opts[:body]
-    @recipients = opts[:recipients]
-    @sender = opts[:sender]
-    @url = opts[:url]
   end
 
   def perform

@@ -53,10 +53,7 @@ end
         Delayed::Job.enqueue(DelayedReminderJob.new( :sender_id  => @user.id,
             :recipient_ids => recipients_array,
             :subject=>params[:reminder][:subject],
-            :body=>params[:reminder][:body],
-            :recipients => @recipients,
-            :sender => @user,
-            :url => url))
+            :body=>params[:reminder][:body]))
 
         sender = User.find_by_username('admin').email
         subject = "#{t('new_message')} - " + params[:reminder][:subject]

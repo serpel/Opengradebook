@@ -4,7 +4,7 @@ module Delayed
     AR_STRING_FORMAT    = /^AR\:([A-Z][\w\:]+)\:(\d+)$/
 
     def initialize(object, method, args)
-      raise NoMethodError, "undefined method `#{method}' for #{self.inspect}" unless object.respond_to?(method)
+      raise NoMethodError, "undefined method '#{method}' for #{self.inspect}" unless object.respond_to?(method)
 
       self.object = dump(object)
       self.args   = args.map { |a| dump(a) }
