@@ -1,9 +1,14 @@
- set :output, "/root/cron_inedhn_log.log"
+set :environment, "production"
+set :output, {:error => "log/cron_error_log.log", :standard => "log/cron_log.log"}
 
- every "1 * * * *" do
-   rake "jobs:work"
- end
+#every "*/1 * * * *" do
+#   rake "jobs:work"
+# end
 
- every :reboot do
+every :reboot do
+  rake "jobs:work"
+end
+
+every 1.minutes do
    rake "jobs:work"
- end
+end
