@@ -12,3 +12,7 @@ end
 every 1.minutes do
    rake "jobs:work"
 end
+
+every 1.weeks do
+   rake "jobs:clear"
+end
