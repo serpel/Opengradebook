@@ -38,7 +38,6 @@ table th.last {
 }
 .line{
   width:100%;
-  float:left;
 }
 
 .division-line{

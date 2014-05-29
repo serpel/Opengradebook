@@ -1,3 +1,20 @@
+<script type="text/javascript">
+function printPage(id)
+{
+   var html="<html>";
+   html+= document.getElementById(id).innerHTML;
+
+   html+="</html>";
+
+   var printWin = window.open('','','');
+   printWin.document.write(html);
+   printWin.document.close();
+   printWin.focus();
+   printWin.print();
+   printWin.close();
+}
+</script>
+
 <script type="text/javascript" >
 $('table tr').each(function(){
   $(this).find('th').first().addClass('first');
@@ -23,72 +40,76 @@ $('table tr').last().addClass('row-last');
   <% unless flash[:notice].nil? %>
     <p class="flash-msg"> <%= flash[:notice] %> </p>
   <% end %>
-  <div id="buttoncontainer">
-    <%=  link_to  "#{t('create')}", :controller => "student_general_details",
+    <div id="buttoncontainer" style="margin:15px">
+    <%=  link_to  "#{t('add')}", :controller => "student_general_details",
                  :action => "new", :student_id => params[:id], :batch_id => params[:batch_id] %>
     | <%= link_to "#{t('export')}", {:controller => 'student_general_details', :action => 'show_all_student_details', :id=>@id.to_s+'.xls' } %>
+    <!--| <input type="button" value="<%=h "#{t('print')}" %>" onclick="printPage('printBlock');"></input>-->
+    | <a href="#" onclick="printPage('printBlock');"><%=h "#{t('print')}" %></a>
   </div>
-  <div id="application-list">
-    <table id="listing">
-      <thead>
-        <tr>
-          <th></th>
-          <% 4.times do |l| %>
-            <th colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></th>
-          <% end %>
-          <th></th>
-        </tr>
-        <tr>
-          <th><%= "#{t('assigment')}" %></th>
-          <% 4.times do |l| %>
-            <th><%= "#{t('exam'+(l+1).to_s)}" %></th>
-            <th><%= "#{t('acum'+(l+1).to_s)}" %></th>
-            <th><%= "#{t('total')}" %></th>
-          <% end %>
-          <th><%= "#{t('average')}" %></th>
-       </tr>
-      </thead>
-      <tbody>
-        <% @student_scores.each do |student_note| %>
-          <tr class="tr-read-<%= cycle('odd', 'even') %>">
-            <% sub = Subject.find(student_note.subject_id) %>
-            <td><%= sub.name %></td>
-            <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f).round 2 %>
-            <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f).round 2 %>
-            <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f).round 2 %>
-            <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f).round 2 %>
-            <td><%= student_note.examen_1.to_f %></td>
-            <td><%= student_note.acumulado_1.to_f %></td>
-            <td><%= total_1 %></td>
-            <td><%= student_note.examen_2.to_f %></td>
-            <td><%= student_note.acumulado_2.to_f %></td>
-            <td><%= total_2 %></td>
-            <td><%= student_note.examen_3.to_f  %></td>
-            <td><%= student_note.acumulado_3.to_f %></td>
-            <td><%= total_3 %></td>
-            <td><%= student_note.examen_4.to_f  %></td>
-            <td><%= student_note.acumulado_4.to_f  %></td>
-            <td><%= total_4 %></td>
-            <td><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
-            <% if @student_scores.count == 0 %>
-              <% 4.times do |l| %>
-                <td colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></td>
-              <% end %>
-            <% end %>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+</div>
 
-  <h3><%= "#{t('details')}" %></h3>
+<div id="printBlock">
+<style>
+@media print
+{
+  table {
+    font-family: 'Arial';
+    margin: 5px;
+    border-collapse: collapse;
+    border: 1px solid #eee;
+    border-bottom: 2px solid #00cccc;
+    font-size: 12px;
+  }
+  table th, table td {
+    border: 1px solid #eee;
+    padding: 1px 4px;
+    border-collapse: collapse;
+  }
+  table th {
+    background: #00cccc;
+    color: #fff;
+    font-size: 12px;
+  }
+  table th.last {
+    border-right: none;
+  }
 
-  <div id="application-list1" class="leftTable">
-    <table id="listing">
+  .leftTable{
+    float:left;
+  }
+  .rightTable{
+    float:left;
+  }
+  .line{
+    width:100%;
+    float:left;
+  }
+  .division-line{
+    width:100%;
+    float:left;
+  }
+}
+</style>
+
+    <div class="leftTable" style="width:250px;margin:15px">
+      <p>Grade / Grado: <b><%=  @course.course_name + ' ' + @course.section_name %></b></p>
+      <p>Student / Alumno: <b><%=  @student.full_name %></b></p>
+    </div>
+
+    <div class="rightTable" style="width:250px;margin:15px">
+      <p>Teacher / Maestro:</p>
+      <p>School Year / Año: <b><%= @time.year %></b></p>
+      <p>Lugar y Fecha: <b><%= @time.strftime("%d/%m/%Y") %></b></p>
+    </div>
+
+    <hr class="division-line"></hr>
+
+    <div class="leftTable"> 
+
+      <table id="listing" width="250px">
       <tr>
-        <th>Evaluation Key</th>
-        <th></th>
-        <th></th>
+        <th colspan="3">Evaluation Key</th>
       </tr>
       <tr class="tr-read-even">
         <td class="col-0">E</td>
@@ -115,77 +136,107 @@ $('table tr').last().addClass('row-last');
         <td class="col-0">Unsatisfactory</td>
         <td class="col-0">0-59</td>
       </tr>
-    </table>
-  </div>
-
-  <div class="line"></div>
-
-  <div id="application-list2" class="leftTable">
-    <table id="listing">
+    </table>   
+      <table id="listing"  width="250px">
       <thead>
         <tr>
           <th colspan="5">Attendance Record</th>
         </tr>
-        <tr>
-            <th>Period</th>
-            <th>Days Absent</th>
-            <th>Days Tardy</th>
-            <th>Demerit</th>
-            <th></th>
-        </tr>
       </thead>
       <tbody>
-      <% @st.each do |st| %>
+
+      <% @attendance.each do |a| %>
         <tr class="tr-read-even">
-          <td><%=h st.period %></td>
-          <td><%=h st.daysAbsent %></td>
-          <td><%=h st.daysTardy %></td>
-          <td><%=h st.demerit %></td>
-          <td><%= link_to 'Edit', :controller => "student_general_details", :action => "edit",
-                :id => st, :student_id => params[:id], :batch_id => params[:batch_id]  %>
-              |<%= link_to 'Delete', :action => 'delete', :id => st %></td>
+          <% a.each do |e| %>
+          <td><%=h e %></td>
+          <% end %>
         </tr>
       <% end %>
       </tbody>
     </table>
-  </div>
-  <div class="space"></div>
-  <div id="application-list3" class="leftTable">
-    <table id="listing" >
+      <table id="listing" width="250px">
       <thead>
       <tr>
         <th colspan="8">Behavior</th>
       </tr>
-      <tr>
-        <th><b>Punctuality</b></th>
-        <th><b>Effort</b></th>
-        <th><b>Work Order And Appearance</b></th>
-        <th><b>Social Skills</b></th>
-        <th><b>Morals</b></th>
-        <th><b>Conduct</b></th>
-        <th><b>Comment</b></th>
-        <th></th>
-      </tr>
+      </thead>
+      <tbody>
+        <% @behavior.each do |b| %>
+        <tr class="tr-read-even">
+          <% b.each do |e| %>
+          <td><%=h e %></td>
+          <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    </div>
+     
+    <div class="rightTable">
+      <table id="listing">
+        <thead>
+          <tr>
+            <th></th>
+            <% 4.times do |l| %>
+              <th colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></th>
+            <% end %>
+            <th></th>
+          </tr>
+          <tr>
+            <th><%= "#{t('assigment')}" %></th>
+            <% 4.times do |l| %>
+              <th><%= "#{t('total')}" %></th>
+            <% end %>
+            <th><%= "#{t('average')}" %></th>
+         </tr>
+        </thead>
+        <tbody>
+          <% @student_scores.each do |student_note| %>
+            <tr class="tr-read-<%= cycle('odd', 'even') %>">
+              <% sub = Subject.find(student_note.subject_id) %>
+              <td><%= sub.name %></td>
+              <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f).round 2 %>
+              <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f).round 2 %>
+              <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f).round 2 %>
+              <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f).round 2 %>
+              <td><%= total_1 %></td>
+              <td><%= total_2 %></td>
+              <td><%= total_3 %></td>
+              <td><%= total_4 %></td>
+              <td><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
+              <% if @student_scores.count == 0 %>
+                <% 4.times do |l| %>
+                  <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
+                <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+   <hr class="division-line"></hr>
+    
+    <div class="line">
+     <table id="listing" width="400px">
+      <thead>
+        <tr>
+          <th><b>Period</b></th>
+            <th><b>Comment</b></th>
+        </tr>
       </thead>
       <tbody>
       <% @st.each do |st| %>
         <tr class="tr-read-even">
-          <td><%=h st.puntuality %></td>
-          <td><%=h st.effort %></td>
-          <td><%=h st.workOrderAndAppearance %></td>
-          <td><%=h st.socialSkills %></td>
-          <td><%=h st.morals %></td>
-          <td><%=h st.conduct %></td>
-          <td><%=h st.comment%></td>
-          <td class="col-0"><%= link_to 'Edit',  :action => "edit", :id => st, :student_id => params[:id], :batch_id => params[:batch_id]  %>
-        |<%= link_to 'Delete', :action => 'delete', :id => st %></td>
-      </tr>
+          <td class="col-0"><%=h st.period %></td>
+          <td class="col-0"><%=h st.comment %></td>
+        </tr>
       <% end %>
       </tbody>
     </table>
   </div>
 
-  <div class="line"></div>
+</div>
   <!--
   <div id="application-list4" class="leftTable" >
     <table id="listing">
@@ -224,5 +275,5 @@ $('table tr').last().addClass('row-last');
     </tbody>
   </table>
 </div>
-  -->
-</div>
+ 
+</div> -->

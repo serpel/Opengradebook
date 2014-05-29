@@ -51,12 +51,31 @@ class StudentGeneralDetailsController < ApplicationController
       @student = Student.find(params[:id])
       @student_scores = @student.notas
       @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, params[:id])
+
+      batch = @student.batch
+      @course = batch.course
+      @time = Time.new
+
+      @attendance = []
+      @attendance << ["Period", "DaysAbsent", "DaysTardy", "Demerit"]
+      @behavior = []
+      @behavior << ["Punctuality", "Effort", "Work Order And Appearance", "Social Skills", "Morals", "Conduct" ]
+      
+      @st.each do |detail|
+        @attendance << [detail.period, detail.daysAbsent, detail.daysTardy, detail.demerit]
+        @behavior << [detail.puntuality.upcase, detail.effort.upcase,
+                      detail.workOrderAndAppearance.upcase, detail.socialSkills.upcase,
+                      detail.morals.upcase, detail.conduct.upcase]
+      end
+      @attendance = @attendance.transpose
+      @behavior = @behavior.transpose
+      
       respond_to do |format|
         format.html
         format.xls { render :template => 'student_general_details/show_all_student_details.rhtml.erb' }
       end
     rescue Exception => e
-      flash[:notice] = "Error: can't find student: "+params[:id]+', details: ' + e.to_s
+      flash[:notice] = "Error, details: " + e.to_s
       redirect_to :controller => "user", :action => "dashboard"
     end
   end
