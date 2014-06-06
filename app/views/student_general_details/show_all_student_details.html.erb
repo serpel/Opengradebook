@@ -95,13 +95,11 @@ $('table tr').last().addClass('row-last');
     <div class="leftTable" style="width:250px;margin:15px">
       <p>Grade / Grado: <b><%=  @course.course_name + ' ' + @course.section_name %></b></p>
       <p>Student / Alumno: <b><%=  @student.full_name %></b></p>
-      <p>Principal / Director:</p>
     </div>
 
     <div class="rightTable" style="width:250px;margin:15px">
       <p>School Year / Año: <b><%= @time.year %></b></p>
       <p>Date / Fecha: <b><%= @time.strftime("%d/%m/%Y") %></b></p>
-      <p>Teacher / Maestro:</p>
     </div>
 
     <hr class="division-line"></hr>
