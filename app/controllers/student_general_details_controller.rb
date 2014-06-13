@@ -45,6 +45,11 @@ class StudentGeneralDetailsController < ApplicationController
     end
   end
 
+  def get_periods
+    i = 2
+    i += 2
+  end
+
   def show_all_student_details
     begin
       @id = params[:id]

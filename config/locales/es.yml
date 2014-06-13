@@ -2458,3 +2458,5 @@ es: # locale
     school: "Escuela"
     empty_assignation: "No asignado"
     print: "Imprimir"
+    edit: "Editar"
+    new: "Nuevo"

@@ -3,7 +3,6 @@ function printPage(id)
 {
    var html="<html>";
    html+= document.getElementById(id).innerHTML;
-
    html+="</html>";
 
    var printWin = window.open('','','');
@@ -13,6 +12,8 @@ function printPage(id)
    printWin.print();
    printWin.close();
 }
+
+
 </script>
 
 <script type="text/javascript" >
@@ -36,6 +37,24 @@ $('table tr').last().addClass('row-last');
   </div>
 </div>
 
+ <table id="listing" >
+      <thead>
+      <tr class="tr-head">
+        <th><b>Period</b></th>
+        <th><b>Action</b></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @st.each do |st| %>
+        <tr class="tr-read-even">
+          <td class="col-0"><%=h st.period %></td>
+          <td class="col-0"><%=  link_to  "#{t('edit')}", :controller => "student_general_details",
+                                          :action => "edit", :id => st %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+
 <div id="page-yield">
   <% unless flash[:notice].nil? %>
     <p class="flash-msg"> <%= flash[:notice] %> </p>
@@ -43,9 +62,8 @@ $('table tr').last().addClass('row-last');
     <div id="buttoncontainer" style="margin:15px">
     <%=  link_to  "#{t('add')}", :controller => "student_general_details",
                  :action => "new", :student_id => params[:id], :batch_id => params[:batch_id] %>
-    | <%= link_to "#{t('export')}", {:controller => 'student_general_details', :action => 'show_all_student_details', :id=>@id.to_s+'.xls' } %>
-    <!--| <input type="button" value="<%=h "#{t('print')}" %>" onclick="printPage('printBlock');"></input>-->
-    | <a href="#" onclick="printPage('printBlock');"><%=h "#{t('print')}" %></a>
+    |<%= link_to "#{t('export')}", {:controller => 'student_general_details', :action => 'show_all_student_details', :id=>@id.to_s+'.xls' } %>
+    |<a href="#" onclick="printPage('printBlock');"><%=h "#{t('print')}" %></a>
   </div>
 </div>
 
@@ -194,14 +212,14 @@ $('table tr').last().addClass('row-last');
             <tr class="tr-read-<%= cycle('odd', 'even') %>">
               <% sub = Subject.find(student_note.subject_id) %>
               <td><%= sub.name %></td>
-              <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f).ceil %>
-              <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f).ceil %>
-              <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f).ceil %>
-              <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f).ceil %>
-              <td><%= total_1 %></td>
-              <td><%= total_2 %></td>
-              <td><%= total_3 %></td>
-              <td><%= total_4 %></td>
+              <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f) %>
+              <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f) %>
+              <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f) %>
+              <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f) %>
+              <td><%= total_1.ceil %></td>
+              <td><%= total_2.ceil %></td>
+              <td><%= total_3.ceil %></td>
+              <td><%= total_4.ceil %></td>
               <td><%= ((total_1 + total_2 + total_3 + total_4)/4).ceil %></td>
               <% if @student_scores.count == 0 %>
                 <% 4.times do |l| %>

@@ -46,3 +46,6 @@ table th.last {
   float:left;
 }
 
+.text-input-bg select {
+  width: 120px;
+}
