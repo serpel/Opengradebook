@@ -62,7 +62,7 @@ class StudentGeneralDetailsController < ApplicationController
       @time = Time.new
 
       @attendance = []
-      @attendance << ["Period", "DaysAbsent", "DaysTardy", "Demerit"]
+      @attendance << ["Period", "Days Absent", "Days Tardy", "Demerit"]
       @behavior = []
       @behavior << ["Punctuality", "Effort", "Work Order And Appearance", "Social Skills", "Morals", "Conduct" ]
       
