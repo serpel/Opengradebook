@@ -218,11 +218,11 @@ $('table tr').last().addClass('row-last');
               <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f) %>
               <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f) %>
               <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f) %>
-              <td><%= total_1.ceil %></td>
-              <td><%= total_2.ceil %></td>
-              <td><%= total_3.ceil %></td>
-              <td><%= total_4.ceil %></td>
-              <td><%= ((total_1 + total_2 + total_3 + total_4)/4).ceil %></td>
+              <td><%= total_1.round %></td>
+              <td><%= total_2.round %></td>
+              <td><%= total_3.round %></td>
+              <td><%= total_4.round %></td>
+              <td><%= ((total_1 + total_2 + total_3 + total_4)/4).round %></td>
               <% if @student_scores.count == 0 %>
                 <% 4.times do |l| %>
                   <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
