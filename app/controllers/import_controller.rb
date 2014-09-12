@@ -16,10 +16,12 @@ class ImportController < ApplicationController
       n, errs = 0, []
       #@last_admitted_student = Student.find(:last)
       flash[:notice] = "Successfull"
-      
+
         CSV.parse(filename) do |row|
           n += 1
           next if n == 1 or row.join.blank?
+
+          row = row.to_s.split(/[ ,;\s]/)
           @date = DateTime.now.strftime('%m/%d/%Y')
 
           st = Student.new
@@ -34,7 +36,7 @@ class ImportController < ApplicationController
           @course = Course.find(@batch.course_id)
 
           st.batch_id = @batch.id
-          st.school_id = @course.school_id == nil ? -1: @course.school_id
+          st.school_id = @course.school_id
             
           #by Default take this parameter from local configuration
           st.is_sms_enabled = 1
