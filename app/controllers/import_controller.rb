@@ -30,7 +30,20 @@ class ImportController < ApplicationController
             st.last_name = row[2].to_s
             st.date_of_birth = row[3].to_s.empty? ? today : row[3].to_s
             st.email = row[4].to_s
+            st.gender = row[5].to_s
             st.batch_id = params[:course][:course_id].to_s
+            
+            #@batch = Batch.find_by_id(st.batch_id)
+            #@course = @batch.course
+            #@school = @course.school
+            
+            @school = School.find_all_by_school_name row[6].to_s
+            
+            if @school.nil?
+              st.school_id = -1
+            else
+              st.school_id = @school
+            end
 
             #by Default take this parameter from local configuration
             st.is_sms_enabled = 1
@@ -38,7 +51,7 @@ class ImportController < ApplicationController
             st.nationality_id = 73
             st.admission_date = DateTime.now.strftime('%m/%d/%Y')
             st.is_active = 1
-            st.gender = 'm'
+
 
             st.create_user_and_validate
             st.save!
@@ -48,10 +61,10 @@ class ImportController < ApplicationController
 
           begin
             gu = Guardian.new
-            gu.first_name = row[5]
-            gu.last_name = row[6]
-            gu.relation = row[7]
-            gu.email = row[8]
+            gu.first_name = row[7].to_s
+            gu.last_name = row[8].to_s
+            gu.relation = row[9].to_s
+            gu.email = row[10].to_s
 
             gu.country_id = 73
             _st = Student.find_by_admission_no st.admission_no
