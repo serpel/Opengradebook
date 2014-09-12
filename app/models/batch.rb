@@ -9,7 +9,7 @@ class Batch < ActiveRecord::Base
   has_many :grouped_batches
   has_many :archived_students
   has_many :grading_levels, :conditions => { :is_deleted => false }
-  has_many :subjects, :conditions => { :is_deleted => false }
+  has_many :subjects, :conditions => { :is_deleted => false }, :dependent => :destroy
   has_many :employees_subjects, :through =>:subjects
   has_many :exam_groups
   has_many :fee_category , :class_name => "FinanceFeeCategory"

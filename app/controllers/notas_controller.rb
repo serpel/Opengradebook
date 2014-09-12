@@ -102,7 +102,7 @@ class NotasController < ApplicationController
 				redirect_to ("/plans/"+@plan.id.to_s) 
 		  else
 		    flash[:notice] = 'Something went wrong when creating score.'
-				render :action => "new"
+				#render :action => "new"
 		  end
 		end
   end
