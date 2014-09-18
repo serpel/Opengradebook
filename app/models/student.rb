@@ -9,6 +9,7 @@ class Student < ActiveRecord::Base
   belongs_to :student_category
   belongs_to :nationality, :class_name => 'Country'
   belongs_to :user
+  belongs_to :school
 
   has_one    :immediate_contact
   has_one    :student_previous_data
@@ -257,11 +258,14 @@ class Student < ActiveRecord::Base
     student_attributes.delete "has_paid_fees"
     student_attributes.delete "user_id"
     student_attributes.delete "created_at"
+    student_attributes.delete "school_id"
     archived_student = ArchivedStudent.new(student_attributes)
     archived_student.photo = self.photo
     if archived_student.save
       guardian = self.guardians
-      self.user.update_attributes(:is_deleted =>true) unless self.user.blank?
+      
+      #self.user.update_attributes(:is_active =>true) unless self.user.blank? and self.user.attributes.nil?
+      self.user.destroy
       guardian.each do |g|
         g.archive_guardian(archived_student.id)
       end

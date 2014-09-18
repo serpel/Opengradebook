@@ -28,7 +28,7 @@ class ImportController < ApplicationController
           st.admission_no = row[0]
           st.first_name = row[1]
           st.last_name = row[2]
-          st.date_of_birth = row[3].to_s.empty? ? @date : row[3]
+          st.date_of_birth = row[3]
           st.email = row[4]
           st.gender = row[5]
             
@@ -46,8 +46,9 @@ class ImportController < ApplicationController
           st.is_active = 1
 
           begin
-            st.create_user_and_validate
-            st.save!
+            if st.create_user_and_validate == true
+              st.save
+            end
           rescue Exception => e
             flash[:notice] = e.to_s
           end
@@ -62,11 +63,9 @@ class ImportController < ApplicationController
           _st = Student.find_by_admission_no st.admission_no
           gu.ward_id = _st.id 
 
-          gu.validate
-
           begin
-            gu.create_guardian_user(_st)
-            gu.save!
+            #gu.create_guardian_user(_st)
+            #gu.save!
           rescue Exception => e
             flash[:notice] = e.to_s
           end
