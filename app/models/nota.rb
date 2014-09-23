@@ -61,7 +61,6 @@ class Nota < ActiveRecord::Base
     end
   end
 
-
   def to_csv(options = {})
     CSV.generate do |csv|
       csv << column_names

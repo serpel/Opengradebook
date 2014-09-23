@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2781719581">
+    <data-source source="LOCAL" name="Rails Opengradebook: development" uuid="7fdb588b-ea66-4e88-8a86-4ac9e39cc07e">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3306/fedena_development</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfcbdfcedfc7dfc3dfc4</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails Opengradebook: test" uuid="4dc8e214-d954-486b-aa1a-d58b8116761f">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3306/fedena_two_new</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfccdfc5dfd8dfcbdfcedfc3dfcbdfc4</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails Opengradebook: production" uuid="555116ff-9865-4c45-b04d-cc8267ef8979">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3306/fedena_production</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfcbdfcedfc7dfc3dfc4</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails Opengradebook: cucumber" uuid="5c662513-15da-42eb-abd9-1ddd9d407ac0">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1:3306/fedena_two_new</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfccdfc5dfd8dfcbdfcedfc3dfcbdfc4</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

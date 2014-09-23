@@ -49,7 +49,7 @@
                 </td>
                 <!--<td class="col-1"><%= link_to "Mostrar Ponderacion", plan_path(subject_plan.id) %></td>-->
               <% else %>
-                <td class="col-1"><%= link_to "Crear", new_subject_ponderation_path(:id=>subject.id) %></td>
+                <td class="col-1"><%= link_to "Crear", new_subject_ponderation_path(:id=>subject.id, :batch=>subject.batch_id) %></td>
               <% end %>
             </tr>
             <tr class="tr-blank"></tr>

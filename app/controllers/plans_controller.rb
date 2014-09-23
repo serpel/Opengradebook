@@ -38,20 +38,12 @@ class PlansController < ApplicationController
   # GET /plans/new
   # GET /plans/new.xml
   def new
-    begin
-      @plan = Plan.new
-
-      if @plan.save
-        respond_to do |format|
-          format.html # new.html.erb
-          format.xml  { render :xml => @plan }
-        end
-      else
-        
-      end    
-    rescue Exception => e
-      flash[:notice] = " Error!"
-      redirect_to :controller => "employee", :action => "get_subjects", :status => 303
+    @plan = Plan.new
+    if request.post? and @plan.save
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @plan }
+      end
     end
   end
 

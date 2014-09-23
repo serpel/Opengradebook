@@ -155,22 +155,18 @@ class NotasController < ApplicationController
   # GET /notas/by_grade/14
   def get_grades_notes
     begin
-      @course_id = params[:id].nil? ? 0:params[:id]
+      batch_id = params[:id]
 
-      @batch = Batch.active.find(@course_id)
-      @batch = @batch.nil? ? ([]):@batch
-
-      @subjects = @batch.subjects
-      @subjects = @subjects.nil? ? ([]):@subjects
-
-      @students = Student.find_all_by_batch_id(@batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
-      @students = @students.nil? ? ([]):@students
-
-      render(:update) { |page| page.replace_html 'students', :partial => 'notes_by_grade' }
-
+      if !batch_id.nil?
+        @batch = Batch.find(batch_id)
+        @subjects = @batch.subjects
+        @students = Student.find_all_by_batch_id(@batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
+        render(:update) { |page| page.replace_html 'students', :partial => 'notes_by_grade' }
+      end
     rescue Exception => e
-      flash[:notice] = "Error: Something Wrong, 'get_grades_notes': " + @course_id.to_s + "\r\nDetails : " + e.to_s
-      redirect_to :controller => "user", :action => "dashboard"
+      flash[:notice] = "Error: Something Wrong, 'get_grades_notes': " + batch_id.to_s + "\r\nDetails : " + e.to_s
+      return
+      #redirect_to :controller => "user", :action => "dashboard"
     end
   end
 
@@ -178,34 +174,31 @@ class NotasController < ApplicationController
     begin
       employee = Employee.find_by_employee_number(current_user.username)
       subjects = employee.subjects.select { |s| s.is_deleted == false }
-      batche_ids = subjects.map { |a| a.batch_id }.uniq
-      batches = Batch.find_all_by_id(batche_ids, :conditions => { :is_deleted => false})
-      course_ids = batches.map { |b| b.course_id }.uniq
-      @courses = Course.find_all_by_id(course_ids, :conditions => { :is_deleted => false})
+      batch_ids = subjects.map { |a| a.batch_id }.uniq
+      @batches = Batch.find_all_by_id(batch_ids, :conditions => { :is_deleted => false})
+      #course_ids = batches.map { |b| b.course_id }.uniq
+      #@courses = Course.find_all_by_id(course_ids, :conditions => { :is_deleted => false})
     rescue Exception => e
       flash[:notice] = "Error: getting students grades, contact Admin! Details: "+ e.to_s
-      redirect_to :controller => "user", :action => "dashboard"
+      #redirect_to :controller => "user", :action => "dashboard"
+      return
     end
   end
 
   def export_csv
+      batch_id = params[:id]
 
-      course_id = params[:id].nil? ? 0:params[:id]
+      if !batch_id.nil?
+        @batch = Batch.find(batch_id)
+        @subjects = @batch.subjects
+        @students = Student.find_all_by_batch_id(@batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
 
-      @batch = Batch.active.find(course_id)
-      @batch = @batch.nil? ? ([]):@batch
-
-      @subjects = @batch.subjects
-      @subjects = @subjects.nil? ? ([]):@subjects
-
-      @students = Student.find_all_by_batch_id(@batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
-      @students = @students.nil? ? ([]):@students
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xls { render :template => 'notas/show.rhtml',:name => 'test' }
-      format.pdf { render :template => 'notas/show.rhtml' }
-    end
+        respond_to do |format|
+          format.html # index.html.erb
+          format.xls { render :template => 'notas/show.rhtml.erb',:name => 'test' }
+          format.pdf { render :template => 'notas/show.rhtml.erb' }
+        end
+      end
   end
 
   # DELETE /notas/1

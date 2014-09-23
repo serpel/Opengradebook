@@ -44,21 +44,21 @@ $('table tr').last().addClass('row-last');
 		<% @students.each do |student| %>
 		<tr class="tr-read-<%= cycle('odd', 'even') %>">
 			<td class="col-1" style="text-transform:capitalize">
-                           <%= student.first_and_last_name %>
+                <%= student.first_and_last_name %>
 			</td>
-                        <% avg = 0 %>
-			<% @subjects.each do |subject| %>
-                           <% nota = student.notas.find_by_subject_id(subject) %>
-                             <td class="col-1"><%= !nota.nil? ? nota.total_parcial(1) : 0.0 %></td>
-                             <td class="col-1"><%= !nota.nil? ? nota.total_parcial(2) : 0.0 %></td>
-                             <td class="col-1"><%= !nota.nil? ? nota.total_parcial(3) : 0.0 %></td>
-                             <td class="col-1"><%= !nota.nil? ? nota.total_parcial(4) : 0.0 %></td>
-                             <% avg += !nota.nil? ? nota.total_average : 0 %>
-                        <% end %>
-                       <td class="col-1"><%= (avg / (@subjects.count)).round 1 %></td>
+          <% avg = 0 %>
+          <% @subjects.each do |subject| %>
+              <% nota = student.notas.find_by_subject_id(subject) %>
+              <td class="col-1"><%= !nota.nil? ? nota.total_parcial(1) : 0.0 %></td>
+              <td class="col-1"><%= !nota.nil? ? nota.total_parcial(2) : 0.0 %></td>
+              <td class="col-1"><%= !nota.nil? ? nota.total_parcial(3) : 0.0 %></td>
+              <td class="col-1"><%= !nota.nil? ? nota.total_parcial(4) : 0.0 %></td>
+              <% avg += !nota.nil? ? nota.total_average : 0 %>
+          <% end %>
+          <td class="col-1"><%= (avg / (@subjects.count)).round %></td>
 		</tr>
-               <% end %>
-           </tbody>
+        <% end %>
+      </tbody>
 	</table>
         </div>
 </div>

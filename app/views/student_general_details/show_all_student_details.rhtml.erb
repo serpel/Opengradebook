@@ -35,7 +35,7 @@ $('table tr').last().addClass('row-last');
        </tr>
       </thead>
       <tbody>
-        <% @student_scores.each do |student_note| %>
+        <% @scores.each do |student_note| %>
           <tr class="tr-read-<%= cycle('odd', 'even') %>">
             <% sub = Subject.find(student_note.subject_id) %>
             <td><%= sub.name %></td>
@@ -56,7 +56,7 @@ $('table tr').last().addClass('row-last');
             <td><%= student_note.acumulado_4.to_f  %></td>
             <td><%= total_4 %></td>
             <td><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
-            <% if @student_scores.count == 0 %>
+            <% if @scores.count == 0 %>
               <% 4.times do |l| %>
                 <td colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></td>
               <% end %>
@@ -122,7 +122,7 @@ $('table tr').last().addClass('row-last');
         </tr>
       </thead>
       <tbody>
-      <% @st.each do |st| %>
+      <% @details.each do |st| %>
         <tr class="tr-read-even">
           <td class="col-0"><%=h st.period %></td>
           <td class="col-0"><%=h st.daysAbsent %></td>
@@ -151,7 +151,7 @@ $('table tr').last().addClass('row-last');
       </tr>
       </thead>
       <tbody>
-      <% @st.each do |st| %>
+      <% @details.each do |st| %>
         <tr class="tr-read-even">
           <td class="col-0"><%=h st.puntuality %></td>
           <td class="col-0"><%=h st.effort %></td>
@@ -178,7 +178,7 @@ $('table tr').last().addClass('row-last');
         </tr>
       </thead>
       <tbody>
-      <% @st.each do |st| %>
+      <% @details.each do |st| %>
         <tr class="tr-read-even">
           <td class="col-0"><%=h st.period %></td>
           <td class="col-0"><%=h st.demerit %></td>
@@ -198,7 +198,7 @@ $('table tr').last().addClass('row-last');
       </tr>
     </thead>
     <tbody>
-      <% @st.each do |st| %>
+      <% @details.each do |st| %>
         <tr class="tr-read-even">
           <td><%=h st.period%></td>
           <td><%=h st.comment%></td>

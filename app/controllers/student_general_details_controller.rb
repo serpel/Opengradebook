@@ -50,39 +50,39 @@ class StudentGeneralDetailsController < ApplicationController
     i += 2
   end
 
+
   def show_all_student_details
-    begin
-      @id = params[:id]
       @student = Student.find(params[:id])
-      @student_scores = @student.notas
-      @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, params[:id])
+      @details = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
+      if !@details.nil?
+        @scores = []
+        subjects = @student.batch.subjects.map{ |s| s.id }
+        @scores = @student.notas.select { |n| subjects.include? n.subject_id }
+        @course = @student.batch.course
+        @time = Time.new
 
-      batch = @student.batch
-      @course = batch.course
-      @time = Time.new
-
-      @attendance = []
-      @attendance << ["Period", "Days Absent", "Days Tardy", "Demerit"]
-      @behavior = []
-      @behavior << ["Punctuality", "Effort", "Work Order And Appearance", "Social Skills", "Morals", "Conduct" ]
+        @attendance = []
+        @attendance << ["Period", "Days Absent", "Days Tardy", "Demerit"]
+        @behavior = []
+        @behavior << ["Punctuality", "Effort", "Work Order And Appearance", "Social Skills", "Morals", "Conduct" ]
       
-      @st.each do |detail|
-        @attendance << [detail.period, detail.daysAbsent, detail.daysTardy, detail.demerit]
-        @behavior << [detail.puntuality.upcase, detail.effort.upcase,
-                      detail.workOrderAndAppearance.upcase, detail.socialSkills.upcase,
-                      detail.morals.upcase, detail.conduct.upcase]
-      end
-      @attendance = @attendance.transpose
-      @behavior = @behavior.transpose
+        @details.each do |detail|
+          @attendance << [detail.period, detail.daysAbsent, detail.daysTardy, detail.demerit]
+          @behavior << [detail.puntuality.upcase, detail.effort.upcase,
+                        detail.workOrderAndAppearance.upcase, detail.socialSkills.upcase,
+                        detail.morals.upcase, detail.conduct.upcase]
+        end
+        @attendance = @attendance.transpose
+        @behavior = @behavior.transpose
       
-      respond_to do |format|
-        format.html
-        format.xls { render :template => 'student_general_details/show_all_student_details.rhtml.erb' }
+        respond_to do |format|
+          format.html
+          format.xls { render :template => 'student_general_details/show_all_student_details.rhtml.erb' }
+        end
+      else
+        flash[:notice] = 'StudentGeneralDetail not exist'
+        redirect_to :back
       end
-    rescue Exception => e
-      flash[:notice] = "Error, details: " + e.to_s
-      redirect_to :controller => "user", :action => "dashboard"
-    end
   end
 
   # GET /student_general_details/new

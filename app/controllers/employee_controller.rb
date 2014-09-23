@@ -12,9 +12,9 @@ class EmployeeController < ApplicationController
       @current_user = current_user
       @employee = Employee.find_by_employee_number(@current_user.username)
       @my_subjects = @employee.subjects.select { |s| s.is_deleted == false }
+
       b = @my_subjects.map { |a| a.batch_id }.uniq
       @batches = Batch.find_all_by_id(b, :conditions => { :is_deleted => false, :is_active => true })
-
       if b.count > 0
         @my_subjects = @my_subjects.select { |s| s.batch_id == b.first.to_i }
       end
