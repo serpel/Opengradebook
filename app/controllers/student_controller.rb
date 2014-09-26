@@ -660,9 +660,9 @@ class StudentController < ApplicationController
     if user.employee?
       employee = Employee.find_by_user_id(user)
       courses = Course.find_all_by_school_id(employee.school_id)
-      @batches = Batch.find_all_by_course_id(courses)
+      @batches = Batch.find_all_by_course_id_and_is_deleted_and_is_active(courses,false,true).sort_by { |b| b.name and b.id}
     else
-      @batches = Batch.active.select { |e| e.is_deleted == false }.sort_by { |s| s.id }
+      @batches = Batch.active.select { |e| e.is_deleted == false and e.is_active == true }.sort_by { |s| s.id }
     end
   end
 

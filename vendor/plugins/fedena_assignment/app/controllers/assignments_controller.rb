@@ -14,10 +14,12 @@ class AssignmentsController < ApplicationController
         redirect_to :controller => "user", :action => "dashboard"
       end
     elsif @current_user.student?
-      @assignments = Assignment.for_student current_user.student_record.id
+      assignments = Assignment.for_student current_user.student_record.id
+      @assignments = assignments.select { |a| a.duedate >= (Time.now - 20.day) }
     elsif @current_user.parent?      
       st = Student.find_by_admission_no current_user.parent_record.admission_no 
-      @assignments = Assignment.for_student st.id
+      assignments = Assignment.for_student st.id
+      @assignments = assignments.select { |a| a.duedate >= (Time.now - 20.day) }
     end
   end
 
