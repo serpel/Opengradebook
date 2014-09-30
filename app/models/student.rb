@@ -284,7 +284,8 @@ class Student < ActiveRecord::Base
   end
   
   def check_dependency
-    return true if self.finance_transactions.present? or self.graduated_batches.present? or self.attendances.present? or self.finance_fees.present?
+    return true if self.finance_transactions.present? or self.attendances.present? or self.finance_fees.present?
+    #or self.graduated_batches.present?
     return true if FedenaPlugin.check_dependency(self,"permanant").present?
     return false
   end

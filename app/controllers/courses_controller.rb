@@ -24,7 +24,7 @@ class CoursesController < ApplicationController
   end
 
   def manage_course
-    @courses = Course.active
+    @courses = Course.active.sort_by { |a| a.code }
   end
 
   def manage_batches
