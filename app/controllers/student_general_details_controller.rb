@@ -77,7 +77,7 @@ class StudentGeneralDetailsController < ApplicationController
       
         respond_to do |format|
           format.html
-          format.xls { render :template => 'student_general_details/show_all_student_details.rhtml.erb' }
+          format.xls { render :template => 'show_all_student_details.rhtml.erb' }
         end
       else
         flash[:notice] = 'StudentGeneralDetail not exist'
