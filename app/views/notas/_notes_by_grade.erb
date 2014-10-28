@@ -19,7 +19,7 @@ $('table tr').last().addClass('row-last');
 </div>
 
 <div id="page-yield">
-  <div><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'notas', :action => 'export_csv', :id=>@course_id.to_s+'.xls' } %></div>
+  <div><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'notas', :action => 'export_csv', :id=>param[:id].to_s+'.xls' } %></div>
 
 	<div id="application-list" class="wrapper">
           <table id="listing" cellpadding="1" cellspacing="1">
