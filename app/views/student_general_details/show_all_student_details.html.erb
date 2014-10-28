@@ -64,7 +64,7 @@ $('table tr').last().addClass('row-last');
     <div id="buttoncontainer" style="margin:15px">
     <%=  link_to  "#{t('add')}", :controller => "student_general_details",
                  :action => "new", :student_id => params[:id], :batch_id => params[:batch_id] %>
-    |<%= link_to "#{t('export')}", {:controller => 'student_general_details', :action => 'show_all_student_details', :id=>@id.to_s+'.xls' } %>
+    |<%= link_to "#{t('export')}", {:controller => 'student_general_details', :action => 'show_all_student_details', :id=>params[:id].to_s+'.xls' } %>
     |<a href="#" onclick="printPage('printBlock');"><%=h "#{t('print')}" %></a>
   </div>
 </div>
