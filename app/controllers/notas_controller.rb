@@ -4,11 +4,11 @@ class NotasController < ApplicationController
   # GET /notas
   # GET /notas.xml
   def index
-    @notas = Nota.find 14
+    @notas = Nota.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.csv  { render :text => @notas.to_csv }
+      format.xml  { render :xml => @notas }
     end
   end
 
