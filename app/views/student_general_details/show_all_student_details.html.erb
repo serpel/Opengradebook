@@ -122,7 +122,7 @@ $('table tr').last().addClass('row-last');
       <p>Date / Fecha: <b><%= @time.strftime("%d/%m/%Y") %></b></p>
     </div>
 
-    <hr class="division-line"></hr>
+    <hr class="division-line"/>
 
     <div class="leftTable"> 
 
@@ -228,13 +228,16 @@ $('table tr').last().addClass('row-last');
                   <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
                 <% end %>
               <% end %>
-            </tr>
+              <% if permitted_to? :destroy %>
+                <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
+              <% end %>
+               </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 
-   <hr class="division-line"></hr>
+   <hr class="division-line"/>
     
     <div class="line">
      <table id="listing" width="400px">
@@ -255,7 +258,7 @@ $('table tr').last().addClass('row-last');
     </table>
     </div>
     
-   <hr class="division-line"></hr>
+   <hr class="division-line"/>
     <div class="leftTable" style="width:250px;margin:15px">
       <p>Principal / Director:</p>
     </div>

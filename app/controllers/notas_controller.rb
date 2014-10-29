@@ -15,7 +15,7 @@ class NotasController < ApplicationController
   # GET /notas/1
   # GET /notas/1.xml
   def show
-    @nota = Nota.find(params[:id])
+    @notas = Nota.find_all_by_student_id(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -208,7 +208,7 @@ class NotasController < ApplicationController
     @nota.destroy
 
     respond_to do |format|
-      format.html { redirect_to(notas_url) }
+      format.html { redirect_to(:back) }
       format.xml  { head :ok }
     end
   end

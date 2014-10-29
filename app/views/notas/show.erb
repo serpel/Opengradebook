@@ -1,0 +1,41 @@
+<h1>Listing notes</h1>
+
+<table>
+  <tr>
+    <th>Student</th>
+    <th>Course</th>
+    <th>Subject</th>
+    <th>Examen 1</th>
+    <th>Acumulado 1</th>
+    <th>Examen 2</th>
+    <th>Acumulado 2</th>
+    <th>Examen 3</th>
+    <th>Acumulado 3</th>
+    <th>Examen 4</th>
+    <th>Acumulado 4</th>
+  </tr>
+
+  <% @notas.each do |grade| %>
+      <tr>
+        <% student = Student.find_by_id(grade.student_id) %>
+        <% subject = Subject.find_by_id(grade.subject_id) %>
+        <% batch = subject.batch unless subject.nil? %>
+        <% course = batch.course unless batch.nil? %>
+        <td><%=h student.full_name unless student.nil? %></td>
+        <td><%=h course.full_name unless course.nil? %></td>
+        <td><%=h subject.name unless subject.nil? %></td>
+        <td><%=h grade.examen_1 %></td>
+        <td><%=h grade.acumulado_1 %></td>
+        <td><%=h grade.examen_2 %></td>
+        <td><%=h grade.acumulado_2 %></td>
+        <td><%=h grade.examen_3 %></td>
+        <td><%=h grade.acumulado_3 %></td>
+        <td><%=h grade.examen_4 %></td>
+        <td><%=h grade.acumulado_4 %></td>
+        <!--<td><%= link_to 'Show', grade %></td>-->
+        <td><%= link_to 'Destroy', grade, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br />
