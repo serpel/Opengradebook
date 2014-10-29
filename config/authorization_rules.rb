@@ -847,7 +847,7 @@ authorization do
   end
 
   role :subject_master do
-    has_permission_on [:notas], :to => [:index,:show,:destroy]
+    has_permission_on [:notas], :to => [:destroy]
     has_permission_on [:student_general_details], :to => [:destroy]
     has_permission_on [:configuration], :to => [:index]
     has_permission_on [:student], :to => [:electives, :assign_students, :unassign_students, :assign_all_students, :unassign_all_students]
