@@ -37,6 +37,11 @@ class NotasController < ApplicationController
   # GET /notas/1/edit
   def edit
     @nota = Nota.find(params[:id])
+
+    if request.post? and @plan.update_attributes(params[:nota])
+      flash[:notice] = "#{t('flash3')}"
+      redirect_to :back
+    end
   end
 
   # POST /notas

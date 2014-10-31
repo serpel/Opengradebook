@@ -49,11 +49,11 @@ class PlansController < ApplicationController
 
   # GET /plans/1/edit
   def edit
-    begin
-      @plan = Plan.find(params[:id])
-    rescue Exception => e
-       flash[:notice] = " Error: plan can't be edited! " + e.to_s
-       redirect_to :controller => "employee", :action => "get_subjects", :status => 303
+    @plan = Plan.find(params[:id])
+
+    if request.post? and @plan.update_attributes(params[:plan])
+      flash[:notice] = "#{t('flash3')}"
+      redirect_to :back
     end
   end
 
@@ -125,6 +125,11 @@ class PlansController < ApplicationController
     end
   end
 
+  # /plans/preview
+  def preview
+
+  end
+
   def export
       id = params[:id].nil? ? 0:params[:id]
       @plan = Plan.find(id)
@@ -135,11 +140,73 @@ class PlansController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      format.csv { render :template => 'plans/show.rhtml' }
       format.xls { render :template => 'plans/show.rhtml' }
       format.xml { render :template => 'plans/show.rhtml' }
     end
   end
 
+  def import2
+    if request.post? && params[:file].present?
+      file = params[:file].read
+      csv_data = get_data_at( CSV.parse( file ), 6, 7, 100 )
+
+      csv_data.each do |data|
+        student = Student.find_by_name(data[:student_id])
+        subject = Subject.find_by_code(data[:subject_id])
+
+        nota = Nota.find_by_subject_id_and_student_id(data[:subject_id],student.id) || Nota.new
+        nota.examen_1 = data[:examen_1].to_f
+        nota.examen_2 = data[:examen_2].to_f
+        nota.examen_3 = data[:examen_3].to_f
+        nota.examen_4 = data[:examen_4].to_f
+        nota.acumulado_1 = data[:acumulado_1].to_f
+        nota.acumulado_2 = data[:acumulado_2].to_f
+        nota.acumulado_3 = data[:acumulado_3].to_f
+        nota.acumulado_4 = data[:acumulado_4].to_f
+        nota.subject_id = data[:subject_id].to_i unless nota.subject_id.nil?
+        nota.student_id = data[:student_id].to_i unless nota.student_id.nil?
+
+        if !nota.save
+          if student.nil? && subject.nil?
+            flash[:notice] += "invalid student: #{data[:student_id]}, in subject: #{data[:subject_id]}\n"
+          else
+            flash[:notice] += "invalid student: #{student.full_name}, in #{subject.name}\n"
+          end
+        end
+      end
+
+      #print errors
+      if !flash[:notice].to_s.empty?
+        redirect_to :back
+      end
+    end
+  end
+
+
+
+  require 'spreadsheet'
+  def import
+
+    if request.post? && params[:file].present?
+      uploaded_io = params[:file]
+      filepath = ""
+      File.open(Rails.root.join('public', 'uploads', "#{uploaded_io.original_filename}"), 'w') do |file|
+        file.write(uploaded_io.read)
+        filepath = file.path
+      end
+
+      book = Spreadsheet.open filepath
+      sheet ||= book.worksheet 0
+      sheet.each do |row|
+        row[0] = 2
+      end
+      book.write filepath
+
+      redirect_to :back
+    end
+
+  end
   # DELETE /plans/1
   # DELETE /plans/1.xml
   def destroy
@@ -150,5 +217,32 @@ class PlansController < ApplicationController
       format.html { redirect_to(plans_url) }
       format.xml  { head :ok }
     end
+  end
+
+  private
+  def get_data_at(csv_array, header_row, begin_number, end_number)  # makes arrays of hashes out of CSV's arrays of arrays
+    result = []
+    return result if csv_array.nil? || csv_array.empty? || begin_number < 0 ||
+        end_number < begin_number
+
+    headerA = csv_array.fetch(header_row)
+    headerA.map!{|x| x.downcase.to_sym }
+    count = 0
+    csv_array.each do |row|
+      result << Hash[ headerA.zip(row) ] if count >= begin_number and count <= end_number
+      count+=1
+    end
+    return result
+  end
+
+  def get_data(csv_array)  # makes arrays of hashes out of CSV's arrays of arrays
+    result = []
+    return result if csv_array.nil? || csv_array.empty?
+    headerA = csv_array.shift             # remove first array with headers from array returned by CSV
+    headerA.map!{|x| x.downcase.to_sym }  # make symbols out of the CSV headers
+    csv_array.each do |row|               #    convert each data row into a hash, given the CSV headers
+      result << Hash[ headerA.zip(row) ]  #    you could use HashWithIndifferentAccess here instead of Hash
+    end
+    return result
   end
 end

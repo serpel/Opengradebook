@@ -28,6 +28,7 @@ $('table tr').last().addClass('row-last');
 
 <div id="page-yield">
   <div><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'plans', :action => 'export', :id=>@id.to_s+'.xls' } %></div>
+  <div><%= link_to "#{t('import_file')}", {:controller => 'plans', :action => 'import', :id => @id } %></div>
   <div id="application-list" class="wrapper">
     <table id="listing" cellpadding="1" cellspacing="1">
        <thead>

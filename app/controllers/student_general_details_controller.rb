@@ -90,9 +90,9 @@ class StudentGeneralDetailsController < ApplicationController
   # GET /student_general_details/new.xml
   def new
     @student_general_details = StudentGeneralDetail.new
-    
+
     respond_to do |format|
-      format.html 
+      format.html
       format.xml  { render :xml => @student_general_details }
     end
   end
@@ -100,6 +100,11 @@ class StudentGeneralDetailsController < ApplicationController
   # GET /student_general_details/1/edit
   def edit
     @student_general_details = StudentGeneralDetail.find(params[:id])
+
+    if request.post? and @plan.update_attributes(params[:student_general_details])
+      flash[:notice] = "#{t('flash3')}"
+      redirect_to :back
+    end
   end
 
   # POST /student_general_details
@@ -110,11 +115,8 @@ class StudentGeneralDetailsController < ApplicationController
     respond_to do |format|
       if @student_general_details.save
         flash[:notice] = 'StudentGeneralDetail was successfully created.'
-        format.html { redirect_to @student_general_details }
+        format.html { redirect_to :back }
         format.xml  { render :xml => @student_general_details, :status => :created, :location => @student_general_details }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @student_general_details.errors, :status => :unprocessable_entity }
       end
     end
   end
