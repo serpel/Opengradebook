@@ -2,8 +2,7 @@
 
 <div id="content-header">
   <%= image_tag("/images/student_details/student_details_logo.jpg") %>
-  <h1><%= t('student_details') %> </h1>
-  <h3><%= t('view_details') %> </h3>
+  <h1><%= t('import_header') %> </h1>
   <div id="app-back-button">
     <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
   </div>
@@ -15,15 +14,32 @@
       <p class="flash-msg"> <%= flash[:notice] %> </p>
   <% end %>
 
+  <% if @errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(errors.count, "error") %> prohibited this import from completing:</h2>
+        <ul>
+          <% @errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+  <% end %>
+
+  <p><%=h "#{t('import_text')}" %> </p>
+  <ul>
+    <% ["ID","#{t('exam')}","#{t('acum')}"].each do |column| %>
+            <li>
+              <strong><%= column %></strong> - <%=h "#{t('number_type')}" %>
+            </li>
+    <% end %>
+  </ul>
+
   <% form_tag({:action => 'import'}, {:multipart => true}) do %>
 
-      <div class="label-field-pair-select-class">
-        <label><%= t('import_file') %></label>
         <div class="text-input-bg">
-          <%= file_field_tag 'file', :size => 60%></div>
-      </div>
-
-      <%= submit_tag t('import_file'),:class => "submit_button" %>
-
+          <%= file_field_tag 'file', :size => 60%>
+          <%= submit_tag t('import_file'),:class => "submit_button" %>
+        </div>
   <%end%>
+
 </div>

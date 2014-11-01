@@ -2,6 +2,10 @@ class Nota < ActiveRecord::Base
 	belongs_to :student
 	belongs_to :subject
 
+  #attr_accessible :examen_1, :examen_2, :examen_3, :examen_4,
+  #                :acumulado_1, :acumulado_2, :acumulado_3, :acumulado_4,
+  #                :subject_id, :student_id
+
   validates_presence_of :examen_1, :examen_2, :examen_3, :examen_4,
                         :acumulado_1, :acumulado_2, :acumulado_3, :acumulado_4,
                         :subject_id, :student_id

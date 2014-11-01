@@ -125,11 +125,6 @@ class PlansController < ApplicationController
     end
   end
 
-  # /plans/preview
-  def preview
-
-  end
-
   def export
       id = params[:id].nil? ? 0:params[:id]
       @plan = Plan.find(id)
@@ -183,29 +178,64 @@ class PlansController < ApplicationController
     end
   end
 
+  def copy_file_to_public(filename)
+    File.open(Rails.root.join('public', 'uploads', "#{filename.original_filename}"), 'w') do |file|
+      file.write(filename.read)
+      file.path
+    end
+  end
 
+  def delete_file(filepath)
+    File.delete filepath
+    puts "removed file: #{filepath}"
+  end
 
   require 'spreadsheet'
   def import
 
+    @errors ||= []
     if request.post? && params[:file].present?
       uploaded_io = params[:file]
-      filepath = ""
-      File.open(Rails.root.join('public', 'uploads', "#{uploaded_io.original_filename}"), 'w') do |file|
-        file.write(uploaded_io.read)
-        filepath = file.path
-      end
+      file_path = copy_file_to_public uploaded_io
 
-      book = Spreadsheet.open filepath
+      book = Spreadsheet.open file_path
+      sheet ||= book.worksheet 1
+
+      #puts sheet.inspect
+      subject_id = sheet.rows[1][0] if sheet.rows.size > 0
+
+      sheet = nil
       sheet ||= book.worksheet 0
-      sheet.each do |row|
-        row[0] = 2
+      sheet.each 2 do |row|
+        student = Student.find_by_id(row[0])
+        nota = Nota.find_by_subject_id_and_student_id(subject_id,row[0]) || Nota.new
+        nota.examen_1 = row[2].to_f
+        nota.examen_2 = row[5].to_f
+        nota.examen_3 = row[8].to_f
+        nota.examen_4 = row[12].to_f
+        nota.acumulado_1 = row[3].to_f
+        nota.acumulado_2 = row[6].to_f
+        nota.acumulado_3 = row[9].to_f
+        nota.acumulado_4 = row[13].to_f
+        nota.subject_id = subject_id if nota.subject_id.nil?
+        nota.student_id = row[0].to_i if nota.student_id.nil?
+        nota.save unless student.nil?
+        (@errors.push nota.errors) unless nota.errors.empty?
       end
-      book.write filepath
-
+      delete_file file_path
+      flash[:notice] = "#{t('completed_text')}\n"
       redirect_to :back
     end
+  end
 
+  def temp
+    if !nota.save
+      if student.nil? && subject.nil?
+        flash[:notice] += "invalid student: #{row[0]}, in subject: #{subject_id}\n"
+      else
+        flash[:notice] += "invalid student: #{student.full_name}, in #{subject.name}\n"
+      end
+    end
   end
   # DELETE /plans/1
   # DELETE /plans/1.xml

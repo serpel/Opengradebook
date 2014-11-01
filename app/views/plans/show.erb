@@ -97,11 +97,22 @@ $('table tr').last().addClass('row-last');
                <% end %>
                <td class="col-1"><%= nota != nil ? nota.total_average.round(1) : 0.0 %></td>
 
-               <% if nota %>
-                  <td class="col-1"><%= link_to "#{t('grade_text')}", edit_nota_path(nota.id), :class => "example" %></td>
+               <% details = StudentGeneralDetail.find_by_batch_id_and_student_id(student.batch_id,student.id)  %>
+               <td class="col-1">
+               <% if details %>
+                    <%= link_to  "#{t('detail')}", :controller => "student_general_details",
+                             :action => "show_all_student_details", :id=>student.id, :student_id => student.id, :batch_id => student.batch_id %>
                <% else %>
-                  <td class="col-1"><%= link_to "#{t('grade_text')}", new_student_score_path(:id => @plan.subject, :id2 => student.id), :class => "example" %></td>
+                      <%= link_to  "#{t('detail')}", :controller => "student_general_details",
+                                   :action => "new", :student_id => student.id, :batch_id => student.batch_id %>
                <% end %>
+               |
+               <% if nota %>
+                  <%= link_to "#{t('grade_text')}", edit_nota_path(nota.id), :class => "example" %>
+               <% else %>
+                  <%= link_to "#{t('grade_text')}", new_student_score_path(:id => @plan.subject, :id2 => student.id), :class => "example" %>
+               <% end %>
+               </td>
          </tr>
       <% end %>
       </tbody>

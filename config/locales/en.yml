@@ -234,6 +234,7 @@ en: # locale
         select_a_batch: "Select a batch"
 
       plans:
+        exam: "Exam"
         exam1: "Exam 1"
         exam2: "Exam 2"
         exam3: "Exam 3"
@@ -249,7 +250,12 @@ en: # locale
         partial2: "P2"
         partial3: "P3"
         partial4: "P4"
+        number_type: "Number"
         grade_text: "grade"
+        import_text: "The following columns are required."
+        completed_text: "Successfully imported."
+        import_header: "Grade import"
+        detail: "Detail"
 
     errors:
       template:

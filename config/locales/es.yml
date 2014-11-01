@@ -2329,6 +2329,7 @@ es: # locale
     select_a_batch: "Selecctionar Curso"
 
   plans:
+    exam: "Examen"
     exam1: "Examen 1"
     exam2: "Examen 2"
     exam3: "Examen 3"
@@ -2345,7 +2346,12 @@ es: # locale
     partial2: "P2"
     partial3: "P3"
     partial4: "P4"
-    grade_text: "calificar"
+    number_type: "Numero"
+    grade_text: "Calificar"
+    import_text: "Las siguientes columnas son requeridas."
+    completed_text: "Archivo importado con exito."
+    import_header: "Importacion de calificaciones"
+    detail: "Detalle"
 
   student:
     partial1: "P1"
