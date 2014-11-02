@@ -27,8 +27,7 @@ $('table tr').last().addClass('row-last');
 </div>
 
 <div id="page-yield">
-  <div><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'plans', :action => 'export', :id=>@id.to_s+'.xls' } %></div>
-  <div><%= link_to "#{t('import_file')}", {:controller => 'plans', :action => 'import', :id => @id } %></div>
+  <div><p><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'plans', :action => 'export', :id=>@id } %> | <%= link_to "#{t('import_file')}", {:controller => 'plans', :action => 'import', :id => @id } %></p></div>
   <div id="application-list" class="wrapper">
     <table id="listing" cellpadding="1" cellspacing="1">
        <thead>
@@ -54,7 +53,7 @@ $('table tr').last().addClass('row-last');
             <td class="col-1"><%= @plan.acumulado_3.nil? ? 0:@plan.acumulado_3 %></td>
             <td class="col-1"><%= @plan.examen_4.nil? ? 0:@plan.examen_4 %></td>
             <td class="col-1"><%= @plan.acumulado_4.nil? ? 0:@plan.acumulado_4 %></td>
-            <td class="col-1"><%= link_to 'Editar', edit_plan_path(@plan) %></td>
+            <td class="col-1"><%= link_to "#{t('edit')}", edit_plan_path(@plan) %></td>
           </tr>
       </tbody>
     </table>

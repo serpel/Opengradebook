@@ -2370,7 +2370,7 @@ authorization do
   # employee -privileges
   role :employee do
     has_permission_on [:student_general_details], :to => [:show, :edit, :new, :create,:update, :destroy, :view_details, :view_all, :get_students, :show_all_student_details, :delete]
-    has_permission_on [:plans], :to => [:index, :show, :preview, :import, :export, :edit, :new, :create,:update, :destroy]
+    has_permission_on [:plans], :to => [:index, :show, :import, :export, :edit, :new, :create,:update, :destroy]
     has_permission_on [:notas], :to => [:by_grade, :get_grades_notes, :export_csv, :export, :to_csv]
     has_permission_on [:employee],
       :to => [

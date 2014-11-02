@@ -253,6 +253,7 @@ en: # locale
         number_type: "Number"
         grade_text: "grade"
         import_text: "The following columns are required."
+        export_text: "Successfully esported"
         completed_text: "Successfully imported."
         import_header: "Grade import"
         detail: "Detail"

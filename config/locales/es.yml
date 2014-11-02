@@ -2349,6 +2349,7 @@ es: # locale
     number_type: "Numero"
     grade_text: "Calificar"
     import_text: "Las siguientes columnas son requeridas."
+    export_text: "Exportacion exitosa"
     completed_text: "Archivo importado con exito."
     import_header: "Importacion de calificaciones"
     detail: "Detalle"

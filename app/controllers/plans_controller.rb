@@ -125,7 +125,7 @@ class PlansController < ApplicationController
     end
   end
 
-  def export
+  def export2
       id = params[:id].nil? ? 0:params[:id]
       @plan = Plan.find(id)
       @plan = @plan.nil? ? ([]):@plan
@@ -141,53 +141,74 @@ class PlansController < ApplicationController
     end
   end
 
-  def import2
-    if request.post? && params[:file].present?
-      file = params[:file].read
-      csv_data = get_data_at( CSV.parse( file ), 6, 7, 100 )
+  def export
+    id = params[:id]
 
-      csv_data.each do |data|
-        student = Student.find_by_name(data[:student_id])
-        subject = Subject.find_by_code(data[:subject_id])
+    if params[:id].present?
+      plan ||= Plan.find(id)
+      students ||= Student.find_all_by_batch_id(plan.subject.batch,
+                                           :conditions => {:is_deleted => false},
+                                           :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
 
-        nota = Nota.find_by_subject_id_and_student_id(data[:subject_id],student.id) || Nota.new
-        nota.examen_1 = data[:examen_1].to_f
-        nota.examen_2 = data[:examen_2].to_f
-        nota.examen_3 = data[:examen_3].to_f
-        nota.examen_4 = data[:examen_4].to_f
-        nota.acumulado_1 = data[:acumulado_1].to_f
-        nota.acumulado_2 = data[:acumulado_2].to_f
-        nota.acumulado_3 = data[:acumulado_3].to_f
-        nota.acumulado_4 = data[:acumulado_4].to_f
-        nota.subject_id = data[:subject_id].to_i unless nota.subject_id.nil?
-        nota.student_id = data[:student_id].to_i unless nota.student_id.nil?
+      book = Spreadsheet::Workbook.new
+      sheet1 = book.create_worksheet :name => "#{t('grade')}"
 
-        if !nota.save
-          if student.nil? && subject.nil?
-            flash[:notice] += "invalid student: #{data[:student_id]}, in subject: #{data[:subject_id]}\n"
-          else
-            flash[:notice] += "invalid student: #{student.full_name}, in #{subject.name}\n"
-          end
-        end
+      # format header
+      format = Spreadsheet::Format.new :size => 12,
+                                       :weight => :bold,
+                                       :pattern => 1,
+                                       :pattern_fg_color => :silver,
+                                       :bottom => :thin,
+                                       :top => :thin
+      #puts format.inspect
+      sheet1.row(0).default_format = format
+      sheet1.row(1).default_format = format
+
+      #header sheet1
+      sheet1.update_row 0, '','','','','P1','','','P2','','','P3','','','P4'
+      row = sheet1.row 1
+      row.push "#{t('id')}", "#{t('name')}"
+      4.times do |i|
+        row.push "#{t('exam'+(i+1).to_s)}"
+        row.push "#{t('acum'+(i+1).to_s)}"
+        row.push "#{t('total')}"
+      end
+      row.push "#{t('average')}"
+
+      #content
+      students.each_with_index do |student, i|
+        nota ||= student.notas.find_by_subject_id(plan.subject)
+        sheet1.update_row i+2, student.id, student.full_name,
+                          nota.examen_1, nota.acumulado_1, nota.total_parcial(1),
+                          nota.examen_2, nota.acumulado_2, nota.total_parcial(2),
+                          nota.examen_3, nota.acumulado_3, nota.total_parcial(3),
+                          nota.examen_4, nota.acumulado_4, nota.total_parcial(4),
+                          nota.total_average
       end
 
-      #print errors
-      if !flash[:notice].to_s.empty?
-        redirect_to :back
+      sheet2 = book.create_worksheet :name => "#{t('detail')}"
+      row = sheet2.row 0
+      row.push "#{t('subject_code')}", "#{t('subject_name')}"
+      4.times do |i|
+        row.push "#{t('exam'+(i+1).to_s)}"
+        row.push "#{t('acum'+(i+1).to_s)}"
       end
-    end
-  end
+      sheet2.update_row 1, plan.subject.id, plan.subject.name, plan.examen_1, plan.acumulado_1, plan.examen_2, plan.acumulado_2,
+                        plan.examen_3, plan.acumulado_3, plan.examen_4, plan.acumulado_4
 
-  def copy_file_to_public(filename)
-    File.open(Rails.root.join('public', 'uploads', "#{filename.original_filename}"), 'w') do |file|
-      file.write(filename.read)
-      file.path
-    end
-  end
+      t = DateTime.now
+      name = t.strftime("%Y%m%d")
+      full_path = create_full_path "#{plan.subject.name}-#{name}.xls"
+      book.write full_path
 
-  def delete_file(filepath)
-    File.delete filepath
-    puts "removed file: #{filepath}"
+      puts full_path
+      data = open(full_path)
+      send_data data.read, :filename => data.original_filename, :type=>"application/xls", :x_sendfile=>true
+      delete_file full_path
+
+      flash[:notice] = "#{t('export_text')}\n"
+      #redirect_to :back
+    end
   end
 
   require 'spreadsheet'
@@ -228,15 +249,6 @@ class PlansController < ApplicationController
     end
   end
 
-  def temp
-    if !nota.save
-      if student.nil? && subject.nil?
-        flash[:notice] += "invalid student: #{row[0]}, in subject: #{subject_id}\n"
-      else
-        flash[:notice] += "invalid student: #{student.full_name}, in #{subject.name}\n"
-      end
-    end
-  end
   # DELETE /plans/1
   # DELETE /plans/1.xml
   def destroy
@@ -250,6 +262,22 @@ class PlansController < ApplicationController
   end
 
   private
+  def copy_file_to_public(filename)
+    File.open(Rails.root.join('public', 'uploads', "#{filename.original_filename}"), 'w') do |file|
+      file.write(filename.read)
+      file.path
+    end
+  end
+
+  def create_full_path(name)
+    Rails.root.join('public', 'uploads', "#{name}")
+  end
+
+  def delete_file(fullpath)
+    File.delete fullpath
+    puts "removed file: #{fullpath}"
+  end
+
   def get_data_at(csv_array, header_row, begin_number, end_number)  # makes arrays of hashes out of CSV's arrays of arrays
     result = []
     return result if csv_array.nil? || csv_array.empty? || begin_number < 0 ||
