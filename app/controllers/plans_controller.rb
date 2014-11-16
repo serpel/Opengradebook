@@ -71,6 +71,7 @@ class PlansController < ApplicationController
         if total_1 == 100 and total_2 == 100 and total_3 == 100 and total_4 == 100
           respond_to do |format|
             if @plan.save
+              #TODO: Set to zero all students notes
               flash[:notice] = 'Ponderacion creada con exito.'
               format.html { redirect_to(@plan) }
               format.xml  { render :xml => @plan, :status => :created, :location => @plan }
@@ -125,22 +126,6 @@ class PlansController < ApplicationController
     end
   end
 
-  def export2
-      id = params[:id].nil? ? 0:params[:id]
-      @plan = Plan.find(id)
-      @plan = @plan.nil? ? ([]):@plan
-
-      @st = Student.find_all_by_batch_id(@plan.subject.batch, :conditions => {:is_deleted => false}, :order => "lower(gender) asc, lower(first_name) asc, lower(last_name) asc")
-      @st = @st.nil? ? ([]):@st
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.csv { render :template => 'plans/show.rhtml' }
-      format.xls { render :template => 'plans/show.rhtml' }
-      format.xml { render :template => 'plans/show.rhtml' }
-    end
-  end
-
   def export
     id = params[:id]
 
@@ -177,7 +162,8 @@ class PlansController < ApplicationController
 
       #content
       students.each_with_index do |student, i|
-        nota ||= student.notas.find_by_subject_id(plan.subject)
+        nota = student.notas.find_by_subject_id(plan.subject)
+        nota = set_students_notes_equal_zero(plan.subject.id, student.id) if nota.nil?
         sheet1.update_row i+2, student.id, student.full_name,
                           nota.examen_1, nota.acumulado_1, nota.total_parcial(1),
                           nota.examen_2, nota.acumulado_2, nota.total_parcial(2),
@@ -262,6 +248,16 @@ class PlansController < ApplicationController
   end
 
   private
+
+  def set_students_notes_equal_zero(subject_id, student_id)
+    if subject_id.present? and student_id.present?
+       nota = Nota.new
+       nota.set_notes_to_zero subject_id, student_id
+       nota.save
+       nota
+    end
+  end
+
   def copy_file_to_public(filename)
     File.open(Rails.root.join('public', 'uploads', "#{filename.original_filename}"), 'w') do |file|
       file.write(filename.read)
