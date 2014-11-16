@@ -13,6 +13,20 @@ class Nota < ActiveRecord::Base
                             :acumulado_1, :acumulado_2, :acumulado_3, :acumulado_4,
                             :greater_than_or_equal_to => 0
 
+  def set_notes_to_zero(subject_id, student_id)
+    self.examen_1 = 0
+    self.examen_2 = 0
+    self.examen_3 = 0
+    self.examen_4 = 0
+    self.acumulado_1 = 0
+    self.acumulado_2 = 0
+    self.acumulado_3 = 0
+    self.acumulado_4 = 0
+    self.student_id = student_id
+    self.subject_id = subject_id
+    #
+  end
+
   def total_parcial(number)
     case number
     when 1
@@ -62,15 +76,6 @@ class Nota < ActiveRecord::Base
       self.acumulado_4.to_f
     else
       0.0
-    end
-  end
-
-  def to_csv(options = {})
-    CSV.generate do |csv|
-      csv << column_names
-      all.each do |notas|
-        csv << notas.attributes.values_at(*column_names)
-      end
     end
   end
 end
