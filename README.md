@@ -63,8 +63,10 @@ employee      | username  | username`123`
 * rubymine
 * mysql workbench
 
-**Install Rubymine IDE**
-> download RubyMine 6.3.3 or later for linux
+**Install Rubymine IDE:**
+
+JetBrains RubyMine is a commercial IDE for Ruby and Ruby on Rails built on JetBrains' IntelliJ IDEA platform. [rubymine]
+> You must pay for it $$$, in this project we use RubyMine 6.3.3 for linux
 
 ```sh
 cd path-where-rubymine-is-located
@@ -83,9 +85,22 @@ StartupWMClass=jetbrains-rubymine
 EOF'
 ```
 **Install Mysql workbench 5.2 or later**
-use ubuntu market
+> You can find it in the ubuntu market
 
 ## Install for production environment
+Before install you might check out cloud hosting like:
+* Rackspace
+* Amazon cloud
+* Azure
+* Digital Ocean
+> All this sites offer a VPS Server with Linux.
+
+### Requirements
+* Ubuntu 14.04 LTS
+
+### Minimun requirements specs
+* 1 Core & 512 RAM
+> This may vary depending on the number of users.i
 
 **Step 1:** You need to install Apache (if you don't already have it installed):
 ```sh
@@ -149,6 +164,9 @@ Please file issues [click here] at Github.
 
 Copyright (c) 2012-2014 Sergio Peralta. This software is licensed under the MIT License.
 
-[click here]:https://github.com/serpel/Opengradebook/issues
-
 Good luck!
+
+[click here]:https://github.com/serpel/Opengradebook/issues
+[rubymine]:https://www.jetbrains.com/ruby/
+
+
