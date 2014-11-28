@@ -51,12 +51,13 @@ rake fedena:plugins:install_all RAILS_ENV=development
 ```
 
 **Default data Demo:** 
+
 Role          | Username      | Password
 ------------- | ------------- | ------------- 
 admin         | admin         | admin`123`
 student       | username      | username`123`
-parent        | `p`studentusername  | `p`studentusername`123`
-employee      | username      | username`123`
+parent        | `p`studentusername | `p`studentusername`123`
+employee      | username  | username`123`
 
 **Optional:** 
 * rubymine
@@ -109,13 +110,14 @@ Enable mod_rewrite for Apache:
 ```sh
 sudo a2enmod rewrite
 ```
-**Step 5:** Clone or copy the project to this path -> /var/www/opengradebook
+
+**Step 5:** Clone or copy the project to this path -> /var/www/opengradebook, this will create a folder in the current directory called 'opengradebook' with all the files needed to run your Rails app.
 ```sh
 cd /var/www/
 git clone https://github.com/serpel/Opengradebook
 ```
 
-**Step 6:** This will create a folder in the current directory called 'opengradebook' with all the files needed to run your Rails app. Now you can add a vhost for you project.
+**Step 6:** Now you can add a vhost for you project.
 Create a file in /etc/apache2/sites-available/ for your site (something like 'dev.example.com') and insert this:
 
 ```xml
@@ -133,9 +135,9 @@ Create a file in /etc/apache2/sites-available/ for your site (something like 'de
 sudo a2ensite dev.example.com
 sudo /etc/init.d/apache2 restart
 ```
-> Remember change dev.example.com for your domain
+> Remember change dev.example.com to your domain
 
-**Optional: ** You might also need to make an entry in your etc/hosts file and restart your browser:
+**Optional:** You might also need to make an entry in your etc/hosts file and restart your browser:
 ```sh
 127.0.0.1   dev.example.com
 ```
