@@ -10,6 +10,8 @@ opengradebook
 ### Recommended specs
 * 2 Core & 1GB RAM
 
+### Installation
+
 **Step 1:** Install ruby
 ```sh
 sudo add-apt-repository ppa:brightbox/ruby-ng-experimental 
@@ -93,14 +95,16 @@ Before install you might check out cloud hosting like:
 * Amazon cloud
 * Azure
 * Digital Ocean
-> All this sites offer a VPS Server with Linux.
+All this sites offer a VPS Server with Linux.
 
 ### Requirements
 * Ubuntu 14.04 LTS
 
 ### Minimun requirements specs
 * 1 Core & 512 RAM
-> This may vary depending on the number of users.i
+This may vary depending on the number of users.i
+
+### Installation
 
 **Step 1:** You need to install Apache (if you don't already have it installed):
 ```sh
