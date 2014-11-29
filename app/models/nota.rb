@@ -22,6 +22,10 @@ class Nota < ActiveRecord::Base
     self.acumulado_2 = 0
     self.acumulado_3 = 0
     self.acumulado_4 = 0
+    self.recuperacion_1 = 0
+    self.recuperacion_2 = 0
+    self.recuperacion_3 = 0
+    self.recuperacion_4 = 0
     self.student_id = student_id
     self.subject_id = subject_id
     #
@@ -76,6 +80,36 @@ class Nota < ActiveRecord::Base
       self.acumulado_4.to_f
     else
       0.0
+    end
+  end
+
+  def acumulado(numero)
+    case numero
+      when 1
+        self.acumulado_1.to_f
+      when 2
+        self.acumulado_2.to_f
+      when 3
+        self.acumulado_3.to_f
+      when 4
+        self.acumulado_4.to_f
+      else
+        0.0
+    end
+  end
+
+  def recuperacion(numero)
+    case numero
+      when 1
+        self.recuperacion_1.to_f
+      when 2
+        self.recuperacion_2.to_f
+      when 3
+        self.recuperacion_3.to_f
+      when 4
+        self.recuperacion_4.to_f
+      else
+        0.0
     end
   end
 end

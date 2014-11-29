@@ -69,7 +69,7 @@ $('table tr').last().addClass('row-last');
         <tr>
           <th></th>
           <% 4.times do |l| %>
-             <th colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></th>
+             <th colspan="4"><%= "#{t('partial'+(l+1).to_s)}" %></th>
           <% end %>
           <th colspan="2"></th>
         </tr>
@@ -78,6 +78,7 @@ $('table tr').last().addClass('row-last');
           <% 4.times do |l| %>
             <th><%= "#{t('exam'+(l+1).to_s)}" %></th>
             <th><%= "#{t('acum'+(l+1).to_s)}" %></th>
+            <th><%= "#{t('recov'+(l+1).to_s)}" %></th>
             <th><%= "#{t('total')}" %></th>
           <% end %>
           <th><%= "#{t('average')}" %></th>
@@ -91,7 +92,8 @@ $('table tr').last().addClass('row-last');
                <% nota = student.notas.find_by_subject_id(@plan.subject) %>
                <% 4.times do |l| %>
                   <td class="col-1"><%=  nota != nil ? nota.examen(l+1) : 0.0 %></td>
-                  <td class="col-1"><%=  nota != nil ? nota.acum(l+1) : 0.0 %></td>
+                  <td class="col-1"><%=  nota != nil ? nota.acumulado(l+1) : 0.0 %></td>
+                  <td class="col-1"><%=  nota != nil ? nota.recuperacion(l+1) : 0.0 %></td>
                   <td class="col-1"><%=  nota != nil ? nota.total_parcial(l+1) : 0.0 %></td>
                <% end %>
                <td class="col-1"><%= nota != nil ? nota.total_average.round(1) : 0.0 %></td>

@@ -156,6 +156,7 @@ class PlansController < ApplicationController
       4.times do |i|
         row.push "#{t('exam'+(i+1).to_s)}"
         row.push "#{t('acum'+(i+1).to_s)}"
+        row.push "#{t('recov'+(i+1).to_s)}"
         row.push "#{t('total')}"
       end
       row.push "#{t('average')}"
@@ -165,10 +166,10 @@ class PlansController < ApplicationController
         nota = student.notas.find_by_subject_id(plan.subject)
         nota = set_students_notes_equal_zero(plan.subject.id, student.id) if nota.nil?
         sheet1.update_row i+2, student.id, student.full_name,
-                          nota.examen_1, nota.acumulado_1, nota.total_parcial(1),
-                          nota.examen_2, nota.acumulado_2, nota.total_parcial(2),
-                          nota.examen_3, nota.acumulado_3, nota.total_parcial(3),
-                          nota.examen_4, nota.acumulado_4, nota.total_parcial(4),
+                          nota.examen_1, nota.acumulado_1, nota.recuperacion_1, nota.total_parcial(1),
+                          nota.examen_2, nota.acumulado_2, nota.recuperacion_1, nota.total_parcial(2),
+                          nota.examen_3, nota.acumulado_3, nota.recuperacion_1, nota.total_parcial(3),
+                          nota.examen_4, nota.acumulado_4, nota.recuperacion_1, nota.total_parcial(4),
                           nota.total_average
       end
 
@@ -178,6 +179,7 @@ class PlansController < ApplicationController
       4.times do |i|
         row.push "#{t('exam'+(i+1).to_s)}"
         row.push "#{t('acum'+(i+1).to_s)}"
+        row.push "#{t('recov'+(i+1).to_s)}"
       end
       sheet2.update_row 1, plan.subject.id, plan.subject.name, plan.examen_1, plan.acumulado_1, plan.examen_2, plan.acumulado_2,
                         plan.examen_3, plan.acumulado_3, plan.examen_4, plan.acumulado_4
@@ -217,13 +219,17 @@ class PlansController < ApplicationController
         student = Student.find_by_id(row[0])
         nota = Nota.find_by_subject_id_and_student_id(subject_id,row[0]) || Nota.new
         nota.examen_1 = row[2].to_f
-        nota.examen_2 = row[5].to_f
-        nota.examen_3 = row[8].to_f
-        nota.examen_4 = row[12].to_f
+        nota.examen_2 = row[6].to_f
+        nota.examen_3 = row[10].to_f
+        nota.examen_4 = row[14].to_f
         nota.acumulado_1 = row[3].to_f
-        nota.acumulado_2 = row[6].to_f
-        nota.acumulado_3 = row[9].to_f
-        nota.acumulado_4 = row[13].to_f
+        nota.acumulado_2 = row[7].to_f
+        nota.acumulado_3 = row[11].to_f
+        nota.acumulado_4 = row[15].to_f
+        nota.recuperacion_1 = row[4].to_f
+        nota.recuperacion_2 = row[8].to_f
+        nota.recuperacion_3 = row[12].to_f
+        nota.recuperacion_4 = row[16].to_f
         nota.subject_id = subject_id if nota.subject_id.nil?
         nota.student_id = row[0].to_i if nota.student_id.nil?
         nota.save unless student.nil?
