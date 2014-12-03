@@ -33,6 +33,7 @@ $('table tr').last().addClass('row-last');
           <% 4.times do |l| %>
             <th><%= "#{t('exam'+(l+1).to_s)}" %></th>
             <th><%= "#{t('acum'+(l+1).to_s)}" %></th>
+            <th><%= "#{t('recov'+(l+1).to_s)}" %></th>
             <th><%= "#{t('total')}" %></th>
           <% end %>
           <th><%= "#{t('average')}" %></th>
@@ -49,15 +50,19 @@ $('table tr').last().addClass('row-last');
             <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f).round 2 %>
             <td class="col-1"><%= student_note.examen_1.to_f %></td>
             <td class="col-1"><%= student_note.acumulado_1.to_f %></td>
+            <td class="col-1"><%= student_note.recuperacion_1.to_f %></td>
             <td class="col-1"><%= total_1 %></td>
             <td class="col-1"><%= student_note.examen_2.to_f %></td>
             <td class="col-1"><%= student_note.acumulado_2.to_f %></td>
+            <td class="col-1"><%= student_note.recuperacion_2.to_f %></td>
             <td class="col-1"><%= total_2 %></td>
             <td class="col-1"><%= student_note.examen_3.to_f  %></td>
             <td class="col-1"><%= student_note.acumulado_3.to_f %></td>
+            <td class="col-1"><%= student_note.recuperacion_3.to_f %></td>
             <td class="col-1"><%= total_3 %></td>
             <td class="col-1"><%= student_note.examen_4.to_f  %></td>
             <td class="col-1"><%= student_note.acumulado_4.to_f  %></td>
+            <td class="col-1"><%= student_note.recuperacion_4.to_f %></td>
             <td class="col-1"><%= total_4 %></td>
 
             <td class="col-1"><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
