@@ -95,14 +95,16 @@ Before install you might check out cloud hosting like:
 * Amazon cloud
 * Azure
 * Digital Ocean
-All this sites offer a VPS Server with Linux.
+ 
+*All this sites offer a VPS Server with Linux.*
 
 ### Requirements
 * Ubuntu 14.04 LTS
 
 ### Minimun requirements specs
 * 1 Core & 512 RAM
-This may vary depending on the number of users.i
+
+*This may vary depending on the number of users.*
 
 ### Installation
 
@@ -162,6 +164,7 @@ sudo /etc/init.d/apache2 restart
 ```
 
 ### Support
+
 Sergio Peralta serpel.js@gmail.com
 
 Please file issues [click here] at Github. 
@@ -173,4 +176,13 @@ Good luck!
 [click here]:https://github.com/serpel/Opengradebook/issues
 [rubymine]:https://www.jetbrains.com/ruby/
 
+### Contributing
 
+Fork it
+Create your feature branch (git checkout -b my-new-feature)
+
+Commit your changes (git commit -am 'Add some feature')
+
+Push to the branch (git push origin my-new-feature)
+
+Create a new Pull Request
