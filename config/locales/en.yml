@@ -257,6 +257,10 @@ en: # locale
         completed_text: "Successfully imported."
         import_header: "Grade import"
         detail: "Detail"
+        recov1: "Niv 1"
+        recov2: "Niv 2"
+        recov3: "Niv 3"
+        recov4: "Niv 4"
 
     errors:
       template:
@@ -2559,9 +2563,9 @@ en: # locale
   print: "Print"
   edit: "Edit"
   new: "New"
-  recov1: "Recov 1"
-  recov2: "Recov 2"
-  recov3: "Recov 3"
-  recov4: "Recov 4"
   grade_texting: "Grade"
   options: "Options"
+  recov1: "Niv 1"
+  recov2: "Niv 2"
+  recov3: "Niv 3"
+  recov4: "Niv 4"
