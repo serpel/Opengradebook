@@ -9,6 +9,9 @@
        <%= "#{t('title')}"%>
       </td>
       <td>
+        <%= "#{t('teacher')}"%>
+      </td>
+      <td>
         <%= "#{t('due_date')}"%>
       </td>
     </tr>
@@ -20,6 +23,9 @@
           </td>
           <td class="col-2">
             <%=  link_to assignment.title, assignment%>
+          </td>
+          <td class="col-2">
+            <%=  assignment.employee.full_name %>
           </td>
           <td class="col-4">
             <%= I18n.l(assignment.duedate,:format=>"%A, %d %B, %Y") %>
