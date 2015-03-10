@@ -1,4 +1,8 @@
 <% unless @subject.nil? %>
+    <div class="submit_button">
+      <%= link_to "► #{t('create_new_assignment')}" , :controller=>:assignments,:action=>:new,:id=>@subject.id%>
+    </div>
+   <div class="extender"></div>
   <table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
     <% unless @assignments.empty? %>
     <tr class="tr-head">
@@ -22,10 +26,10 @@
             <%= i+1 %>
           </td>
           <td class="col-2">
-            <%=  link_to assignment.title, assignment%>
+            <%= link_to assignment.title, assignment%>
           </td>
-          <td class="col-2">
-            <%=  assignment.employee.full_name %>
+          <td class="col-1">
+            <%= assignment.employee.full_name %>
           </td>
           <td class="col-4">
             <%= I18n.l(assignment.duedate,:format=>"%A, %d %B, %Y") %>
@@ -38,9 +42,7 @@
       </tr>
     <% end %>
   </table>
+  <div class="extender"></div>
   <%= will_paginate @assignments %>
   <%  permitted_to? :new,:assignments%>
-  <div class="submit_button">
-    <%= link_to "► #{t('create_new_assignment')}" , :controller=>:assignments,:action=>:new,:id=>@subject.id%>
-  </div>
 <% end %>
