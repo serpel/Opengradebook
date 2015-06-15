@@ -210,23 +210,22 @@ $('table tr').last().addClass('row-last');
          </tr>
         </thead>
         <tbody>
-          <% @scores.each do |notas| %>
+          <% @scores.each do |student_note| %>
             <tr class="tr-read-<%= cycle('odd', 'even') %>">
-              <% subject = Subject.find(notas.subject_id) %>
-              <td><%= subject.name %></td>
-              <% nota = @Student.notas.find_by_subject_id(subject) %>
-              <td><%= !nota.nil? ? nota.total_parcial(1) : 0.0 %></td>
-              <td><%= !nota.nil? ? nota.total_parcial(2) : 0.0 %></td>
-              <td><%= !nota.nil? ? nota.total_parcial(3) : 0.0 %></td>
-              <td><%= !nota.nil? ? nota.total_parcial(4) : 0.0 %></td>
-              <td><%= !nota.nil? ? nota.total_average : 0 %></td>
+            <% sub = Subject.find(student_note.subject_id) %>
+            <td><%= sub.name %></td>
+            <td><%= student_note.total_parcial(1) %></td>
+            <td><%= student_note.total_parcial(2) %></td>
+            <td><%= student_note.total_parcial(3) %></td>
+            <td><%= student_note.total_parcial(4) %></td>
+            <td><%= student_note.total_average %></td>
               <% if @scores.count == 0 %>
                 <% 4.times do |l| %>
                   <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
                 <% end %>
               <% end %>
               <% if permitted_to? :destroy and (@current_user.privileges.map{|p| p.name}.include?("SubjectMaster"))  %>
-                <td><%= link_to 'Destroy', notas, :confirm => 'Are you sure?', :method => :delete %></td>
+                <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
               <% end %>
                </tr>
           <% end %>
