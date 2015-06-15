@@ -214,11 +214,11 @@ $('table tr').last().addClass('row-last');
             <tr class="tr-read-<%= cycle('odd', 'even') %>">
             <% sub = Subject.find(student_note.subject_id) %>
             <td><%= sub.name %></td>
-            <td><%= student_note.total_parcial(1) %></td>
-            <td><%= student_note.total_parcial(2) %></td>
-            <td><%= student_note.total_parcial(3) %></td>
-            <td><%= student_note.total_parcial(4) %></td>
-            <td><%= student_note.total_average %></td>
+            <td><%= student_note.total_parcial(1).round %></td>
+            <td><%= student_note.total_parcial(2).round %></td>
+            <td><%= student_note.total_parcial(3).round %></td>
+            <td><%= student_note.total_parcial(4).round %></td>
+            <td><%= student_note.total_average.round %></td>
               <% if @scores.count == 0 %>
                 <% 4.times do |l| %>
                   <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
