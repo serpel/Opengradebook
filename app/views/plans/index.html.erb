@@ -11,6 +11,7 @@
     <th>Acumulado 3</th>
     <th>Examen 4</th>
     <th>Acumulado 4</th>
+    <th>Recovery</th>
   </tr>
 
 <% @plans.each do |plan| %>
@@ -24,6 +25,7 @@
     <td><%=h plan.acumulado_3 %></td>
     <td><%=h plan.examen_4 %></td>
     <td><%=h plan.acumulado_4 %></td>
+    <td><%=h plan.recovery %></td>
     <td><%= link_to 'Show', plan %></td>
     <td><%= link_to 'Edit', edit_plan_path(plan) %></td>
     <td><%= link_to 'Destroy', plan, :confirm => 'Are you sure?', :method => :delete %></td>

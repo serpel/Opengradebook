@@ -13,6 +13,7 @@
     <th>Acumulado 3</th>
     <th>Examen 4</th>
     <th>Acumulado 4</th>
+    <th>Recuperacion</th>
   </tr>
 
   <% @notas.each do |grade| %>
@@ -32,6 +33,7 @@
         <td><%=h grade.acumulado_3 %></td>
         <td><%=h grade.examen_4 %></td>
         <td><%=h grade.acumulado_4 %></td>
+        <td><%=h grade.recovery %></td>
         <!--<td><%= link_to 'Show', grade %></td>-->
         <td><%= link_to 'Destroy', grade, :confirm => 'Are you sure?', :method => :delete %></td>
       </tr>

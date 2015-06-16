@@ -159,6 +159,7 @@ class PlansController < ApplicationController
         row.push "#{t('recov'+(i+1).to_s)}"
         row.push "#{t('total')}"
       end
+      row.push "#{t('recovery')}"
       row.push "#{t('average')}"
 
       #content
@@ -170,6 +171,7 @@ class PlansController < ApplicationController
                           nota.examen_2, nota.acumulado_2, nota.recuperacion_1, nota.total_parcial(2),
                           nota.examen_3, nota.acumulado_3, nota.recuperacion_1, nota.total_parcial(3),
                           nota.examen_4, nota.acumulado_4, nota.recuperacion_1, nota.total_parcial(4),
+                          nota.recovery,
                           nota.total_average
       end
 
@@ -230,6 +232,7 @@ class PlansController < ApplicationController
         nota.recuperacion_2 = row[8].to_f
         nota.recuperacion_3 = row[12].to_f
         nota.recuperacion_4 = row[16].to_f
+        nota.recovery = row[18].to_f
         nota.subject_id = subject_id if nota.subject_id.nil?
         nota.student_id = row[0].to_i if nota.student_id.nil?
         nota.save unless student.nil?

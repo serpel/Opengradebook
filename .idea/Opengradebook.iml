@@ -149,8 +149,10 @@
     <orderEntry type="library" scope="PROVIDED" name="rack (v1.0.1, ruby-1.8.7-p375) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails (v2.3.5, ruby-1.8.7-p375) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rake (v0.8.7, ruby-1.8.7-p375) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="ruby-ole (v1.2.11.8, ruby-1.8.7-p375) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rush (v0.6.8, ruby-1.8.7-p375) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="session (v3.1.0, ruby-1.8.7-p375) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="spreadsheet (v1.0.3, ruby-1.8.7-p375) [gem]" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />

@@ -199,6 +199,7 @@ $('table tr').last().addClass('row-last');
             <% 4.times do |l| %>
               <th colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></th>
             <% end %>
+            <th colspan="1"></th>
             <th></th>
           </tr>
           <tr>
@@ -206,6 +207,7 @@ $('table tr').last().addClass('row-last');
             <% 4.times do |l| %>
               <th><%= "#{t('total')}" %></th>
             <% end %>
+            <th><%= "#{t('recovery')}" %></th>
             <th><%= "#{t('average')}" %></th>
          </tr>
         </thead>
@@ -218,6 +220,7 @@ $('table tr').last().addClass('row-last');
             <td><%= student_note.total_parcial(2).round %></td>
             <td><%= student_note.total_parcial(3).round %></td>
             <td><%= student_note.total_parcial(4).round %></td>
+            <td><%= student_note.recovery %></td>
             <td><%= student_note.total_average.round %></td>
               <% if @scores.count == 0 %>
                 <% 4.times do |l| %>

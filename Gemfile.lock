@@ -37,10 +37,13 @@ GEM
       activesupport (= 2.3.5)
       rake (>= 0.8.3)
     rake (0.8.7)
+    ruby-ole (1.2.11.8)
     rush (0.6.8)
       session
     session (3.1.0)
       fattr
+    spreadsheet (1.0.3)
+      ruby-ole (>= 1.0)
 
 PLATFORMS
   ruby
@@ -54,3 +57,4 @@ DEPENDENCIES
   rails (= 2.3.5)
   rake (= 0.8.7)
   rush (= 0.6.8)
+  spreadsheet

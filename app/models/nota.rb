@@ -47,10 +47,23 @@ class Nota < ActiveRecord::Base
   end
 
   def total_average
-    ((self.examen_1.to_f + self.acumulado_1.to_f +  self.recuperacion_1.to_f) +
-    (self.examen_2.to_f + self.acumulado_2.to_f + self.recuperacion_2.to_f) +
-    (self.examen_3.to_f + self.acumulado_3.to_f + self.recuperacion_3.to_f) +
-    (self.examen_4.to_f + self.acumulado_4.to_f + self.recuperacion_4.to_f)) / 4
+    #((self.examen_1.to_f + self.acumulado_1.to_f +  self.recuperacion_1.to_f) +
+    #(self.examen_2.to_f + self.acumulado_2.to_f + self.recuperacion_2.to_f) +
+    #(self.examen_3.to_f + self.acumulado_3.to_f + self.recuperacion_3.to_f) +
+    #(self.examen_4.to_f + self.acumulado_4.to_f + self.recuperacion_4.to_f)) / 4
+
+    count = 0
+    sum = 0
+    avg = 0
+    4.times do |t|
+      if total_parcial(t+1) > 0
+        sum += total_parcial(t+1)
+        count += 1
+      end
+    end
+
+    avg = sum / count if count > 0
+    avg
   end
 
   def examen(number)
