@@ -19,5 +19,6 @@ gem 'mysql','2.8.1'
 gem 'rake','0.8.7'
 gem 'mongrel','1.1.5'
 gem 'rush','0.6.8'
+gem 'spreadsheet'
 
 >>>>>>> bff00c261ac697cd642388f61d0748380b449bce

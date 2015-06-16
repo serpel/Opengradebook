@@ -71,7 +71,7 @@ $('table tr').last().addClass('row-last');
           <% 4.times do |l| %>
              <th colspan="4"><%= "#{t('partial'+(l+1).to_s)}" %></th>
           <% end %>
-          <th colspan="2"></th>
+          <th colspan="3"></th>
         </tr>
         <tr>
           <th><%= "#{t('name')}" %></th>
@@ -81,6 +81,7 @@ $('table tr').last().addClass('row-last');
             <th><%= "#{t('recov'+(l+1).to_s)}" %></th>
             <th><%= "#{t('total')}" %></th>
           <% end %>
+          <th><%= "#{t('recovery')}" %></th>
           <th><%= "#{t('average')}" %></th>
           <th><%= "#{t('options')}" %></th>
 	</tr>
@@ -90,13 +91,20 @@ $('table tr').last().addClass('row-last');
           <tr class="tr-read-<%= cycle('odd', 'even') %>">
                <td class="col-1" style="text-transform:capitalize"><%= student.first_and_last_name %></td>
                <% nota = student.notas.find_by_subject_id(@plan.subject) %>
-               <% 4.times do |l| %>
-                  <td class="col-1"><%=  nota != nil ? nota.examen(l+1) : 0.0 %></td>
-                  <td class="col-1"><%=  nota != nil ? nota.acumulado(l+1) : 0.0 %></td>
-                  <td class="col-1"><%=  nota != nil ? nota.recuperacion(l+1) : 0.0 %></td>
-                  <td class="col-1"><%=  nota != nil ? nota.total_parcial(l+1) : 0.0 %></td>
+               <% if !nota.nil? %>
+                    <% 4.times do |l| %>
+                        <td class="col-1"><%= nota.examen(l+1) %></td>
+                        <td class="col-1"><%= nota.acumulado(l+1) %></td>
+                        <td class="col-1"><%= nota.recuperacion(l+1) %></td>
+                        <td class="col-1"><%= nota.total_parcial(l+1) %></td>
+                    <% end %>
+                    <td class="col-1"><%= nota.recovery.nil? ? 0.0 : nota.recovery %></td>
+                    <td class="col-1"><%= nota.total_average.round(1) %></td>
+               <% else %>
+                    <% 6.times do |l| %>
+                        <td class="col-1">0.0</td>
+                    <% end %>
                <% end %>
-               <td class="col-1"><%= nota != nil ? nota.total_average.round(1) : 0.0 %></td>
 
                <% details = StudentGeneralDetail.find_by_batch_id_and_student_id(student.batch_id,student.id)  %>
                <td class="col-1">

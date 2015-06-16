@@ -30,6 +30,7 @@
             <th><%= f.label "#{t('acum'+(l+1).to_s)}" %></th>
             <th><%= f.label "#{t('recov'+(l+1).to_s)}" %></th>
         <% end %>
+        <th><%= f.label "#{t('recovery')}" %></th>
         <th><%= f.label "#{t('options')}" %></th>
       </tr>
         <tr class="tr-read-even">
@@ -45,6 +46,7 @@
             <td class="col-0"><%= f.text_field :examen_4, :size => 2 %></td>
             <td class="col-0"><%= f.text_field :acumulado_4, :size => 2 %></td>
             <td class="col-0"><%= f.text_field :recuperacion_4, :size => 2 %></td>
+            <td class="col-0"><%= f.text_field :recovery, :size => 2 %></td>
             <td><%= f.submit "#{t('grade_texting')}" %></td>
         </tr>
         <tr class="tr-blank"></tr>
