@@ -55,9 +55,13 @@ class StudentGeneralDetailsController < ApplicationController
       @student = Student.find(params[:id])
       @details = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
       if !@details.nil?
+<<<<<<< HEAD
+        @scores = @student.notas
+=======
         @scores = []
         subjects = @student.batch.subjects.map{ |s| s.id }
         @scores = @student.notas.select { |n| subjects.include? n.subject_id }
+>>>>>>> bff00c261ac697cd642388f61d0748380b449bce
         @course = @student.batch.course
         @time = Time.new
 
@@ -77,8 +81,12 @@ class StudentGeneralDetailsController < ApplicationController
       
         respond_to do |format|
           format.html
+<<<<<<< HEAD
+          format.xls { render :template => 'student_general_details/show_all_student_details.rhtml.erb' }
+=======
           format.xls { render :template => 'student_general_details/show_all_student_details.rhtml' }
           format.xml { render :template => 'student_general_details/show_all_student_details.rhtml' }
+>>>>>>> bff00c261ac697cd642388f61d0748380b449bce
         end
       else
         flash[:notice] = 'StudentGeneralDetail not exist'

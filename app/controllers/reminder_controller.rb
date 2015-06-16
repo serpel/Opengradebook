@@ -132,6 +132,7 @@ class ReminderController < ApplicationController
       students.each do |student|
         guardians.concat student.guardians
       end
+<<<<<<< HEAD
 
       @guardians_user = guardians.collect { |guardian| guardian.user }
       @students_user = students.collect { |student| student.user }
@@ -139,6 +140,15 @@ class ReminderController < ApplicationController
       @students_user.compact!
       @guardians_user.compact!
 
+=======
+
+      @guardians_user = guardians.collect { |guardian| guardian.user }
+      @students_user = students.collect { |student| student.user }
+
+      @students_user.compact!
+      @guardians_user.compact!
+
+>>>>>>> bff00c261ac697cd642388f61d0748380b449bce
       render :update do |page|
         page.replace_html 'to_users2', :partial => 'to_users', :object => @students_user
         page.replace_html 'to_users3', :partial => 'to_guardian', :object => @guardians_user
