@@ -1731,7 +1731,7 @@ es: # locale
   do_not: "No"
   academic: "Académicos"
   consolidated: "Consolidado"
-  average: "Promedio"
+  average: "Prom."
   exam_management: "Gestión de Exámenes"
   generate_exam_wise_report: "Generar reporte según exámenes"
   generate_subject_wise_report: "Generar reporte según asignaturas"
