@@ -24,7 +24,7 @@ $('table tr').last().addClass('row-last');
         <tr>
           <th></th>
           <% 4.times do |l| %>
-            <th colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></th>
+            <th colspan="4"><%= "#{t('partial'+(l+1).to_s)}" %></th>
           <% end %>
           <th></th>
         </tr>
@@ -33,49 +33,24 @@ $('table tr').last().addClass('row-last');
           <% 4.times do |l| %>
             <th><%= "#{t('exam'+(l+1).to_s)}" %></th>
             <th><%= "#{t('acum'+(l+1).to_s)}" %></th>
+            <th><%= "#{t('recov'+(l+1).to_s)}" %></th>
             <th><%= "#{t('total')}" %></th>
           <% end %>
           <th><%= "#{t('average')}" %></th>
        </tr>
       </thead>
       <tbody>
-        <% @student_scores.each do |student_note| %>
+        <% @student_scores.each do |nota| %>
           <tr class="tr-read-<%= cycle('odd', 'even') %>">
-            <% sub = Subject.find(student_note.subject_id) %>
+            <% sub = Subject.find(nota.subject_id) %>
             <td class="col-1" style="text-transform:capitalize"><%= sub.name %></td>
-            <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f).round 2 %>
-            <% total_2 = (student_note.examen_2.to_f + student_note.acumulado_2.to_f).round 2 %>
-            <% total_3 = (student_note.examen_3.to_f + student_note.acumulado_3.to_f).round 2 %>
-            <% total_4 = (student_note.examen_4.to_f + student_note.acumulado_4.to_f).round 2 %>
-            <td class="col-1"><%= student_note.examen_1.to_f %></td>
-            <td class="col-1"><%= student_note.acumulado_1.to_f %></td>
-            <td class="col-1"><%= total_1 %></td>
-            <td class="col-1"><%= student_note.examen_2.to_f %></td>
-            <td class="col-1"><%= student_note.acumulado_2.to_f %></td>
-            <td class="col-1"><%= total_2 %></td>
-            <td class="col-1"><%= student_note.examen_3.to_f  %></td>
-            <td class="col-1"><%= student_note.acumulado_3.to_f %></td>
-            <td class="col-1"><%= total_3 %></td>
-            <td class="col-1"><%= student_note.examen_4.to_f  %></td>
-            <td class="col-1"><%= student_note.acumulado_4.to_f  %></td>
-            <td class="col-1"><%= total_4 %></td>
-
-            <td class="col-1"><%= ((total_1 + total_2 + total_3 + total_4)/4).round 2 %></td>
-            <% if @student_scores.count == 0 %>
-              <td class="col-1">0.0</td>
-              <td class="col-1">0.0</td>
-              <td class="col-1">N/A</td>
-              <td class="col-1">0.0</td>
-              <td class="col-1">0.0</td>
-              <td class="col-1">N/A</td>
-              <td class="col-1">0.0</td>
-              <td class="col-1">0.0</td>
-              <td class="col-1">N/A</td>
-              <td class="col-1">0.0</td>
-              <td class="col-1">0.0</td>
-              <td class="col-1">N/A</td>
-              <td class="col-1">N/A</td>
+            <% 4.times do |l| %>
+                <td class="col-1"><%=  nota != nil ? nota.examen(l+1) : 0.0 %></td>
+                <td class="col-1"><%=  nota != nil ? nota.acumulado(l+1) : 0.0 %></td>
+                <td class="col-1"><%=  nota != nil ? nota.recuperacion(l+1) : 0.0 %></td>
+                <td class="col-1"><%=  nota != nil ? nota.total_parcial(l+1) : 0.0 %></td>
             <% end %>
+            <td class="col-1"><%= nota != nil ? nota.total_average.round(1) : 0.0 %></td>
           </tr>
           <tr class="tr-blank"></tr>
         <% end %>

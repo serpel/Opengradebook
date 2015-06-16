@@ -50,11 +50,18 @@ class StudentGeneralDetailsController < ApplicationController
     i += 2
   end
 
+
   def show_all_student_details
       @student = Student.find(params[:id])
       @details = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
       if !@details.nil?
+<<<<<<< HEAD
         @scores = @student.notas
+=======
+        @scores = []
+        subjects = @student.batch.subjects.map{ |s| s.id }
+        @scores = @student.notas.select { |n| subjects.include? n.subject_id }
+>>>>>>> bff00c261ac697cd642388f61d0748380b449bce
         @course = @student.batch.course
         @time = Time.new
 
@@ -74,7 +81,12 @@ class StudentGeneralDetailsController < ApplicationController
       
         respond_to do |format|
           format.html
+<<<<<<< HEAD
           format.xls { render :template => 'student_general_details/show_all_student_details.rhtml.erb' }
+=======
+          format.xls { render :template => 'student_general_details/show_all_student_details.rhtml' }
+          format.xml { render :template => 'student_general_details/show_all_student_details.rhtml' }
+>>>>>>> bff00c261ac697cd642388f61d0748380b449bce
         end
       else
         flash[:notice] = 'StudentGeneralDetail not exist'
@@ -86,9 +98,9 @@ class StudentGeneralDetailsController < ApplicationController
   # GET /student_general_details/new.xml
   def new
     @student_general_details = StudentGeneralDetail.new
-    
+
     respond_to do |format|
-      format.html 
+      format.html
       format.xml  { render :xml => @student_general_details }
     end
   end
@@ -96,6 +108,11 @@ class StudentGeneralDetailsController < ApplicationController
   # GET /student_general_details/1/edit
   def edit
     @student_general_details = StudentGeneralDetail.find(params[:id])
+
+    if request.post? and @plan.update_attributes(params[:student_general_details])
+      flash[:notice] = "#{t('flash3')}"
+      redirect_to :back
+    end
   end
 
   # POST /student_general_details
@@ -106,11 +123,8 @@ class StudentGeneralDetailsController < ApplicationController
     respond_to do |format|
       if @student_general_details.save
         flash[:notice] = 'StudentGeneralDetail was successfully created.'
-        format.html { redirect_to @student_general_details }
+        format.html { redirect_to :back }
         format.xml  { render :xml => @student_general_details, :status => :created, :location => @student_general_details }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @student_general_details.errors, :status => :unprocessable_entity }
       end
     end
   end

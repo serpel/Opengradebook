@@ -16,6 +16,7 @@ $('table tr').last().addClass('row-last');
     <table id="listing" cellpadding="1" cellspacing="1">
        <thead>
 	 <tr>
+	        <th><%=h "subject_id" %></th>
             <th><%= "#{t('exam1')}" %></th>
             <th><%= "#{t('acum')}" %></th>
             <th><%= "#{t('exam2')}" %></th>
@@ -28,6 +29,7 @@ $('table tr').last().addClass('row-last');
        </thead>
        <tbody>
           <tr class="tr-read-<%= cycle('odd', 'even') %>">
+            <td class="col-1"><%= @plan.subject_id %></td>
             <td class="col-1"><%= @plan.examen_1.nil? ? 0:@plan.examen_1%></td>
             <td class="col-1"><%= @plan.acumulado_1.nil? ? 0:@plan.acumulado_1 %></td>
             <td class="col-1"><%= @plan.examen_2.nil? ? 0:@plan.examen_2 %></td>
@@ -56,11 +58,12 @@ $('table tr').last().addClass('row-last');
           <th colspan="2"></th>
         </tr>
         <tr>
-          <th><%= "#{t('name')}" %></th>
+          <th><%=h "student_id" %></th>
+          <th><%=h "#{t('name')}" %></th>
           <% 4.times do |l| %>
-            <th><%= "#{t('exam'+(l+1).to_s)}" %></th>
-            <th><%= "#{t('acum'+(l+1).to_s)}" %></th>
-            <th><%= "#{t('total')}" %></th>
+            <th><%= "#{'examen_'+(l+1).to_s}" %></th>
+            <th><%= "#{'acumulado_'+(l+1).to_s}" %></th>
+            <th><%= "#{'total'}" %></th>
           <% end %>
           <th><%= "#{t('average')}" %></th>
 	</tr>
@@ -68,7 +71,8 @@ $('table tr').last().addClass('row-last');
       <tbody>
         <% @st.each do |student| %>
           <tr class="tr-read-<%= cycle('odd', 'even') %>">
-               <td class="col-1" style="text-transform:capitalize"><%= student.first_and_last_name %></td>
+               <td class="col-1"><%= student.id %></td>
+               <td class="col-1" style="text-transform:capitalize"><%= student.full_name %></td>
                <% nota = student.notas.find_by_subject_id(@plan.subject) %>
                <% 4.times do |l| %>
                   <td class="col-1"><%=  nota != nil ? nota.examen(l+1) : 0.0 %></td>

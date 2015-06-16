@@ -14,10 +14,12 @@ class AssignmentsController < ApplicationController
         redirect_to :controller => "user", :action => "dashboard"
       end
     elsif @current_user.student?
-      @assignments = Assignment.for_student current_user.student_record.id
+      assignments = Assignment.for_student current_user.student_record.id
+      @assignments = assignments.select { |a| a.duedate >= (Time.now - 20.day) }
     elsif @current_user.parent?      
       st = Student.find_by_admission_no current_user.parent_record.admission_no 
-      @assignments = Assignment.for_student st.id
+      assignments = Assignment.for_student st.id
+      @assignments = assignments.select { |a| a.duedate >= (Time.now - 20.day) }
     end
   end
 
@@ -26,8 +28,9 @@ class AssignmentsController < ApplicationController
 
     @subject =Subject.find_by_id params[:subject_id]
     unless @subject.nil?
-      employee_id = current_user.employee_record.id
-      @assignments =Assignment.paginate  :conditions=>"subject_id=#{@subject.id} and employee_id=#{employee_id}",:order=>"duedate desc", :page=>params[:page]
+      #employee_id = current_user.employee_record.id
+      #@assignments =Assignment.paginate  :conditions=>"subject_id=#{@subject.id} and employee_id=#{employee_id}",:order=>"duedate desc", :page=>params[:page]
+      @assignments =Assignment.paginate  :conditions=>"subject_id=#{@subject.id}",:order=>"duedate desc", :page=>params[:page]
     end
     render(:update) do |page|
       page.replace_html 'subject_assignments_list', :partial=>'subject_assignments'

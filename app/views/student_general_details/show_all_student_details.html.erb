@@ -64,7 +64,7 @@ $('table tr').last().addClass('row-last');
     <div id="buttoncontainer" style="margin:15px">
     <%=  link_to  "#{t('add')}", :controller => "student_general_details",
                  :action => "new", :student_id => params[:id], :batch_id => params[:batch_id] %>
-    |<%= link_to "#{t('export')}", {:controller => 'student_general_details', :action => 'show_all_student_details', :id=>@id.to_s+'.xls' } %>
+    |<%= link_to "#{t('export')}", {:controller => 'student_general_details', :action => 'show_all_student_details', :id=>params[:id].to_s+'.xls' } %>
     |<a href="#" onclick="printPage('printBlock');"><%=h "#{t('print')}" %></a>
   </div>
 </div>
@@ -122,7 +122,7 @@ $('table tr').last().addClass('row-last');
       <p>Date / Fecha: <b><%= @time.strftime("%d/%m/%Y") %></b></p>
     </div>
 
-    <hr class="division-line"></hr>
+    <hr class="division-line"/>
 
     <div class="leftTable"> 
 
@@ -212,6 +212,7 @@ $('table tr').last().addClass('row-last');
         <tbody>
           <% @scores.each do |student_note| %>
             <tr class="tr-read-<%= cycle('odd', 'even') %>">
+<<<<<<< HEAD
               <% sub = Subject.find(student_note.subject_id) %>
               <td><%= sub.name %></td>
               <% total_1 = (student_note.examen_1.to_f + student_note.acumulado_1.to_f) %>
@@ -223,18 +224,30 @@ $('table tr').last().addClass('row-last');
               <td><%= total_3.round %></td>
               <td><%= total_4.round %></td>
               <td><%= ((total_1 + total_2 + total_3 + total_4)/4).round %></td>
+=======
+            <% sub = Subject.find(student_note.subject_id) %>
+            <td><%= sub.name %></td>
+            <td><%= student_note.total_parcial(1).round %></td>
+            <td><%= student_note.total_parcial(2).round %></td>
+            <td><%= student_note.total_parcial(3).round %></td>
+            <td><%= student_note.total_parcial(4).round %></td>
+            <td><%= student_note.total_average.round %></td>
+>>>>>>> bff00c261ac697cd642388f61d0748380b449bce
               <% if @scores.count == 0 %>
                 <% 4.times do |l| %>
                   <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
                 <% end %>
               <% end %>
-            </tr>
+              <% if permitted_to? :destroy and (@current_user.privileges.map{|p| p.name}.include?("SubjectMaster"))  %>
+                <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
+              <% end %>
+               </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 
-   <hr class="division-line"></hr>
+   <hr class="division-line"/>
     
     <div class="line">
      <table id="listing" width="400px">
@@ -255,7 +268,7 @@ $('table tr').last().addClass('row-last');
     </table>
     </div>
     
-   <hr class="division-line"></hr>
+   <hr class="division-line"/>
     <div class="leftTable" style="width:250px;margin:15px">
       <p>Principal / Director:</p>
     </div>

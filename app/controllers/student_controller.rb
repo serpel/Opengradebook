@@ -16,7 +16,8 @@ class StudentController < ApplicationController
       @id = params[:id]
       @student = Student.find(params[:id])
       if @student.is_active?
-        @student_scores = @student.notas
+        subjects = @student.batch.subjects.map{ |s| s.id }
+        @student_scores = @student.notas.select { |n| subjects.include? n.subject_id }
         @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
 
         respond_to do |format|
@@ -360,13 +361,13 @@ class StudentController < ApplicationController
         @parent.email= "noreplyp#{@parent.ward.admission_no}@opengradebook.com"
         @parent.save
       end
-      if @parent.id  == @student.immediate_contact_id
+      #if @parent.id  == @student.immediate_contact_id
         unless @parent.user.nil?
           User.update(@parent.user.id, :first_name=> @parent.first_name, :last_name=> @parent.last_name, :email=> @parent.email, :role =>"Parent")
         else
           @parent.create_guardian_user(@student)
         end
-      end
+      #end
       flash[:notice] = "#{t('student.flash4')}"
       redirect_to :controller => "student", :action => "guardians", :id => @student.id
     end
@@ -659,9 +660,9 @@ class StudentController < ApplicationController
     if user.employee?
       employee = Employee.find_by_user_id(user)
       courses = Course.find_all_by_school_id(employee.school_id)
-      @batches = Batch.find_all_by_course_id(courses)
+      @batches = Batch.find_all_by_course_id_and_is_deleted_and_is_active(courses,false,true).sort_by { |b| b.name and b.id}
     else
-      @batches = Batch.active.select { |e| e.is_deleted == false }.sort_by { |s| s.id }
+      @batches = Batch.active.select { |e| e.is_deleted == false and e.is_active == true }.sort_by { |s| s.id }
     end
   end
 

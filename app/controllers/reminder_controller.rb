@@ -90,13 +90,6 @@ class ReminderController < ApplicationController
     render :partial=>"to_users", :object => @to_users
   end
 
-  def user_by_school
-
-    @user = current_user
-#    @code = Employee.find_by_employee_number @user['username']
-#    @departments = EmployeeDepartment.find @code['employee_department_id']
-  end
-
   def select_student_course
     @user = current_user
     @batches = Batch.active
@@ -106,16 +99,17 @@ class ReminderController < ApplicationController
   def to_employees
     if params[:dept_id] == ""
       render :update do |page|
-        #page.replace_html "to_employees", :text => ""
+        page.replace_html "to_employees", :text => ""
       end
-      return
-    end
-    department = EmployeeDepartment.find(params[:dept_id])
-    employees = department.employees
-    @to_users = employees.map { |s| s.user.id unless s.user.nil? }
-    @to_users.delete nil
-    render :update do |page|
-      page.replace_html 'to_users', :partial => 'to_users', :object => @to_users
+      #return
+    else
+      department = EmployeeDepartment.find(params[:dept_id])
+      employees = department.employees
+      @students_user = employees.collect { |s| s.user if s.status == true }
+      @students_user.compact!
+      render :update do |page|
+        page.replace_html 'to_users', :partial => 'to_users', :object => @students_user
+      end
     end
   end
 
@@ -138,6 +132,7 @@ class ReminderController < ApplicationController
       students.each do |student|
         guardians.concat student.guardians
       end
+<<<<<<< HEAD
 
       @guardians_user = guardians.collect { |guardian| guardian.user }
       @students_user = students.collect { |student| student.user }
@@ -145,6 +140,15 @@ class ReminderController < ApplicationController
       @students_user.compact!
       @guardians_user.compact!
 
+=======
+
+      @guardians_user = guardians.collect { |guardian| guardian.user }
+      @students_user = students.collect { |student| student.user }
+
+      @students_user.compact!
+      @guardians_user.compact!
+
+>>>>>>> bff00c261ac697cd642388f61d0748380b449bce
       render :update do |page|
         page.replace_html 'to_users2', :partial => 'to_users', :object => @students_user
         page.replace_html 'to_users3', :partial => 'to_guardian', :object => @guardians_user

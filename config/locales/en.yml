@@ -234,6 +234,7 @@ en: # locale
         select_a_batch: "Select a batch"
 
       plans:
+        exam: "Exam"
         exam1: "Exam 1"
         exam2: "Exam 2"
         exam3: "Exam 3"
@@ -249,7 +250,17 @@ en: # locale
         partial2: "P2"
         partial3: "P3"
         partial4: "P4"
+        number_type: "Number"
         grade_text: "grade"
+        import_text: "The following columns are required."
+        export_text: "Successfully esported"
+        completed_text: "Successfully imported."
+        import_header: "Grade import"
+        detail: "Detail"
+        recov1: "Niv 1"
+        recov2: "Niv 2"
+        recov3: "Niv 3"
+        recov4: "Niv 4"
 
     errors:
       template:
@@ -2544,6 +2555,7 @@ en: # locale
   exam3: "Exam 3"
   exam3: "Exam 4"
   exam4: "Exam 4"
+  acum_text: "Acum"
   acum1: "Acum 1"
   acum2: "Acum 2"
   acum3: "Acum 3"
@@ -2551,3 +2563,9 @@ en: # locale
   print: "Print"
   edit: "Edit"
   new: "New"
+  grade_texting: "Grade"
+  options: "Options"
+  recov1: "Niv 1"
+  recov2: "Niv 2"
+  recov3: "Niv 3"
+  recov4: "Niv 4"

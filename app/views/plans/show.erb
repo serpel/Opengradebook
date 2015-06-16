@@ -27,7 +27,7 @@ $('table tr').last().addClass('row-last');
 </div>
 
 <div id="page-yield">
-  <div><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'plans', :action => 'export', :id=>@id.to_s+'.xls' } %></div>
+  <div><p><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'plans', :action => 'export', :id=>@id } %> | <%= link_to "#{t('import_file')}", {:controller => 'plans', :action => 'import', :id => @id } %></p></div>
   <div id="application-list" class="wrapper">
     <table id="listing" cellpadding="1" cellspacing="1">
        <thead>
@@ -53,7 +53,7 @@ $('table tr').last().addClass('row-last');
             <td class="col-1"><%= @plan.acumulado_3.nil? ? 0:@plan.acumulado_3 %></td>
             <td class="col-1"><%= @plan.examen_4.nil? ? 0:@plan.examen_4 %></td>
             <td class="col-1"><%= @plan.acumulado_4.nil? ? 0:@plan.acumulado_4 %></td>
-            <td class="col-1"><%= link_to 'Editar', edit_plan_path(@plan) %></td>
+            <td class="col-1"><%= link_to "#{t('edit')}", edit_plan_path(@plan) %></td>
           </tr>
       </tbody>
     </table>
@@ -69,7 +69,7 @@ $('table tr').last().addClass('row-last');
         <tr>
           <th></th>
           <% 4.times do |l| %>
-             <th colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></th>
+             <th colspan="4"><%= "#{t('partial'+(l+1).to_s)}" %></th>
           <% end %>
           <th colspan="2"></th>
         </tr>
@@ -78,6 +78,7 @@ $('table tr').last().addClass('row-last');
           <% 4.times do |l| %>
             <th><%= "#{t('exam'+(l+1).to_s)}" %></th>
             <th><%= "#{t('acum'+(l+1).to_s)}" %></th>
+            <th><%= "#{t('recov'+(l+1).to_s)}" %></th>
             <th><%= "#{t('total')}" %></th>
           <% end %>
           <th><%= "#{t('average')}" %></th>
@@ -91,16 +92,28 @@ $('table tr').last().addClass('row-last');
                <% nota = student.notas.find_by_subject_id(@plan.subject) %>
                <% 4.times do |l| %>
                   <td class="col-1"><%=  nota != nil ? nota.examen(l+1) : 0.0 %></td>
-                  <td class="col-1"><%=  nota != nil ? nota.acum(l+1) : 0.0 %></td>
+                  <td class="col-1"><%=  nota != nil ? nota.acumulado(l+1) : 0.0 %></td>
+                  <td class="col-1"><%=  nota != nil ? nota.recuperacion(l+1) : 0.0 %></td>
                   <td class="col-1"><%=  nota != nil ? nota.total_parcial(l+1) : 0.0 %></td>
                <% end %>
                <td class="col-1"><%= nota != nil ? nota.total_average.round(1) : 0.0 %></td>
 
-               <% if nota %>
-                  <td class="col-1"><%= link_to "#{t('grade_text')}", edit_nota_path(nota.id), :class => "example" %></td>
+               <% details = StudentGeneralDetail.find_by_batch_id_and_student_id(student.batch_id,student.id)  %>
+               <td class="col-1">
+               <% if details %>
+                    <%= link_to  "#{t('detail')}", :controller => "student_general_details",
+                             :action => "show_all_student_details", :id=>student.id, :student_id => student.id, :batch_id => student.batch_id %>
                <% else %>
-                  <td class="col-1"><%= link_to "#{t('grade_text')}", new_student_score_path(:id => @plan.subject, :id2 => student.id), :class => "example" %></td>
+                      <%= link_to  "#{t('detail')}", :controller => "student_general_details",
+                                   :action => "new", :student_id => student.id, :batch_id => student.batch_id %>
                <% end %>
+               |
+               <% if nota %>
+                  <%= link_to "#{t('grade_text')}", edit_nota_path(nota.id), :class => "example" %>
+               <% else %>
+                  <%= link_to "#{t('grade_text')}", new_student_score_path(:id => @plan.subject, :id2 => student.id), :class => "example" %>
+               <% end %>
+               </td>
          </tr>
       <% end %>
       </tbody>

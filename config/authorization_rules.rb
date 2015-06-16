@@ -847,9 +847,11 @@ authorization do
   end
 
   role :subject_master do
+    has_permission_on [:notas], :to => [:destroy]
+    has_permission_on [:student_general_details], :to => [:destroy]
     has_permission_on [:configuration], :to => [:index]
     has_permission_on [:student], :to => [:electives, :assign_students, :unassign_students, :assign_all_students, :unassign_all_students]
-    has_permission_on [:subjects],        :to => [:index,:new,:create,:destroy,:edit, :update,:show]
+    has_permission_on [:subjects], :to => [:index,:new,:create,:destroy,:edit, :update,:show]
   end
 
   role :academic_year do
@@ -1318,6 +1320,7 @@ authorization do
   # admin privileges
   role :admin do
     includes :archived_exam_reports
+    has_permission_on [:notas], :to => [:index, :delete, :show, :by_grade, :get_grades_notes, :export_csv, :export, :to_csv]
     has_permission_on [:import],  :to => [:index, :import_csv, :list_batches]
     has_permission_on [:user],  :to => [:edit_privilege]
     has_permission_on [:weekday], :to => [:index, :week, :create]
@@ -2367,7 +2370,7 @@ authorization do
   # employee -privileges
   role :employee do
     has_permission_on [:student_general_details], :to => [:show, :edit, :new, :create,:update, :destroy, :view_details, :view_all, :get_students, :show_all_student_details, :delete]
-    has_permission_on [:plans], :to => [:index, :show, :export, :edit, :new, :create,:update, :destroy]
+    has_permission_on [:plans], :to => [:index, :show, :import, :export, :edit, :new, :create,:update, :destroy]
     has_permission_on [:notas], :to => [:by_grade, :get_grades_notes, :export_csv, :export, :to_csv]
     has_permission_on [:employee],
       :to => [

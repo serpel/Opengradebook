@@ -843,8 +843,8 @@ tr.tr-blank{
 .pagination{
     float:right;
     position: relative;
-    margin-top:-30px;
-    margin-right:100px;
+    /*margin-top:-30px;
+    margin-right:100px;*/
 }
 .pagination a.prev_page,.pagination a.next_page{
     color:#27292b;

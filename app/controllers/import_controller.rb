@@ -3,12 +3,13 @@ class ImportController < ApplicationController
   filter_access_to :all
   before_filter :login_required
 
-  require 'csv'
+
 
   def index
      @batches = Batch.active
   end
 
+=begin
   def import_csv
 
     if request.post? && params[:file].present?
@@ -76,6 +77,68 @@ class ImportController < ApplicationController
     end
 
     redirect_to :action => 'index'
+  end
+=end
+
+  require 'csv'
+  def import_csv
+
+    batch_id = params[:batch][:id]
+    @batch = Batch.find batch_id
+    @course = @batch.course
+
+    if request.post? &&
+       params[:file].present? && !batch_id.nil?
+
+      file = params[:file].read
+      csv_data = get_data( CSV.parse( file ) )
+
+      csv_data.each do |data|
+
+        default_date = '01/01/1999'
+        student = Student.new
+        student.admission_no = data[:student_username].to_s
+        student.first_name = data[:student_first_name].to_s
+        student.last_name = data[:student_last_name].to_s
+        student.date_of_birth = data[:student_date_of_birth].to_s.empty? ? default_date : data[:student_date_of_birth].to_s
+        student.email = data[:student_email].to_s.empty? ? "" : data[:student_email].to_s
+        student.gender = data[:student_gender].to_s
+        student.admission_date = DateTime.now.strftime('%m/%d/%Y')
+        student.batch_id = @batch.id
+        student.school_id = @course.school_id
+        student.country_id = student.nationality_id = Configuration.default_country
+        student.is_sms_enabled = 1
+        student.is_active = true
+        student.create_user_and_validate
+
+        if student.save!
+          guardian = Guardian.new
+          guardian.first_name = data[:parent_first_name].to_s
+          guardian.last_name = data[:parent_first_name].to_s
+          guardian.email = data[:parent_email].to_s
+          guardian.relation = data[:parent_relation].to_s
+          guardian.country_id = Configuration.default_country
+          guardian.create_guardian_user student
+          guardian.save!
+        end
+      end
+      flash[:notice] = "Import succesfull"
+      redirect_to :back
+    else
+      flash[:notice] = "Error"
+      redirect_to :back
+    end
+  end
+
+  def get_data(csv_array)  # makes arrays of hashes out of CSV's arrays of arrays
+    result = []
+    return result if csv_array.nil? || csv_array.empty?
+    headerA = csv_array.shift             # remove first array with headers from array returned by CSV
+    headerA.map!{|x| x.downcase.to_sym }  # make symbols out of the CSV headers
+    csv_array.each do |row|               #    convert each data row into a hash, given the CSV headers
+      result << Hash[ headerA.zip(row) ]  #    you could use HashWithIndifferentAccess here instead of Hash
+    end
+    return result
   end
 
   private
