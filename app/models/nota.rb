@@ -47,23 +47,40 @@ class Nota < ActiveRecord::Base
   end
 
   def total_average
-    #((self.examen_1.to_f + self.acumulado_1.to_f +  self.recuperacion_1.to_f) +
-    #(self.examen_2.to_f + self.acumulado_2.to_f + self.recuperacion_2.to_f) +
-    #(self.examen_3.to_f + self.acumulado_3.to_f + self.recuperacion_3.to_f) +
-    #(self.examen_4.to_f + self.acumulado_4.to_f + self.recuperacion_4.to_f)) / 4
+    ((self.examen_1.to_f + self.acumulado_1.to_f +  self.recuperacion_1.to_f) +
+    (self.examen_2.to_f + self.acumulado_2.to_f + self.recuperacion_2.to_f) +
+    (self.examen_3.to_f + self.acumulado_3.to_f + self.recuperacion_3.to_f) +
+    (self.examen_4.to_f + self.acumulado_4.to_f + self.recuperacion_4.to_f)) / 4
+  end
 
-    count = 0
-    sum = 0
+  def total_average_special
     avg = 0
-    4.times do |t|
-      if total_parcial(t+1) > 0
-        sum += total_parcial(t+1)
-        count += 1
-      end
+
+    p2 = total_parcial(2) > get_recovery(2) ? total_parcial(2) : get_recovery(2)
+    p4 = total_parcial(4) > get_recovery(1) ? total_parcial(4) : get_recovery(1)
+    total_p1 = (total_parcial(1) + p2)/2
+    total_p2 = (total_parcial(3) + p4)/2
+
+    if total_p1 > 0 and total_p2 > 0
+      avg = (total_p1 + total_p2) / 2
+    elsif total_p1 > 0 and total_p2 <= 0
+      avg = total_p1
+    elsif total_p2 > 0 and total_p1 <= 0
+      avg = total_p2
     end
 
-    avg = sum / count if count > 0
     avg
+  end
+
+  def get_recovery(number)
+    case number
+      when 1
+        self.recovery.to_f
+      when 2
+        self.recovery2.to_f
+      else
+        0
+    end
   end
 
   def examen(number)
@@ -125,4 +142,5 @@ class Nota < ActiveRecord::Base
         0.0
     end
   end
+
 end
