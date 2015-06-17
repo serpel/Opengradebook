@@ -427,6 +427,8 @@ es: # locale
   remove_all: "Remover TODOS"
   select_all: "Seleccionar TODOS"
   total: "Total"
+  tot: "T"
+  niv: "N"
   all_text: "Todo"
   teacher: "Profesor"
   total_average: "Promedio Total"
