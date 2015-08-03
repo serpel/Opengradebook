@@ -1,0 +1,35 @@
+
+
+<div id="content-header">
+  <%= image_tag("/images/show_settings.png") %>
+  <h1><%= t('courses_text') %></h1>
+  <h3><%= t('home') %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <table>
+  <tr>
+    <th>Name</th>
+    <th>School</th>
+  </tr>
+
+<% @student_additional_grade_fields.each do |student_additional_grade_field| %>
+  <tr>
+    <td><%=h student_additional_grade_field.name %></td>
+    <td><%=h student_additional_grade_field.school.school_name unless student_additional_grade_field.school == nil %></td>
+    <td><%= link_to 'Show', student_additional_grade_field %></td>
+    <td><%= link_to 'Edit', edit_student_additional_grade_field_path(student_additional_grade_field) %></td>
+    <td><%= link_to 'Destroy', student_additional_grade_field, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New student_additional_grade_field', new_student_additional_grade_field_path %>
+
+</div>

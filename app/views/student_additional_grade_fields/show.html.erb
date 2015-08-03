@@ -1,0 +1,13 @@
+<p>
+  <b>Name:</b>
+  <%=h @student_additional_grade_field.name %>
+</p>
+
+<p>
+  <b>School:</b>
+  <%=h @student_additional_grade_field.school.school_name %>
+</p>
+
+
+<%= link_to 'Edit', edit_student_additional_grade_field_path(@student_additional_grade_field) %> |
+<%= link_to 'Back', student_additional_grade_fields_path %>

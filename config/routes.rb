@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :student_additional_grade_fields
+
+  map.resources :student_additional_grade_fields
+
 
   map.resources :plans
   map.resources :notas

@@ -1,3 +1,4 @@
+=begin
 [
   {"config_key" => "InstitutionName"                 ,"config_value" => "" },
   {"config_key" => "InstitutionAddress"              ,"config_value" => ""},
@@ -57,7 +58,7 @@ if User.first( :conditions=>{:admin=>true}).blank?
     :employee_department_id => employee_department.id,:employee_grade_id => employee_grade.id,:employee_position_id => employee_position.id,:employee_category_id => employee_category.id,:status => true,:nationality_id =>'76', :date_of_birth => Date.today-365, :email => 'noreply@fedena.com')
 
   employee.user.update_attributes(:admin=>true,:employee=>false)
-  
+
 end
 
 [
@@ -102,3 +103,7 @@ end
 Event.all.each do |e|
   e.destroy if e.origin_type=="AdditionalExam"
 end
+
+=end
+
+StudentAdditionalGradeFields
