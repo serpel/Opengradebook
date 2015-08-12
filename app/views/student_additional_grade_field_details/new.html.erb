@@ -1,0 +1,27 @@
+<h1>New student_additional_grade_field_detail</h1>
+
+<% form_for(@student_additional_grade_field_detail) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :student %><br />
+    <%= f.text_field :student %>
+  </p>
+  <p>
+    <%= f.label :batch %><br />
+    <%= f.text_field :batch %>
+  </p>
+  <p>
+    <%= f.label :student_additional_grade_field %><br />
+    <%= f.text_field :student_additional_grade_field %>
+  </p>
+  <p>
+    <%= f.label :period %><br />
+    <%= f.text_field :period %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', student_additional_grade_field_details_path %>

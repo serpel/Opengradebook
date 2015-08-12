@@ -1,0 +1,12 @@
+<h1>Editing school_report</h1>
+
+<% form_for(@school_report) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @school_report %> |
+<%= link_to 'Back', school_reports_path %>

@@ -1320,7 +1320,8 @@ authorization do
   # admin privileges
   role :admin do
     includes :archived_exam_reports
-    has_permission_on [:student_additional_grade_fields], :to => [:index, :delete, :show]
+    has_permission_on [:student_additional_grade_field], :to => [:index, :delete, :show, :update]
+    has_permission_on [:student_additional_grade_field_detail], :to => [:index, :delete, :show, :update]
     has_permission_on [:notas], :to => [:index, :delete, :show, :by_grade, :get_grades_notes, :export_csv, :export, :to_csv]
     has_permission_on [:import],  :to => [:index, :import_csv, :list_batches]
     has_permission_on [:user],  :to => [:edit_privilege]

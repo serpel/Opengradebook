@@ -27,18 +27,10 @@
           <%= r.admission_no %>
         </td>
 
-        <% details = StudentGeneralDetail.find_all_by_batch_id_and_student_id(params[:batch_id], r.id) %>
-        <%  if details.size > 0 %>
-          <td class="col-7">
-            <%= link_to  "#{t('show')}", :controller => "student_general_details",
-                         :action => "show_all_student_details", :id => r.id, :student_id => r.id, :batch_id => r.batch_id %>
-          </td>
-        <% else %>
-          <td class="col-7">
-            <%= link_to  "#{t('create')}", :controller => "student_general_details",
-                         :action => "new", :student_id => r.id, :batch_id => r.batch_id %>
-          </td>
-        <% end %>
+        <td class="col-7">
+          <%= link_to  "#{t('edit')}", :controller => "student_grade_personalities",
+                       :action => "by_student", :id => r.id %>
+        </td>
       </tr>
     <% end %>
   </table>

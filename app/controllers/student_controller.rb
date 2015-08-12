@@ -11,6 +11,20 @@ class StudentController < ApplicationController
     :guardians, :academic_pdf,:show_previous_details,:fees,:fee_details
   ]
 
+
+  def grades
+    @student = Student.find(params[:id])
+    @details = @student.student_general_details.select { |d| d.batch_id == @student.batch_id}
+    @grade_fields =
+
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @student_general_details }
+    end
+  end
+
+
+
   def get_scores
     begin
       @id = params[:id]

@@ -383,6 +383,14 @@ en: # locale
     batch_transfers:
       errors_found: "Following errors were found"
 
+
+  personality_edit: "Edit Personality"
+  biweekly_report: "Biweekly Report"
+  print_report: "Print Report"
+  gradebook_text: "Gradebook"
+  gradebook_personality: "Personality Gradebook"
+  gradebook_subjects: "Subjects Gradebook"
+  decroly_school: "Decroly School"
   sl_no: "Sl  no."
   name: "Name"
   adm_no: "Adm no."

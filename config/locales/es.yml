@@ -346,6 +346,14 @@ es: # locale
     batch_transfers:
       errors_found: "Se encontró el siguiente error"
 
+
+  personality_edit: "Editar Personalidad"
+  biweekly_report: "Reporte Bi-Semanal"
+  print_report: "Imprimir Reporte"
+  decroly_school: "Escuela Decroly"
+  gradebook_text: "Boleta de Calificaciones"
+  gradebook_personality: "Calificar Personalidad"
+  gradebook_subjects: "Calificar Materias"
   empty_assignation: "No asignado"
   sl_no: "Sl No."
   name: "Nombre"

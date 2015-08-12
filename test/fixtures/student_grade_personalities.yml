@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  student_additional_grade_field: 
+  p1: MyString
+  p2: MyString
+  p3: MyString
+  p4: MyString
+
+two:
+  student_additional_grade_field: 
+  p1: MyString
+  p2: MyString
+  p3: MyString
+  p4: MyString

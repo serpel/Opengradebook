@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  student_id: 1
+  subject_id: 1
+  w1: 1
+  w2: 1
+  w3: 1
+  w4: 1
+  period: 1
+
+two:
+  student_id: 1
+  subject_id: 1
+  w1: 1
+  w2: 1
+  w3: 1
+  w4: 1
+  period: 1

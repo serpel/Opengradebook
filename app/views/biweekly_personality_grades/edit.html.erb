@@ -1,0 +1,36 @@
+<h1>Editing biweekly_personality_grade</h1>
+
+<% form_for(@biweekly_personality_grade) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :student_id %><br />
+    <%= f.text_field :student_id %>
+  </p>
+  <p>
+    <%= f.label :student_additional_grade_field_id %><br />
+    <%= f.text_field :student_additional_grade_field_id %>
+  </p>
+  <p>
+    <%= f.label :w1 %><br />
+    <%= f.text_field :w1 %>
+  </p>
+  <p>
+    <%= f.label :w2 %><br />
+    <%= f.text_field :w2 %>
+  </p>
+  <p>
+    <%= f.label :w3 %><br />
+    <%= f.text_field :w3 %>
+  </p>
+  <p>
+    <%= f.label :w4 %><br />
+    <%= f.text_field :w4 %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @biweekly_personality_grade %> |
+<%= link_to 'Back', biweekly_personality_grades_path %>

@@ -1,0 +1,2 @@
+module SchoolReportsHelper
+end
