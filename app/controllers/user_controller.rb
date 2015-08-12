@@ -160,6 +160,7 @@ class UserController < ApplicationController
   
   def dashboard
     @user = current_user
+    @privilege = @user.privileges.map {|p| p.name}
     @config = Configuration.available_modules
     @employee = @user.employee_record if ['employee','admin'].include?(@user.role_name.downcase)
     if @user.student?

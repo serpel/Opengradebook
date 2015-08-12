@@ -1,4 +1,14 @@
 class SchoolReportsController < ApplicationController
+  before_filter :login_required, :has_access
+  #filter_access_to :all
+
+  def has_access
+    privilege = current_user.privileges.map{|p| p.name}
+    unless privilege.include?("decroly_school")
+      redirect_to :controller => 'user', :action => 'dashboard'
+      flash[:notice] = "#{t('flash_msg4')}"
+    end
+  end
   # GET /school_reports
   # GET /school_reports.xml
   def index

@@ -91,6 +91,8 @@ end
   {"settings_key" => "ExamScheduleResultEnabled"          ,"is_enabled" => false},
   {"settings_key" => "AttendanceEnabled"                  ,"is_enabled" => false},
   {"settings_key" => "NewsEventsEnabled"                  ,"is_enabled" => false}
+
+
 ].each do |param|
   SmsSetting.find_or_create_by_settings_key(param)
 end
@@ -105,5 +107,10 @@ Event.all.each do |e|
 end
 
 =end
+p = Privilege.new
+p.name = "decroly_school"
+p.save!
 
-StudentAdditionalGradeFields
+Privilege.all.each do |p|
+  p.update_attributes(:description=> p.name.underscore+"_privilege")
+end

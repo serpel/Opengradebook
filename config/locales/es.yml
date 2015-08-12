@@ -347,6 +347,7 @@ es: # locale
       errors_found: "Se encontró el siguiente error"
 
 
+  decroly_school_privilege: "Gestion Escuela Decroly"
   personality_edit: "Editar Personalidad"
   biweekly_report: "Reporte Bi-Semanal"
   print_report: "Imprimir Reporte"
