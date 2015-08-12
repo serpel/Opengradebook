@@ -1,0 +1,38 @@
+<h2>Personalities</h2>
+<h3>Student: <%=h @student.full_name if @student %></h3>
+<table>
+  <tr>
+    <th>Personality</th>
+    <th>P1</th>
+    <th>P2</th>
+    <th>P3</th>
+    <th>P4</th>
+  </tr>
+
+  <% @personalities.each do |personality| %>
+      <tr>
+        <% student_personality =  StudentGradePersonality.find_by_student_additional_grade_field_id_and_student_id personality, @student.id %>
+
+        <% if student_personality %>
+            <td><%=h personality.name %></td>
+            <td><%=h student_personality.p1 %></td>
+            <td><%=h student_personality.p2 %></td>
+            <td><%=h student_personality.p3 %></td>
+            <td><%=h student_personality.p4 %></td>
+            <td><%= link_to 'Edit', {:controller => 'student_grade_personalities',
+                                     :action => 'edit',
+                                     :id => student_personality.id} %></td>
+        <% else %>
+            <td><%=h personality.name %></td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td><%= link_to 'New', {:controller => 'student_grade_personalities', :action => 'new', :student_id => @student.id, :field_id =>  personality.id} %></td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
+
+<br />
+<%= link_to 'Back', :controller => 'student_grade_personalities', :action => 'batches', :id => 1 %>
