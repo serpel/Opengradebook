@@ -10,6 +10,7 @@ class Employee < ActiveRecord::Base
   
   has_many :employees_subjects
   has_many :subjects ,:through => :employees_subjects
+  has_many :batches ,:through => :subjects, :conditions => { :is_deleted => false }
   has_many    :timetable_entries
   has_many    :employee_bank_details
   has_many    :employee_additional_details

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="Number">No</Data></Cell>
+        <Cell><Data ss:Type="String">Asignatura</Data></Cell>
+        <Cell><Data ss:Type="String">Primer Periodo</Data></Cell>
+        <Cell><Data ss:Type="String">Segundo Periodo</Data></Cell>
+        <Cell><Data ss:Type="String">Tercer Periodo</Data></Cell>
+        <Cell><Data ss:Type="String">Cuarto Periodo</Data></Cell>
+        <Cell><Data ss:Type="String">Recup. 1</Data></Cell>
+        <Cell><Data ss:Type="String">Recup. 2</Data></Cell>
+      </Row>
+      <% @student_grade.each do |grade, n| %>
+          <Row>
+            <Cell><Data ss:Type="Number"><%= n %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= Subject.find(grade.subject_id).name %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= grade.partial 1 %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= grade.partial 2 %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= grade.partial 3 %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= grade.partial 4 %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= grade.get_recovery 1 %></Data></Cell>
+            <Cell><Data ss:Type="Number"><%= grade.get_recovery 2 %></Data></Cell>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

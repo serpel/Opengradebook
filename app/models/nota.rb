@@ -61,6 +61,13 @@ class Nota < ActiveRecord::Base
     end
   end
 
+  def average
+    ((self.examen_1.to_f + self.acumulado_1.to_f +  self.recuperacion_1.to_f) +
+        (self.examen_2.to_f + self.acumulado_2.to_f + self.recuperacion_2.to_f) +
+        (self.examen_3.to_f + self.acumulado_3.to_f + self.recuperacion_3.to_f) +
+        (self.examen_4.to_f + self.acumulado_4.to_f + self.recuperacion_4.to_f)) / 4
+  end
+
   def total_average
     ((self.examen_1.to_f + self.acumulado_1.to_f +  self.recuperacion_1.to_f) +
     (self.examen_2.to_f + self.acumulado_2.to_f + self.recuperacion_2.to_f) +

@@ -384,6 +384,12 @@ en: # locale
       errors_found: "Following errors were found"
 
 
+  week_1: '1 - 2'
+  week_2: '3 - 4'
+  week_3: '5 - 6'
+  week_4: '7 - 8'
+  rate: 'Rate'
+  rate_week: 'Rate Week'
   decroly_school_privilege: "Decroly School Privilege"
   personality_edit: "Edit Personality"
   biweekly_report: "Biweekly Report"

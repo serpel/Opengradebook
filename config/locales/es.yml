@@ -347,6 +347,16 @@ es: # locale
       errors_found: "Se encontró el siguiente error"
 
 
+  week_1: '1 - 2'
+  week_2: '3 - 4'
+  week_3: '5 - 6'
+  week_4: '7 - 8'
+  first_period: 'Periodo I'
+  second_period: 'Periodo II'
+  third_period: 'Periodo III'
+  fourth_period: 'Periodo IV'
+  rate: 'Calificar'
+  rate_week: 'Calificar Semana'
   decroly_school_privilege: "Gestion Escuela Decroly"
   personality_edit: "Editar Personalidad"
   biweekly_report: "Reporte Bi-Semanal"

@@ -1,4 +1,33 @@
 class BiweeklySubjectGradesController < ApplicationController
+
+
+  def batches
+    @employee = Employee.find(params[:id])
+    @batches = Batch.all :joins => {:subjects =>
+                                    [{:employees_subjects => :employee}]},
+                         :conditions => {'employees.id' => @employee.id}
+  end
+
+  def subjects
+    @batch = Batch.find(params[:id])
+    employee = Employee.find(params[:employee])
+    @subjects =  employee.subjects.select { |s| s.batch == @batch }
+    render(:update) do |page|
+      page.replace_html 'subjects', :partial => 'subjects'
+    end
+  end
+
+  def student_grades
+    @subject = Subject.find(params[:id])
+    batch = @subject.batch
+    @students = batch.students.select {|s| !s.is_deleted }
+
+    respond_to do |format|
+      format.html # student_grades.html.erb
+      format.xml  { render :xml => @students }
+    end
+  end
+
   # GET /biweekly_subject_grades
   # GET /biweekly_subject_grades.xml
   def index
