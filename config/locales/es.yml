@@ -346,16 +346,22 @@ es: # locale
     batch_transfers:
       errors_found: "Se encontró el siguiente error"
 
-
+  action: 'Accion'
+  personality: 'Personalidad'
+  period: 'Periodo'
   week_1: '1 - 2'
   week_2: '3 - 4'
   week_3: '5 - 6'
   week_4: '7 - 8'
+  first_week: 'Semana I'
+  second_week: 'Semana II'
+  third_week: 'Semana IV'
+  fourth_week: 'Semana V'
   first_period: 'Periodo I'
   second_period: 'Periodo II'
   third_period: 'Periodo III'
   fourth_period: 'Periodo IV'
-  rate: 'Calificar'
+  rate: 'calificar'
   rate_week: 'Calificar Semana'
   decroly_school_privilege: "Gestion Escuela Decroly"
   personality_edit: "Editar Personalidad"

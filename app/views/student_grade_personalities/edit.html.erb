@@ -1,28 +1,37 @@
-<h1>Editing student_grade_personality</h1>
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1><%= t('edit')  %> - <%= @student_grade_personality.student_additional_grade_field.name if  @student_grade_personality %></h1>
+  <h3 style="text-transform:capitalize"><%= @student.full_name %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
 
-<% form_for(@student_grade_personality) do |f| %>
-  <%= f.error_messages %>
 
-  <p>
-    <%= f.label :p1 %><br />
-    <%= f.text_field :p1 %>
-  </p>
-  <p>
-    <%= f.label :p2 %><br />
-    <%= f.text_field :p2 %>
-  </p>
-  <p>
-    <%= f.label :p3 %><br />
-    <%= f.text_field :p3 %>
-  </p>
-  <p>
-    <%= f.label :p4 %><br />
-    <%= f.text_field :p4 %>
-  </p>
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
-<% end %>
+<div id="page-yield">
+  <% unless flash[:notice].nil? %>
+      <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
 
-<%= link_to 'Show', @student_grade_personality %> |
-<%= link_to 'Back', student_grade_personalities_path %>
+  <div id="application-list">
+        <% form_for(@student_grade_personality) do |f| %>
+          <%= f.error_messages %>
+            <table id="listing" align="center" width="100%" cellpadding="0" cellspacing="0">
+              <tr class="tr-head">
+                <td><%= f.label :p1 %></td>
+                <td><%= f.label :p2 %></td>
+                <td><%= f.label :p3 %></td>
+                <td><%= f.label :p4 %></td>
+                <td><%= t('actions') %></td>
+              </tr>
+              <tr class="tr-read-even">
+                <td class="col-0"><%= f.text_field :p1, :size => 2 %></td>
+                <td class="col-0"><%= f.text_field :p2, :size => 2 %></td>
+                <td class="col-0"><%= f.text_field :p3, :size => 2 %></td>
+                <td class="col-0"><%= f.text_field :p4, :size => 2 %></td>
+                <td><%= f.submit t('update') %></td>
+              </tr>
+            </table>
+        <% end %>
+    </div>
+  </div>

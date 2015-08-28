@@ -383,11 +383,21 @@ en: # locale
     batch_transfers:
       errors_found: "Following errors were found"
 
-
+  action: 'Action'
+  personality: 'Personality'
+  period: 'Period'
+  first_week: 'First week'
+  second_week: 'Second week'
+  third_week: 'Third week'
+  fourth_week: 'Fourth week'
   week_1: '1 - 2'
   week_2: '3 - 4'
   week_3: '5 - 6'
   week_4: '7 - 8'
+  first_period: 'Period I'
+  second_period: 'Period II'
+  third_period: 'Period III'
+  fourth_period: 'Period IV'
   rate: 'Rate'
   rate_week: 'Rate Week'
   decroly_school_privilege: "Decroly School Privilege"

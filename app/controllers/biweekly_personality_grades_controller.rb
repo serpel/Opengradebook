@@ -10,6 +10,16 @@ class BiweeklyPersonalityGradesController < ApplicationController
     end
   end
 
+  def student
+    @student = Student.find(params[:id])
+    @fields = StudentAdditionalGradeField.find_all_by_school_id(current_school)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @personalities }
+    end
+  end
+
   def by_student
     @student = Student.find(params[:id])
     @personalities = StudentAdditionalGradeField.find_all_by_school_id(current_school)
@@ -48,8 +58,10 @@ class BiweeklyPersonalityGradesController < ApplicationController
   # GET /biweekly_personality_grades/new.xml
   def new
     @biweekly_personality_grade = BiweeklyPersonalityGrade.new
-    @student = Student.find(params[:student_id])
-    @student_grade_field = StudentAdditionalGradeField.find(params[:field_id])
+    @biweekly_personality_grade.student_id = params[:student]
+    @biweekly_personality_grade.student_additional_grade_field_id = params[:field]
+    @biweekly_personality_grade.period = params[:period]
+    @period = params[:period]
 
     respond_to do |format|
       format.html # new.html.erb
@@ -60,6 +72,8 @@ class BiweeklyPersonalityGradesController < ApplicationController
   # GET /biweekly_personality_grades/1/edit
   def edit
     @biweekly_personality_grade = BiweeklyPersonalityGrade.find(params[:id])
+    @student = @biweekly_personality_grade.student
+    @period = @biweekly_personality_grade.period
   end
 
   # POST /biweekly_personality_grades
@@ -70,7 +84,7 @@ class BiweeklyPersonalityGradesController < ApplicationController
     respond_to do |format|
       if @biweekly_personality_grade.save
         flash[:notice] = 'BiweeklyPersonalityGrade was successfully created.'
-        format.html { redirect_to(@biweekly_personality_grade) }
+        format.html { redirect_to :action => 'student', :id => @biweekly_personality_grade.student.id }
         format.xml  { render :xml => @biweekly_personality_grade, :status => :created, :location => @biweekly_personality_grade }
       else
         format.html { render :action => "new" }
@@ -87,7 +101,7 @@ class BiweeklyPersonalityGradesController < ApplicationController
     respond_to do |format|
       if @biweekly_personality_grade.update_attributes(params[:biweekly_personality_grade])
         flash[:notice] = 'BiweeklyPersonalityGrade was successfully updated.'
-        format.html { redirect_to(@biweekly_personality_grade) }
+        format.html { redirect_to :action => 'student', :id=> @biweekly_personality_grade.student.id }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

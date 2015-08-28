@@ -78,6 +78,7 @@ class StudentGradePersonalitiesController < ApplicationController
 
   # GET /student_grade_personalities/1/edit
   def edit
+    @student = Student.find(params[:student])
     @student_grade_personality = StudentGradePersonality.find(params[:id])
   end
 
@@ -89,7 +90,7 @@ class StudentGradePersonalitiesController < ApplicationController
     respond_to do |format|
       if @student_grade_personality.save
         flash[:notice] = 'StudentGradePersonality was successfully created.'
-        format.html { redirect_to :controller => "student_grade_personalities", :action => "by_student", :id => @student_grade_personality.student_id }
+        format.html { redirect_to :action => "by_student", :id => @student_grade_personality.student.id }
         format.xml  { render :xml => @student_grade_personality, :status => :created, :location => @student_grade_personality }
       else
         format.html { render :action => "new" }
@@ -106,7 +107,7 @@ class StudentGradePersonalitiesController < ApplicationController
     respond_to do |format|
       if @student_grade_personality.update_attributes(params[:student_grade_personality])
         flash[:notice] = 'StudentGradePersonality was successfully updated.'
-        format.html { redirect_to(@student_grade_personality) }
+        format.html { redirect_to :action => 'by_student', :id => @student_grade_personality.student.id }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

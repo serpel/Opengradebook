@@ -12,7 +12,7 @@
 <div id="content-header">
   <%= image_tag("/images/examination/show_exam.png") %>
   <h1 style="text-transform:capitalize"><%=h @subject.name %></h1>
-  <h3><%= t('gradebook')%></h3>
+  <h3><%= t('biweekly_report')%></h3>
   <div id="app-back-button">
     <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
   </div>
@@ -25,25 +25,19 @@
 </div>
 
 <div id="page-yield">
-  <div><p><%= image_tag("/images/buttons/Download-32.png") %> <%= link_to "#{t('export')}", {:controller => 'plans', :action => 'export', :id=>@id } %> | <%= link_to "#{t('import_file')}", {:controller => 'plans', :action => 'import', :id => @id } %></p></div>
-
   <div id="application-list" class="wrapper">
-
-        <table id="listing" class="wrapper">
+        <table id="listing2" class="wrapper" width="100%">
           <thead>
-          <tr>
+          <tr class="tr-head">
             <th>No</th>
-            <th><%= t('subject')%></th>
-            <th colspan="4"><%= t('first_period')%></th>
-            <th><%= "#{t('total')}" %></th>
-            <th colspan="4"><%= t('second_period')%></th>
-            <th><%= "#{t('total')}" %></th>
-            <th colspan="4"><%= t('third_period')%></th>
-            <th><%= "#{t('total')}" %></th>
-            <th colspan="4"><%= t('fourth_period')%></th>
-            <th><%= "#{t('total')}" %></th>
+            <th><%= t('name')%></th>
+            <th colspan="6"><%= t('first_period')%></th>
+            <th colspan="6"><%= t('second_period')%></th>
+            <th colspan="6"><%= t('third_period')%></th>
+            <th colspan="6"><%= t('fourth_period')%></th>
+            <th></th>
           </tr>
-          <tr>
+          <tr class="tr-head">
             <th></th>
             <th></th>
             <% 4.times do |l| %>
@@ -51,8 +45,10 @@
                 <th><%= "#{t('week_2')}" %></th>
                 <th><%= "#{t('week_3')}" %></th>
                 <th><%= "#{t('week_4')}" %></th>
-                <th></th>
+                <th><%= t('total')%></th>
+                <th><%= t('action') %></th>
             <% end %>
+            <th><%= t('personality') %></th>
           </tr>
           </thead>
           <tbody>
@@ -64,18 +60,25 @@
                 <% 4.times do |period| %>
                     <% grades.select {|g| g.period == (period+1) }.each do |grade| %>
                         <% 4.times do |l| %>
-                            <td class="col-1"><%= grade.week(l+1) %></td>
+                            <td class="col-1"><%= grade.week(l+1).round %></td>
                         <% end %>
-                        <td class="col-1"><%= grade.total %></td>
+                        <td class="col-1"><%= grade.total.round %></td>
+                        <td class="col-1">
+                          <%= link_to t('rate'), edit_biweekly_subject_grade_path(grade) %>
+                        </td>
                     <% end %>
-                    <% if grades.count <= 0 %>
+                    <% if grades.select {|g| g.period == (period+1) }.count <= 0 %>
                         <% 4.times do |l| %>
                             <td class="col-1"><%= 0 %></td>
                         <% end %>
                         <td class="col-1"><%= 0 %></td>
+                        <td class="col-1">
+                          <%= link_to t('rate'), new_biweekly_subject_grade_path(:subject => @subject, :student => student, :period => period+1) %>
+                        </td>
                     <% end %>
                 <% end %>
-              </tr>
+                <td><%= link_to t('edit'),:controller => 'biweekly_personality_grades', :action => 'student', :id => student.id %></td>
+                </tr>
           <% end %>
           </tbody>
         </table>

@@ -1,0 +1,78 @@
+<script type="text/javascript" >
+    $('table tr').each(function(){
+        $(this).find('th').first().addClass('first');
+        $(this).find('th').last().addClass('last');
+        $(this).find('td').first().addClass('first');
+        $(this).find('td').last().addClass('last');
+    });
+    $('table tr').first().addClass('row-first');
+    $('table tr').last().addClass('row-last');
+</script>
+
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1 style="text-transform:capitalize"><%=h @student.full_name if @student %></h1>
+  <h3><%= t('biweekly_report')%></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+  <% unless flash[:notice].nil? %>
+      <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+</div>
+
+<div id="page-yield">
+  <div id="application-list" class="wrapper">
+    <table id="listing2" class="wrapper" width="100%">
+      <thead>
+      <tr class="tr-head">
+        <th>No</th>
+        <th><%= t('name')%></th>
+        <th colspan="6"><%= t('first_period')%></th>
+        <th colspan="6"><%= t('second_period')%></th>
+        <th colspan="6"><%= t('third_period')%></th>
+        <th colspan="6"><%= t('fourth_period')%></th>
+      </tr>
+      <tr class="tr-head">
+        <th></th>
+        <th></th>
+        <% 4.times do |l| %>
+            <th><%= "#{t('week_1')}" %></th>
+            <th><%= "#{t('week_2')}" %></th>
+            <th><%= "#{t('week_3')}" %></th>
+            <th><%= "#{t('week_4')}" %></th>
+            <th><%= t('action') %></th>
+            <th><%= t('export') %></th>
+        <% end %>
+      </tr>
+      </thead>
+      <tbody>
+      <% @fields.each_with_index do |field, i| %>
+          <tr class="tr-read-<%= cycle('odd', 'even') %>">
+            <td><%= i %></td>
+            <td class="col-1" style="text-transform:capitalize"><%= field.name %></td>
+            <% 4.times do |period| %>
+                <% personality = BiweeklyPersonalityGrade.find_by_student_id_and_student_additional_grade_field_id_and_period(@student.id, field, period+1) %>
+                <% if personality %>
+                    <td><%= personality.w1.upcase %></td>
+                    <td><%= personality.w2.upcase %></td>
+                    <td><%= personality.w3.upcase %></td>
+                    <td><%= personality.w4.upcase %></td>
+                    <td><%= link_to t('edit'), edit_biweekly_personality_grade_path(personality) %></td>
+                <% else %>
+                    <% 4.times.each do |t|%>
+                        <td>pg</td>
+                    <% end %>
+                    <td><%= link_to t('edit'), new_biweekly_personality_grade_path(:student => @student,:field => field.id, :period => period+1) %></td>
+                <% end %>
+                <td><%= link_to 'pdf', :controller => 'school_reports', :action => 'biweekly_report', :id => @student, :period =>period+1, :ext => 'pdf' %></td>
+          <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

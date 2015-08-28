@@ -53,12 +53,18 @@ class BiweeklySubjectGradesController < ApplicationController
   # GET /biweekly_subject_grades/new
   # GET /biweekly_subject_grades/new.xml
   def new
-    @biweekly_subject_grade = BiweeklySubjectGrade.new
+      @student = Student.find(params[:student])
+      @subject = Subject.find(params[:subject])
+      @period = params[:period]
+      @biweekly_subject_grade = BiweeklySubjectGrade.new
+      @biweekly_subject_grade.subject_id = params[:subject]
+      @biweekly_subject_grade.student_id = params[:student]
+      @biweekly_subject_grade.period = params[:period]
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @biweekly_subject_grade }
-    end
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @biweekly_subject_grade }
+      end
   end
 
   # GET /biweekly_subject_grades/1/edit
@@ -71,14 +77,24 @@ class BiweeklySubjectGradesController < ApplicationController
   def create
     @biweekly_subject_grade = BiweeklySubjectGrade.new(params[:biweekly_subject_grade])
 
-    respond_to do |format|
-      if @biweekly_subject_grade.save
-        flash[:notice] = 'BiweeklySubjectGrade was successfully created.'
-        format.html { redirect_to(@biweekly_subject_grade) }
-        format.xml  { render :xml => @biweekly_subject_grade, :status => :created, :location => @biweekly_subject_grade }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @biweekly_subject_grade.errors, :status => :unprocessable_entity }
+    tmp = BiweeklySubjectGrade.find_by_student_id_and_subject_id_and_period(@biweekly_subject_grade.student_id,
+                                                                            @biweekly_subject_grade.subject_id,
+                                                                            @biweekly_subject_grade.period)
+    if tmp
+      respond_to do |format|
+        format.html { redirect_to :action => 'student_grades', :id => tmp.subject.id }
+        format.xml { render :xml => tmp }
+      end
+    else
+      respond_to do |format|
+        if @biweekly_subject_grade.save
+          flash[:notice] = 'BiweeklySubjectGrade was successfully created.'
+          format.html { redirect_to :action => 'student_grades', :id => @biweekly_subject_grade.subject.id }
+          format.xml  { render :xml => @biweekly_subject_grade, :status => :created, :location => @biweekly_subject_grade }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @biweekly_subject_grade.errors, :status => :unprocessable_entity }
+        end
       end
     end
   end
