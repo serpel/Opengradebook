@@ -1,9 +1,5 @@
 class ImportController < ApplicationController
-
-  filter_access_to :all
   before_filter :login_required
-
-
 
   def index
      @batches = Batch.active
