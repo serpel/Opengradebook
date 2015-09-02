@@ -51,6 +51,12 @@
         <div class="link-heading"><%= link_to "#{t('import_students')}", :controller=>"import", :action => "index" %></div>
         <div class="link-descr"><%= t('append_some_students') %></div>
       </div>
-    <% end %>  
+    <% end %>
+
+    <div class="link-box">
+      <div class="link-heading"><%= link_to "#{t('add_school_extra_fields')}", :controller=>"student_additional_grade_fields" %></div>
+      <div class="link-descr"><%= t('config_school_grade_details') %></div>
+    </div>
+
   </div>
 </div>

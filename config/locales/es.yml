@@ -347,6 +347,8 @@ es: # locale
       errors_found: "Se encontró el siguiente error"
 
   action: 'Accion'
+  add_school_extra_fields: 'Campos extra escuelas'
+  config_school_grade_details: 'Configurar campos adicionales'
   personality: 'Personalidad'
   period: 'Periodo'
   week_1: '1 - 2'
