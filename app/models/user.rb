@@ -13,10 +13,10 @@ class User < ActiveRecord::Base
   validates_presence_of   :password, :on => :create
 
   has_and_belongs_to_many :privileges
-  has_many  :user_events
-  has_many  :events,:through=>:user_events
-  has_one :student_record,:class_name=>"Student",:foreign_key=>"user_id"
-  has_one :employee_record,:class_name=>"Employee",:foreign_key=>"user_id"
+  has_many :user_events, :dependent => :destroy
+  has_many :events, :through=>:user_events
+  has_one :student_record,:class_name=>"Student",:foreign_key=>"user_id", :dependent => :destroy
+  has_one :employee_record,:class_name=>"Employee",:foreign_key=>"user_id", :dependent => :destroy
 
   named_scope :active, :conditions => { :is_deleted => false }
   named_scope :inactive, :conditions => { :is_deleted => true }
