@@ -136,6 +136,12 @@ class Student < ActiveRecord::Base
     Guardian.find(self.immediate_contact_id) unless self.immediate_contact_id.nil?
   end
 
+  def set_immediate_contact(guardian)
+    unless guardian.user.nil?
+      self.update_attributes(:immediate_contact_id=>guardian.id)
+    end
+  end
+
   def image_file=(input_data)
     return if input_data.blank?
     self.photo_filename     = input_data.original_filename
