@@ -79,51 +79,67 @@ class ImportController < ApplicationController
   require 'csv'
   def import_csv
 
-    batch_id = params[:batch][:id]
-    @batch = Batch.find batch_id
+    @batch = Batch.find params[:batch][:id]
     @course = @batch.course
+    @errors = []
 
     if request.post? &&
-       params[:file].present? && !batch_id.nil?
+       params[:file].present?
 
       file = params[:file].read
       csv_data = get_data( CSV.parse( file ) )
 
       csv_data.each do |data|
-
-        default_date = '01/01/1999'
-        student = Student.new
-        student.admission_no = data[:student_username].to_s
-        student.first_name = data[:student_first_name].to_s
-        student.last_name = data[:student_last_name].to_s
-        student.date_of_birth = data[:student_date_of_birth].to_s.empty? ? default_date : data[:student_date_of_birth].to_s
-        student.email = data[:student_email].to_s.empty? ? "" : data[:student_email].to_s
-        student.gender = data[:student_gender].to_s
-        student.admission_date = DateTime.now.strftime('%m/%d/%Y')
-        student.batch_id = @batch.id
-        student.school_id = @course.school_id
-        student.country_id = student.nationality_id = Configuration.default_country
-        student.is_sms_enabled = 1
-        student.is_active = true
-        student.create_user_and_validate
-
-        if student.save!
-          guardian = Guardian.new
-          guardian.first_name = data[:parent_first_name].to_s
-          guardian.last_name = data[:parent_first_name].to_s
-          guardian.email = data[:parent_email].to_s
-          guardian.relation = data[:parent_relation].to_s
-          guardian.country_id = Configuration.default_country
-          guardian.create_guardian_user student
-          guardian.save!
+        student, student_status = create_student(data)
+        create_guardian(data, student) if student_status
+        #student.set_immediate_contact(guardian) if student_status and guardian_status
+        unless student_status
+          @errors << data[:student_first_name].to_s + data[:student_last_name].to_s
         end
       end
-      flash[:notice] = "Import succesfull"
-      redirect_to :back
+
+      if @errors.count > 0
+        msg = "Something Wrong, the following students can't be saved: "
+        @errors.each{ |e| msg += e + ', ' }
+        flash[:notice] = msg
+      else
+        flash[:notice] = "Import succesfull"
+      end
     else
       flash[:notice] = "Error"
-      redirect_to :back
     end
+    redirect_to :back
+  end
+
+  def create_student(data)
+    default_date = '01/01/1999'
+    student = Student.new
+    student.admission_no = data[:student_username].to_s
+    student.first_name = data[:student_first_name].to_s
+    student.last_name = data[:student_last_name].to_s
+    student.date_of_birth = data[:student_date_of_birth].to_s.empty? ? default_date : data[:student_date_of_birth].to_s
+    student.email = data[:student_email].to_s.empty? ? "" : data[:student_email].to_s
+    student.gender = data[:student_gender].to_s
+    student.admission_date = DateTime.now.strftime('%m/%d/%Y')
+    student.batch_id = @batch.id
+    student.school_id = @batch.course.school_id
+    student.country_id = student.nationality_id = Configuration.default_country
+    student.is_sms_enabled = 1
+    student.is_active = true
+    student.create_user_and_validate
+    return student, student.save
+  end
+
+  def create_guardian(data, student)
+    guardian = Guardian.new
+    guardian.first_name = data[:parent_first_name].to_s
+    guardian.last_name = data[:parent_last_name].to_s
+    guardian.email = data[:parent_email].to_s
+    guardian.relation = data[:parent_relation].to_s
+    guardian.country_id = Configuration.default_country
+    guardian.create_guardian_user student
+    status = guardian.save
+    return guardian, status
   end
 
   def get_data(csv_array)  # makes arrays of hashes out of CSV's arrays of arrays

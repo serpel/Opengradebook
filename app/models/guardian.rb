@@ -35,11 +35,9 @@ class Guardian < ActiveRecord::Base
       u.password = "p#{student.admission_no.to_s}123"
       u.role = 'Parent'
       u.email = ( email == '' or User.find_by_email(self.email) ) ? "" :self.email.to_s
-    end 
-    self.update_attributes(:user_id => user.id) if user.save
+    end
+    self.update_attributes(:user_id => user.id, :ward_id => student.id ) if user.save
   end
-
- 
 
   def self.shift_user(student)
     self.find_all_by_ward_id(student.id).each do |g|
