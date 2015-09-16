@@ -18,14 +18,14 @@ class Student < ActiveRecord::Base
   has_many   :attendances
   has_many   :finance_fees
   has_many   :fee_category ,:class_name => "FinanceFeeCategory"
-  has_many   :students_subjects
+  has_many   :students_subjects, :dependent => :destroy
   has_many   :subjects ,:through => :students_subjects
   has_many   :notas, :dependent => :destroy
   has_many   :student_grade_personalities, :dependent => :destroy
   has_many   :biweekly_subject_grades, :dependent => :destroy
   has_many   :biweekly_personality_grades, :dependent => :destroy
-  has_many   :student_additional_details
-  has_many   :batch_students
+  has_many   :student_additional_details, :dependent => :destroy
+  has_many   :batch_students, :dependent => :destroy
   has_many   :subject_leaves
   has_many   :grouped_exam_reports
   has_many   :cce_reports
