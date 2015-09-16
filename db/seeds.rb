@@ -1,3 +1,4 @@
+=begin
 [
   {"config_key" => "InstitutionName"                 ,"config_value" => "" },
   {"config_key" => "InstitutionAddress"              ,"config_value" => ""},
@@ -57,7 +58,7 @@ if User.first( :conditions=>{:admin=>true}).blank?
     :employee_department_id => employee_department.id,:employee_grade_id => employee_grade.id,:employee_position_id => employee_position.id,:employee_category_id => employee_category.id,:status => true,:nationality_id =>'76', :date_of_birth => Date.today-365, :email => 'noreply@fedena.com')
 
   employee.user.update_attributes(:admin=>true,:employee=>false)
-  
+
 end
 
 [
@@ -90,6 +91,8 @@ end
   {"settings_key" => "ExamScheduleResultEnabled"          ,"is_enabled" => false},
   {"settings_key" => "AttendanceEnabled"                  ,"is_enabled" => false},
   {"settings_key" => "NewsEventsEnabled"                  ,"is_enabled" => false}
+
+
 ].each do |param|
   SmsSetting.find_or_create_by_settings_key(param)
 end
@@ -101,4 +104,13 @@ end
 
 Event.all.each do |e|
   e.destroy if e.origin_type=="AdditionalExam"
+end
+
+=end
+p = Privilege.new
+p.name = "decroly_school"
+p.save!
+
+Privilege.all.each do |p|
+  p.update_attributes(:description=> p.name.underscore+"_privilege")
 end

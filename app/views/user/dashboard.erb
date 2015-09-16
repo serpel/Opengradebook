@@ -135,6 +135,14 @@
             :class => "option_buttons", :id => "examinations_button",:title => "#{t('exam_link_title')}   "  %>
         </div>
 
+              <% if @privilege.include?("decroly_school")%>
+
+        <div class="button-box">
+          <%= link_to "<div class ='button-label'><p>#{t('decroly_school')}</p></div>", school_reports_path,
+                      :class => "option_buttons", :id => "examinations_button",:title => "#{t('exam_link_title')}   "  %>
+        </div>
+
+                  <% end %>
        <div class="button-box">
           <%= link_to "<div class ='button-label'><p>#{t('gradebook_by_grade')}</p></div>", {:controller => "notas", :action => "by_grade", :id => 14},
             :class => "option_buttons", :id => "examinations_button",:title => "#{t('exam_link_title')}   "  %>

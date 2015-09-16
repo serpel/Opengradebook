@@ -1,4 +1,18 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :biweekly_personality_grades
+
+  map.resources :biweekly_subject_grades
+
+  map.resources :student_grade_personalities
+
+  map.resources :school_reports
+
+  map.resources :student_additional_grade_field_details
+
+  map.resources :student_additional_grade_fields
+
+  map.resources :student_additional_grade_fields
+
 
   map.resources :plans
   map.resources :notas

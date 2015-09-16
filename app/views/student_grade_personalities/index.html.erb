@@ -1,0 +1,23 @@
+<h1>Listing student_grade_personalities</h1>
+
+<table>
+  <tr>
+    <th>Personality</th>
+    <th>P1</th>
+    <th>P2</th>
+    <th>P3</th>
+    <th>P4</th>
+  </tr>
+
+<% @personalities.each do |personality| %>
+  <tr>
+    <td><%=h personality.name %></td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    <td>N/A</td>
+    </tr>
+<% end %>
+</table>
+
+<br />

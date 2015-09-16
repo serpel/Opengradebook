@@ -1,0 +1,21 @@
+<table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
+  <tr class="tr-head">
+    <td colspan="1"><%= t('course_name')%></td>
+    <td colspan="1"><%= t('subject')%></td>
+    <td colspan="1"><%= t('rate_week')%></td>
+  </tr>
+  <tr class="tr-blank"></tr>
+
+  <% @subjects.each do |subject| %>
+      <tr class="tr-read-<%= cycle('odd', 'even') %>">
+        <td class="col-1"><%= @batch.course_name %></td>
+        <td class="col-1" style='text-transform:capitalize'><%= subject.name %></td>
+        <td class="col-1">
+            <%= link_to t('rate'), :controller => 'biweekly_subject_grades',
+                                   :action => 'student_grades',
+                                   :id => subject.id %>
+        </td>
+      </tr>
+      <tr class="tr-blank"></tr>
+  <% end %>
+</table>

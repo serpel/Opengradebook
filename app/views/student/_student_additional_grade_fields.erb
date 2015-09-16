@@ -1,0 +1,48 @@
+  <table id="listing">
+    <thead>
+    <tr>
+      <th></th>
+      <% 4.times do |l| %>
+          <th colspan="2"><%= "#{t('partial'+(l+1).to_s)}" %></th>
+      <% end %>
+      <th colspan="1"></th>
+    </tr>
+    <tr>
+      <th><%= "#{t('assigment')}" %></th>
+      <th><%= "#{t('tot')}" %></th>
+      <th><%= "#{t('niv')}" %></th>
+      <th><%= "#{t('tot')}" %></th>
+      <th><%= "#{t('recovery')}" %></th>
+      <th><%= "#{t('tot')}" %></th>
+      <th><%= "#{t('niv')}" %></th>
+      <th><%= "#{t('tot')}" %></th>
+      <th><%= "#{t('recovery')}" %></th>
+      <th><%= "#{t('average')}" %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @scores.each do |student_note| %>
+        <tr class="tr-read-<%= cycle('odd', 'even') %>">
+          <% sub = Subject.find(student_note.subject_id) %>
+          <td><%= sub.name %></td>
+          <td><%= student_note.total_parcial(1).round %></td>
+          <td><%= student_note.recuperacion(1).round %></td>
+          <td><%= student_note.total_parcial(2).round %></td>
+          <td><%= student_note.get_recovery(2).round %></td>
+          <td><%= student_note.total_parcial(3).round %></td>
+          <td><%= student_note.recuperacion(3).round %></td>
+          <td><%= student_note.total_parcial(4).round %></td>
+          <td><%= student_note.get_recovery(1).round %></td>
+          <td><%= student_note.total_average_special.round %></td>
+          <% if @scores.count == 0 %>
+              <% 4.times do |l| %>
+                  <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
+              <% end %>
+          <% end %>
+          <% if permitted_to? :destroy and (@current_user.privileges.map{|p| p.name}.include?("SubjectMaster"))  %>
+              <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
+          <% end %>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>

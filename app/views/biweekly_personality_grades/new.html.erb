@@ -1,0 +1,52 @@
+<div id="content-header">
+  <%= image_tag("/images/admission/admission_page_logo.jpg") %>
+  <h1><%= t('period') + ': '+ @period %></h1>
+  <h3><%= @student.full_name if @student %></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+      <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+<% form_for(@biweekly_personality_grade) do |f| %>
+    <%= f.error_messages %>
+    <%= f.hidden_field :student_id %>
+    <%= f.hidden_field :student_additional_grade_field_id %>
+    <%= f.hidden_field :period %>
+
+    <div id="admission1_form">
+
+      <div class="label-field-pair">
+        <label for="student_grade"><%= t('first_week') %><span class="necessary-field">*</span> </label>
+        <div class="text-input-bg"><%= f.text_field :w1 %></div>
+      </div>
+
+      <hr class="label-underline"/>
+
+      <div class="label-field-pair">
+        <label for="student_grade"><%= t('second_week') %><span class="necessary-field">*</span> </label>
+        <div class="text-input-bg"><%= f.text_field :w2 %></div>
+      </div>
+
+      <hr class="label-underline"/>
+
+      <div class="label-field-pair">
+        <label for="student_grade"><%= t('third_week') %><span class="necessary-field">*</span> </label>
+        <div class="text-input-bg"><%= f.text_field :w3 %></div>
+      </div>
+
+      <hr class="label-underline" />
+
+      <div class="label-field-pair">
+        <label for="student_grade"><%= t('fourth_week') %><span class="necessary-field">*</span> </label>
+        <div class="text-input-bg"><%= f.text_field :w4 %></div>
+      </div>
+    </div>
+    <%= submit_tag "", :value => "► #{t('save_and_proceed')}", :class => "submit_button" %>
+<% end %>
+</div>

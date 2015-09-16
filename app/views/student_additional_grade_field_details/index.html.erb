@@ -1,0 +1,26 @@
+<h1>Listing student_additional_grade_field_details</h1>
+
+<table>
+  <tr>
+    <th>Student</th>
+    <th>Batch</th>
+    <th>Student additional grade field</th>
+    <th>Period</th>
+  </tr>
+
+<% @student_additional_grade_field_details.each do |student_additional_grade_field_detail| %>
+  <tr>
+    <td><%=h student_additional_grade_field_detail.student %></td>
+    <td><%=h student_additional_grade_field_detail.batch %></td>
+    <td><%=h student_additional_grade_field_detail.student_additional_grade_field %></td>
+    <td><%=h student_additional_grade_field_detail.period %></td>
+    <td><%= link_to 'Show', student_additional_grade_field_detail %></td>
+    <td><%= link_to 'Edit', edit_student_additional_grade_field_detail_path(student_additional_grade_field_detail) %></td>
+    <td><%= link_to 'Destroy', student_additional_grade_field_detail, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New student_additional_grade_field_detail', new_student_additional_grade_field_detail_path %>

@@ -1,0 +1,30 @@
+<h1>Listing biweekly_personality_grades</h1>
+
+<table>
+  <tr>
+    <th>Student</th>
+    <th>Student additional grade field</th>
+    <th>W1</th>
+    <th>W2</th>
+    <th>W3</th>
+    <th>W4</th>
+  </tr>
+
+<% @biweekly_personality_grades.each do |biweekly_personality_grade| %>
+  <tr>
+    <td><%=h biweekly_personality_grade.student_id %></td>
+    <td><%=h biweekly_personality_grade.student_additional_grade_field_id %></td>
+    <td><%=h biweekly_personality_grade.w1 %></td>
+    <td><%=h biweekly_personality_grade.w2 %></td>
+    <td><%=h biweekly_personality_grade.w3 %></td>
+    <td><%=h biweekly_personality_grade.w4 %></td>
+    <td><%= link_to 'Show', biweekly_personality_grade %></td>
+    <td><%= link_to 'Edit', edit_biweekly_personality_grade_path(biweekly_personality_grade) %></td>
+    <td><%= link_to 'Destroy', biweekly_personality_grade, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New biweekly_personality_grade', new_biweekly_personality_grade_path %>

@@ -1,0 +1,40 @@
+<table id="listing">
+  <thead>
+  <tr>
+    <th><%= "No." %></th>
+    <th><%= "#{t('assigment')}" %></th>
+    <th colspan="7"><%= "APROVECHAMIENTO ACADEMICO" %></th>
+  </tr>
+  <tr>
+    <th></th>
+    <th></th>
+    <th><%= "#{t('tot1')}" %></th>
+    <th><%= "#{t('tot2')}" %></th>
+    <th><%= "#{t('tot3')}" %></th>
+    <th><%= "#{t('tot4')}" %></th>
+    <th><%= "#{t('average')}" %></th>
+    <th><%= "#{t('recovery')}" %></th>
+    <th><%= "#{t('recovery')}" %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @scores.each do |grades, count| %>
+      <tr class="tr-read-<%= cycle('odd', 'even') %>">
+        <% sub = Subject.find(student_note.subject_id) %>
+        <td><%= count %></td>
+        <td><%= sub.name %></td>
+        <td><%= grades.partial(1).round %></td>
+        <td><%= grades.partial(2).round %></td>
+        <td><%= grades.partial(3).round %></td>
+        <td><%= grades.partial(4).round %></td>
+        <td><%= grades.total_average_special.round %></td>
+        <td><%= grades.get_recovery(1).round %></td>
+        <td><%= grades.get_recovery(2).round %></td>
+
+        <% if permitted_to? :destroy and (@current_user.privileges.map{|p| p.name}.include?("SubjectMaster"))  %>
+            <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

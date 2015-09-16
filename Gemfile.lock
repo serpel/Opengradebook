@@ -38,8 +38,11 @@ GEM
       rake (>= 0.8.3)
     rake (0.8.7)
     ruby-ole (1.2.11.8)
+    rubyzip (0.9.1)
     rush (0.6.8)
       session
+    sandrods-odf-report (0.1.3)
+      rubyzip (>= 0, = 0.9.1)
     session (3.1.0)
       fattr
     spreadsheet (1.0.3)
@@ -57,4 +60,5 @@ DEPENDENCIES
   rails (= 2.3.5)
   rake (= 0.8.7)
   rush (= 0.6.8)
+  sandrods-odf-report
   spreadsheet

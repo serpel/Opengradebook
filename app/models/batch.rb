@@ -4,7 +4,7 @@ class Batch < ActiveRecord::Base
 
   belongs_to :course
 
-  has_many :students
+  has_many :students, :order => 'gender ASC, first_name ASC, last_name ASC'
   has_many :grouped_exam_reports
   has_many :grouped_batches
   has_many :archived_students

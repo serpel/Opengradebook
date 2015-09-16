@@ -1,0 +1,40 @@
+<h1>Editing biweekly_subject_grade</h1>
+
+<% form_for(@biweekly_subject_grade) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :student_id %><br />
+    <%= f.text_field :student_id %>
+  </p>
+  <p>
+    <%= f.label :subject_id %><br />
+    <%= f.text_field :subject_id %>
+  </p>
+  <p>
+    <%= f.label :w1 %><br />
+    <%= f.text_field :w1 %>
+  </p>
+  <p>
+    <%= f.label :w2 %><br />
+    <%= f.text_field :w2 %>
+  </p>
+  <p>
+    <%= f.label :w3 %><br />
+    <%= f.text_field :w3 %>
+  </p>
+  <p>
+    <%= f.label :w4 %><br />
+    <%= f.text_field :w4 %>
+  </p>
+  <p>
+    <%= f.label :period %><br />
+    <%= f.text_field :period %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @biweekly_subject_grade %> |
+<%= link_to 'Back', biweekly_subject_grades_path %>

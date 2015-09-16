@@ -11,7 +11,7 @@ class Student < ActiveRecord::Base
 
   has_one    :immediate_contact
   has_one    :student_previous_data
-  has_many   :student_general_detail, :dependent => :destroy
+  has_many   :student_general_details, :dependent => :destroy
   has_many   :student_previous_subject_mark
   has_many   :guardians, :foreign_key => 'ward_id', :dependent => :destroy
   has_many   :finance_transactions, :as => :payee
@@ -21,6 +21,9 @@ class Student < ActiveRecord::Base
   has_many   :students_subjects
   has_many   :subjects ,:through => :students_subjects
   has_many   :notas, :dependent => :destroy
+  has_many   :student_grade_personalities, :dependent => :destroy
+  has_many   :biweekly_subject_grades, :dependent => :destroy
+  has_many   :biweekly_personality_grades, :dependent => :destroy
   has_many   :student_additional_details
   has_many   :batch_students
   has_many   :subject_leaves

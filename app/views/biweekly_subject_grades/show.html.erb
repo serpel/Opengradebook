@@ -1,0 +1,38 @@
+<p>
+  <b>Student:</b>
+  <%=h @biweekly_subject_grade.student_id %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%=h @biweekly_subject_grade.subject_id %>
+</p>
+
+<p>
+  <b>W1:</b>
+  <%=h @biweekly_subject_grade.w1 %>
+</p>
+
+<p>
+  <b>W2:</b>
+  <%=h @biweekly_subject_grade.w2 %>
+</p>
+
+<p>
+  <b>W3:</b>
+  <%=h @biweekly_subject_grade.w3 %>
+</p>
+
+<p>
+  <b>W4:</b>
+  <%=h @biweekly_subject_grade.w4 %>
+</p>
+
+<p>
+  <b>Period:</b>
+  <%=h @biweekly_subject_grade.period %>
+</p>
+
+
+<%= link_to 'Edit', edit_biweekly_subject_grade_path(@biweekly_subject_grade) %> |
+<%= link_to 'Back', biweekly_subject_grades_path %>

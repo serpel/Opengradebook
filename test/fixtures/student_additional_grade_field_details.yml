@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  student: 
+  batch: 
+  student_additional_grade_field: 
+  period: 1
+
+two:
+  student: 
+  batch: 
+  student_additional_grade_field: 
+  period: 1

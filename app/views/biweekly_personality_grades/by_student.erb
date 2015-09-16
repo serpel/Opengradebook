@@ -1,0 +1,41 @@
+<h2>Personalities</h2>
+<h3>Student: <%=h @student.full_name if @student %></h3>
+<table>
+  <tr>
+    <th>Personality</th>
+    <th>1-2</th>
+    <th>3-4</th>
+    <th>5-6</th>
+    <th>7-8</th>
+  </tr>
+
+  <% @personalities.each do |personality| %>
+      <tr>
+        <% student_personality =  BiweeklyPersonalityGrade.find_by_student_additional_grade_field_id_and_student_id personality, @student.id %>
+
+        <% if student_personality %>
+            <td><%=h personality.name %></td>
+            <td><%=h student_personality.w1 %></td>
+            <td><%=h student_personality.w2 %></td>
+            <td><%=h student_personality.w3 %></td>
+            <td><%=h student_personality.w4 %></td>
+            <td><%= link_to 'Edit', {:controller => 'biweekly_personality_grades',
+                                     :action => 'edit',
+                                     :id => student_personality.id} %></td>
+        <% else %>
+            <td><%=h personality.name %></td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td>-</td>
+            <td><%= link_to 'New', {:controller => 'biweekly_personality_grades',
+                                    :action => 'new',
+                                    :student_id => @student.id,
+                                    :field_id =>  personality.id} %></td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
+
+<br />
+<%= link_to 'Back', :controller => 'student_grade_personalities', :action => 'batches', :id => 1 %>

@@ -1,0 +1,54 @@
+
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1><%= "#{t('personality_edit')}" %></h1>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+<div id="page-yield">
+<div id="application-list" class="wrapper">
+    <h3><%= t('name') %>: <%=h @student.full_name if @student %></h3>
+
+  <table id="listing" align="left" width="50%" cellpadding="1" cellspacing="1">
+      <thead>
+      <tr class="tr-head">
+        <th><%= t('gradebook_personality')%></th>
+        <th>P1</th>
+        <th>P2</th>
+        <th>P3</th>
+        <th>P4</th>
+        <th><%= t('actions') %></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @personalities.each do |personality| %>
+          <tr class="tr-read-<%= cycle('odd', 'even') %>">
+            <% student_personality = StudentGradePersonality.find_by_student_additional_grade_field_id_and_student_id personality, @student.id %>
+            <% if student_personality %>
+                <td><%=h personality.name %></td>
+                <td><%=h student_personality.p1.upcase %></td>
+                <td><%=h student_personality.p2.upcase %></td>
+                <td><%=h student_personality.p3.upcase %></td>
+                <td><%=h student_personality.p4.upcase %></td>
+                <td><%= link_to 'Edit', edit_student_grade_personality_path(student_personality) %></td>
+            <% else %>
+                <td><%=h personality.name %></td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td><%= link_to 'Edit', new_student_grade_personality_path(:student => @student.id, :field => personality.id) %></td>
+            <% end %>
+          </tr>
+      <% end %>
+      </tbody>
+     </table>
+</div>
+<br />
+</div>
+
+
+
+
+

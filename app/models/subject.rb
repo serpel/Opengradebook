@@ -7,6 +7,7 @@ class Subject < ActiveRecord::Base
   has_many :employees_subjects
   has_many :employees ,:through => :employees_subjects
   has_many :students_subjects
+  has_many :biweekly_subject_grades, :dependent => :destroy
   has_many :students, :through => :students_subjects
   has_many :notas, :dependent => :destroy
   has_many :plans, :dependent => :destroy

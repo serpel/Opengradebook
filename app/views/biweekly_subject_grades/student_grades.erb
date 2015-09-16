@@ -1,0 +1,86 @@
+<script type="text/javascript" >
+    $('table tr').each(function(){
+        $(this).find('th').first().addClass('first');
+        $(this).find('th').last().addClass('last');
+        $(this).find('td').first().addClass('first');
+        $(this).find('td').last().addClass('last');
+    });
+    $('table tr').first().addClass('row-first');
+    $('table tr').last().addClass('row-last');
+</script>
+
+<div id="content-header">
+  <%= image_tag("/images/examination/show_exam.png") %>
+  <h1 style="text-transform:capitalize"><%=h @subject.name %></h1>
+  <h3><%= t('biweekly_report')%></h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+  <% unless flash[:notice].nil? %>
+      <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+</div>
+
+<div id="page-yield">
+  <div id="application-list" class="wrapper">
+        <table id="listing2" class="wrapper" width="100%">
+          <thead>
+          <tr class="tr-head">
+            <th>No</th>
+            <th><%= t('name')%></th>
+            <th colspan="6"><%= t('first_period')%></th>
+            <th colspan="6"><%= t('second_period')%></th>
+            <th colspan="6"><%= t('third_period')%></th>
+            <th colspan="6"><%= t('fourth_period')%></th>
+            <th></th>
+          </tr>
+          <tr class="tr-head">
+            <th></th>
+            <th></th>
+            <% 4.times do |l| %>
+                <th><%= "#{t('week_1')}" %></th>
+                <th><%= "#{t('week_2')}" %></th>
+                <th><%= "#{t('week_3')}" %></th>
+                <th><%= "#{t('week_4')}" %></th>
+                <th><%= t('total')%></th>
+                <th><%= t('action') %></th>
+            <% end %>
+            <th><%= t('personality') %></th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @students.each_with_index do |student, i| %>
+              <tr class="tr-read-<%= cycle('odd', 'even') %>">
+                <td><%= i %></td>
+                <td class="col-1" style="text-transform:capitalize"><%= student.first_and_last_name %></td>
+                <% grades = student.biweekly_subject_grades.select {|b| b.subject = @subject } %>
+                <% 4.times do |period| %>
+                    <% grades.select {|g| g.period == (period+1) }.each do |grade| %>
+                        <% 4.times do |l| %>
+                            <td class="col-1"><%= grade.week(l+1).round %></td>
+                        <% end %>
+                        <td class="col-1"><%= grade.total.round %></td>
+                        <td class="col-1">
+                          <%= link_to t('rate'), edit_biweekly_subject_grade_path(grade) %>
+                        </td>
+                    <% end %>
+                    <% if grades.select {|g| g.period == (period+1) }.count <= 0 %>
+                        <% 4.times do |l| %>
+                            <td class="col-1"><%= 0 %></td>
+                        <% end %>
+                        <td class="col-1"><%= 0 %></td>
+                        <td class="col-1">
+                          <%= link_to t('rate'), new_biweekly_subject_grade_path(:subject => @subject, :student => student, :period => period+1) %>
+                        </td>
+                    <% end %>
+                <% end %>
+                <td><%= link_to t('edit'),:controller => 'biweekly_personality_grades', :action => 'student', :id => student.id %></td>
+                </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>

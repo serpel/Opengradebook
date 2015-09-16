@@ -1,0 +1,37 @@
+<div id="content-header">
+  <%= image_tag("/images/student_details/student_details_logo.jpg") %>
+  <h1><%= t('student_details') %> </h1>
+  <h3><%= t('view_details') %> </h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+      <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+  <div class="box">
+
+  <% form_for(@student_additional_grade_field) do |f| %>
+      <%= f.error_messages %>
+
+      <div class="label-field-pair">
+        <div class="label-container"><%= f.label :name %></div>
+        <div class="input-container"><%= f.text_field :name %></div>
+      </div>
+
+      <div class="label-field-pair">
+        <div class="label-container"><%= f.label :school %></div>
+        <div class="text-input-bg"><%= select :student_additional_grade_field, :school_id,
+                                               @schools.map{|s| [s.school_name,s.id] },
+                                               {:prompt => "#{t('select_a_school')}"}%></div>
+      </div>
+
+      <%= f.submit 'Create', :class => "submit_button" %>
+  <% end %>
+
+  </div>
+</div>

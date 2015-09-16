@@ -8,3 +8,5 @@ gem 'rake','0.8.7'
 gem 'mongrel','1.1.5'
 gem 'rush','0.6.8'
 gem 'spreadsheet'
+gem 'sandrods-odf-report'
+
