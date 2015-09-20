@@ -318,14 +318,16 @@ class StudentController < ApplicationController
 
   def destroy
     student = Student.find(params[:id])
-    unless student.check_dependency
-      #student.destroy
-      student.user.destroy
-      flash[:notice] = "#{t('flash10')}. #{student.admission_no}."
-      redirect_to :controller => 'user', :action => 'dashboard'
-    else
+    #guardian = Guardian.find_by_ward_id(student.id)
+    if student.check_dependency
       flash[:warn_notice] = "#{t('flash15')}"
       redirect_to  :action => 'remove', :id=>student.id
+    else
+      student.user.destroy
+      student.destroy
+
+      flash[:notice] = "#{t('flash10')}. #{student.admission_no} " + "& #{t('flash6')}"
+      redirect_to :controller => 'user', :action => 'dashboard'
     end
   end
 

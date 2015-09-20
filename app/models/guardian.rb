@@ -56,9 +56,7 @@ class Guardian < ActiveRecord::Base
   end
 
   def get_guardian_by_batch(bid)
-
     students = Student.find_all_by_batch_id bid
-
     students.each do |st|
       self.find_all_by_ward_id st.id
     end
