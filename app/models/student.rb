@@ -25,7 +25,7 @@ class Student < ActiveRecord::Base
   has_many   :biweekly_subject_grades, :dependent => :destroy
   has_many   :biweekly_personality_grades, :dependent => :destroy
   has_many   :student_additional_details, :dependent => :destroy
-  has_many   :batch_students, :dependent => :destroy
+  has_many   :batch_students
   has_many   :subject_leaves
   has_many   :grouped_exam_reports
   has_many   :cce_reports
