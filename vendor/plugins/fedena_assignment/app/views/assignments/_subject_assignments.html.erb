@@ -32,7 +32,7 @@
             <%= assignment.employee.full_name %>
           </td>
           <td class="col-4">
-            <%= I18n.l(assignment.duedate,:format=>"%A, %d %B, %Y") %>
+            <%= I18n.l(assignment.duedate,:format=> '%d/%m/%Y %I:%M %p', :locale => 'en') %>
           </td>
         </tr>
       <% end %>

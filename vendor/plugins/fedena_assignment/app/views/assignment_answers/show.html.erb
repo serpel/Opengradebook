@@ -20,7 +20,7 @@
 
   <div class="answer-details">
     <div class="label-div-pair"><label for="student-name"><%= "#{t('submitted_by')}"%></label><div id="student-name"> <%= @assignment_answer.student.full_name %></div></div>
-    <div class="label-div-pair"><label for="submitted-date"><%= "#{t('submitted_on')}"%> </label><div id="submitted-date"><%= @assignment_answer.created_at.strftime("%I:%M %p, %d %B, %Y")%></div></div>
+    <div class="label-div-pair"><label for="submitted-date"><%= "#{t('submitted_on')}"%> </label><div id="submitted-date"><%= @assignment_answer.created_at.strftime('%d/%m/%Y %I:%M %p')%></div></div>
     <% if @current_user.student? %>
       <% if @current_user.student_record.id == @assignment_answer.student_id %>
         <div class="label-div-pair"><label for="answer-status"><%= "#{t('status')}"%></label>

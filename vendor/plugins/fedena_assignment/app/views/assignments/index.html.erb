@@ -51,7 +51,7 @@
               <%=  link_to assignment.title, assignment%>
             </td>
             <td class="col-3">
-              <%= I18n.l(assignment.duedate,:format=>"%A, %d %B, %Y") %>
+              <%= I18n.l(assignment.duedate, :format=> '%d/%m/%Y %I:%M %p', :locale => 'en') %>
             </td>
           </tr>
     <% end %>
