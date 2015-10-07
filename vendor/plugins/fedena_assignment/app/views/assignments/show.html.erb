@@ -12,7 +12,7 @@
   <% unless flash[:notice].nil? %> <p class="flash-msg"> <%= flash[:notice] %> </p> <% end %>
 
   <div id="assignment_title">
-    <p><%= "#{@assignment.title}   " %></p>  <p id="assignment_due" ><%= @assignment.duedate.past??  "#{t('assignment_already_due')}"  : "#{t('due_in')} #{distance_of_time_in_words( Time.now ,@assignment.duedate)}   "%> <%="<small>(#{@assignment.duedate.strftime("%A, %d %B, %Y")})</small>"%></p>
+    <p><%= "#{@assignment.title}   " %></p>  <p id="assignment_due" ><%= @assignment.duedate.past??  "#{t('assignment_already_due')}"  : "#{t('due_in')} #{distance_of_time_in_words( Time.now ,@assignment.duedate)}   "%> <%="<small>(#{@assignment.duedate.strftime('%d/%m/%Y %I:%M %p')})</small>"%></p>
   </div>
 
 

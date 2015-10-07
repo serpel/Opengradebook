@@ -30,7 +30,8 @@ class AssignmentsController < ApplicationController
     unless @subject.nil?
       #employee_id = current_user.employee_record.id
       #@assignments =Assignment.paginate  :conditions=>"subject_id=#{@subject.id} and employee_id=#{employee_id}",:order=>"duedate desc", :page=>params[:page]
-      @assignments =Assignment.paginate  :conditions=>"subject_id=#{@subject.id}",:order=>"duedate desc", :page=>params[:page]
+      time = (Time.now - 20.days).strftime('%Y/%m/%d %H:%M')
+      @assignments =Assignment.paginate :conditions=>"subject_id=#{@subject.id} and '#{time}' <= duedate",:order=>"duedate desc", :page=>params[:page]
     end
     render(:update) do |page|
       page.replace_html 'subject_assignments_list', :partial=>'subject_assignments'

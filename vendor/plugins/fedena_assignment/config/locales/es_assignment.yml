@@ -30,7 +30,7 @@ es:
     you_have_not_been_assigned_any_assignments: "Usted no se ha asignado ninguna tarea"
     create_a_new_assignment: "Crear una nueva tarea"
     assignment_already_due: "Asignación ya gracias"
-    due_in: "Debido en"
+    due_in: "Vence en"
     delete_assignment: "Eliminar asignación"
     delete_this_assignment: "¿Está seguro que desea eliminar esta tarea? Esto también eliminará todas las respuestas presentadas a esta tarea."
     assigned: "Asignado"

@@ -49,7 +49,9 @@
         <label for="duedate"><%= "#{t('due_date')}"%></label>
         <div  class="text-input-bg">
           <%= calendar_date_select_tag "assignment[duedate]",
-            I18n.l(Time.now,:format=>"%d-%m-%Y") ,:class=>"text-input-bg",:readonly=>true,:popup=>:force%>
+            I18n.l(Time.now, :format=>"%Y-%m-%d %H:%M", :locale => 'en'),
+            :time => true, :class=>"text-input-bg",
+            :readonly=>true, :popup=>:force%>
         </div>
       </div>
       <div id ="assignment-submit" >
