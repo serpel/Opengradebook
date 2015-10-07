@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b7425307-82de-4da7-95d0-66d4d77c8d07" name="Default" comment="Added recovery field in grades module&#10;Updated exported files with new recovery field&#10;Fixed print preview&#10;Added new recovery translations to esp, en">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vendor/plugins/fedena_assignment/app/models/assignment_answer.rb" afterPath="$PROJECT_DIR$/vendor/plugins/fedena_assignment/app/models/assignment_answer.rb" />
-    </list>
+    <list default="true" id="b7425307-82de-4da7-95d0-66d4d77c8d07" name="Default" comment="Added recovery field in grades module&#10;Updated exported files with new recovery field&#10;Fixed print preview&#10;Added new recovery translations to esp, en" />
     <ignored path="Opengradebook.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />

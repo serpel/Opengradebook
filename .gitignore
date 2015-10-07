@@ -14,5 +14,6 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
-.idea/workspace.xml
-.idea
+
+## Directory-based ignore files on idea project
+.idea/
