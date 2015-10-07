@@ -29,7 +29,7 @@ es:
     there_are_no_subjects_assigned_to_this_employee: "No hay temas asignados a este empleado"
     you_have_not_been_assigned_any_assignments: "Usted no se ha asignado ninguna tarea"
     create_a_new_assignment: "Crear una nueva tarea"
-    assignment_already_due: "Asignación ya gracias"
+    assignment_already_due: "Asignación vencida"
     due_in: "Vence en"
     delete_assignment: "Eliminar asignación"
     delete_this_assignment: "¿Está seguro que desea eliminar esta tarea? Esto también eliminará todas las respuestas presentadas a esta tarea."
@@ -42,7 +42,7 @@ es:
     update_assignment: "Actualización de la asignación"
     edit_assignment: "Editar asignación"
     no_assignments_for_this_subject_have_been_created: "No hay asignaciones para este tema se han creado"
-    no_students: "No hay clases"
+    no_students: "No hay estudiantes"
 
   assignment_answers:
     assignment_submitted: "Asignación presentado"
