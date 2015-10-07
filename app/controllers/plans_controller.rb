@@ -166,7 +166,7 @@ class PlansController < ApplicationController
       students.each_with_index do |student, i|
         nota = student.notas.find_by_subject_id(plan.subject)
         nota = set_students_notes_equal_zero(plan.subject.id, student.id) if nota.nil?
-        sheet1.update_row i+2, student.id, student.full_name,
+        sheet1.update_row i+2, student.id, student.full_name.to_s.to_my_utf8,
                           nota.examen_1, nota.acumulado_1, nota.recuperacion_1, nota.total_parcial(1),
                           nota.examen_2, nota.acumulado_2, nota.recuperacion_1, nota.total_parcial(2),
                           nota.examen_3, nota.acumulado_3, nota.recuperacion_1, nota.total_parcial(3),
@@ -187,8 +187,8 @@ class PlansController < ApplicationController
                         plan.examen_3, plan.acumulado_3, plan.examen_4, plan.acumulado_4
 
       t = DateTime.now
-      name = t.strftime("%Y%m%d")
-      full_path = create_full_path "#{plan.subject.name}-#{name}.xls"
+      date = t.strftime("%Y%m%d")
+      full_path = create_full_path "#{plan.subject.name}-#{date}.xls"
       book.write full_path
 
       puts full_path
