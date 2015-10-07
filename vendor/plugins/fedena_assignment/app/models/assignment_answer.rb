@@ -7,7 +7,7 @@ class AssignmentAnswer < ActiveRecord::Base
 
   def download_allowed_for user
     return true if user.admin?
-    return  (user.employee_record.id==self.assignment.employee_id) if user.employee?
+    return true if user.employee?
     return (self.student_id == user.student_record.id) if user.student?
     return true if user.parent?
     false
