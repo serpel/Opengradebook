@@ -47,6 +47,7 @@ en:
     edit_assignment: "Edit assignment"
     no_assignments_for_this_subject_have_been_created: "No assignments for this subject have been created"
     no_students: "No students"
+    created_date: "Created Date"
 
   assignment_answers:
     assignment_submitted: "Assignment submitted"
