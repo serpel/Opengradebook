@@ -72,7 +72,7 @@ $('table tr').last().addClass('row-last');
         <% @st.each do |student| %>
           <tr class="tr-read-<%= cycle('odd', 'even') %>">
                <td class="col-1"><%= student.id %></td>
-               <td class="col-1" style="text-transform:capitalize"><%= student.full_name %></td>
+               <td class="col-1" style="text-transform:capitalize"><%= student.full_name.to_s.to_my_utf8 %></td>
                <% nota = student.notas.find_by_subject_id(@plan.subject) %>
                <% 4.times do |l| %>
                   <td class="col-1"><%=  nota != nil ? nota.examen(l+1) : 0.0 %></td>

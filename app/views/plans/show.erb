@@ -92,7 +92,7 @@
           <tbody>
           <% @st.each do |student| %>
               <tr class="tr-read-<%= cycle('odd', 'even') %>">
-                <td class="col-1" style="text-transform:capitalize"><%= student.first_and_last_name %></td>
+                <td class="col-1" style="text-transform:capitalize"><%= student.first_and_last_name.to_s.to_my_utf8 %></td>
                 <% nota = student.notas.find_by_subject_id(@plan.subject) %>
                 <% if !nota.nil? %>
                     <% 4.times do |l| %>
