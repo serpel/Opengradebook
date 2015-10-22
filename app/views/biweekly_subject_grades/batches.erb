@@ -14,7 +14,7 @@
     <tr class="tr-select">
       <td colspan="2" class="text-input-bg">
         <%= select :batch, :id, @batches.map { |b| [b.full_name, b.id] },
-          {:selected => '1',:prompt =>"#{t('select_a_subject')}"},
+          {:prompt =>"#{t('select_a_subject')}"},
           {:onChange => "#{remote_function(:url => {:action => "subjects"},
                                            :with => "'id='+value+'&employee='+#{@employee.id}")}"} %>
       </td>
