@@ -43,6 +43,7 @@ es:
     edit_assignment: "Editar asignación"
     no_assignments_for_this_subject_have_been_created: "No hay asignaciones para este tema se han creado"
     no_students: "No hay estudiantes"
+    created_date: "Fecha de creación"
 
   assignment_answers:
     assignment_submitted: "Asignación presentado"
