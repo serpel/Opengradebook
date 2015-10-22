@@ -3,9 +3,8 @@ class BiweeklySubjectGradesController < ApplicationController
 
   def batches
     @employee = Employee.find(params[:id])
-    @batches = Batch.all :joins => {:subjects =>
-                                    [{:employees_subjects => :employee}]},
-                         :conditions => {'employees.id' => @employee.id}
+    @batches = Batch.all(:joins => {:subjects => :employees_subjects},
+                         :conditions => {'employees_subjects.employee_id' => @employee.id}).uniq
   end
 
   def subjects
