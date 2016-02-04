@@ -191,52 +191,7 @@ $('table tr').last().addClass('row-last');
     </table>
     </div>
   <!-- temporal fix -->
-  <% if @student.batch_id != 40 %>
-    <div class="rightTable">
-      <table id="listing">
-        <thead>
-          <tr>
-            <th></th>
-            <% 4.times do |l| %>
-              <th colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></th>
-            <% end %>
-            <th colspan="1"></th>
-            <th></th>
-          </tr>
-          <tr>
-            <th><%= "#{t('assigment')}" %></th>
-            <% 4.times do |l| %>
-              <th><%= "#{t('total')}" %></th>
-            <% end %>
-            <th><%= "#{t('recovery')}" %></th>
-            <th><%= "#{t('average')}" %></th>
-         </tr>
-        </thead>
-        <tbody>
-          <% @scores.each do |student_note| %>
-            <tr class="tr-read-<%= cycle('odd', 'even') %>">
-            <% sub = Subject.find(student_note.subject_id) %>
-            <td><%= sub.name %></td>
-            <td><%= student_note.total_parcial(1).round %></td>
-            <td><%= student_note.total_parcial(2).round %></td>
-            <td><%= student_note.total_parcial(3).round %></td>
-            <td><%= student_note.total_parcial(4).round %></td>
-            <td><%= student_note.recovery %></td>
-            <td><%= student_note.total_average.round %></td>
-              <% if @scores.count == 0 %>
-                <% 4.times do |l| %>
-                  <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
-                <% end %>
-              <% end %>
-              <% if permitted_to? :destroy and (@current_user.privileges.map{|p| p.name}.include?("SubjectMaster"))  %>
-                <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
-              <% end %>
-               </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
-  <% else %>
+  <% if @student.batch_id == 40 or @student.batch_id == 53 %>
     <div class="rightTable">
       <table id="listing">
         <thead>
@@ -257,7 +212,7 @@ $('table tr').last().addClass('row-last');
           <th><%= "#{t('niv')}" %></th>
           <th><%= "#{t('tot')}" %></th>
           <th><%= "#{t('recovery')}" %></th>
-          <th><%= "#{t('average')}" %></th>
+          <th><%= "P" %></th>
         </tr>
         </thead>
         <tbody>
@@ -287,7 +242,52 @@ $('table tr').last().addClass('row-last');
         </tbody>
       </table>
     </div>
-<% end %>
+  <% else %>
+    <div class="rightTable">
+      <table id="listing">
+        <thead>
+        <tr>
+          <th></th>
+          <% 4.times do |l| %>
+              <th colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></th>
+          <% end %>
+          <th colspan="1"></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th><%= "#{t('assigment')}" %></th>
+          <% 4.times do |l| %>
+              <th><%= "#{t('total')}" %></th>
+          <% end %>
+          <th><%= "#{t('recovery')}" %></th>
+          <th><%= "#{t('average')}" %></th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @scores.each do |student_note| %>
+            <tr class="tr-read-<%= cycle('odd', 'even') %>">
+              <% sub = Subject.find(student_note.subject_id) %>
+              <td><%= sub.name %></td>
+              <td><%= student_note.total_parcial(1).round %></td>
+              <td><%= student_note.total_parcial(2).round %></td>
+              <td><%= student_note.total_parcial(3).round %></td>
+              <td><%= student_note.total_parcial(4).round %></td>
+              <td><%= student_note.get_recovery(2).round %></td>
+              <td><%= student_note.total_average.round %></td>
+              <% if @scores.count == 0 %>
+                  <% 4.times do |l| %>
+                      <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
+                  <% end %>
+              <% end %>
+              <% if permitted_to? :destroy and (@current_user.privileges.map{|p| p.name}.include?("SubjectMaster"))  %>
+                  <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
+              <% end %>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
    <hr class="division-line"/>
     
     <div class="line">
