@@ -43,7 +43,7 @@ table th.subcategory {
 }
 
 table#listing td.col-1{
-    width:1%;
+    width:0%;
     padding: 5px;
     padding-left:10px;
 }
