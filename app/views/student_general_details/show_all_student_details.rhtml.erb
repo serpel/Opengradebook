@@ -45,7 +45,7 @@ $('table tr').last().addClass('row-last');
                 <td><%= student_note.total_parcial(t+1).round %></td>
             <% end %>
             <td><%= student_note.recovery %></td>
-            <td><%= student_note.total_average.round %></td>
+            <td><%= student_note.total_average_special.round 1 %></td>
             <% if @scores.count == 0 %>
               <% 4.times do |l| %>
                 <td colspan="3"><%= "#{t('partial'+(l+1).to_s)}" %></td>
