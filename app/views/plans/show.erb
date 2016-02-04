@@ -9,6 +9,12 @@
     $('table tr').last().addClass('row-last');
 </script>
 
+<style>
+    table#listing td.col-1{
+        width:0%;
+    }
+</style>
+
 <div id="content-header">
   <%= image_tag("/images/examination/show_exam.png") %>
   <h1 style="text-transform:capitalize"><%=h @plan.subject.name %></h1>
@@ -60,7 +66,7 @@
 
 <h3><%= "#{t('gradebooks')}" %></h3>
 
-<% if @plan.subject.batch_id = 40 %>
+<% if @plan.subject.batch_id == 40 or @plan.subject.batch_id == 53 %>
     <div id="page-yield">
       <div id="application-list">
         <table id="listing" class="wrapper">
@@ -68,23 +74,25 @@
           <tr>
             <th></th>
             <th colspan="4"><%= "#{t('partial1')}" %></th>
-            <th colspan="5"><%= "#{t('partial2')}" %></th>
+            <th colspan="4"><%= "#{t('partial2')}" %></th>
+            <th colspan="1"></th>
             <th colspan="4"><%= "#{t('partial3')}" %></th>
-            <th colspan="5"><%= "#{t('partial4')}" %></th>
+            <th colspan="4"><%= "#{t('partial4')}" %></th>
+            <th colspan="1"></th>
             <th colspan="2"></th>
           </tr>
           <tr>
             <th><%= "#{t('name')}" %></th>
             <% 4.times do |l| %>
-                <th><%= "#{t('exam'+(l+1).to_s)}" %></th>
-                <th><%= "#{t('acum'+(l+1).to_s)}" %></th>
-                <th><%= "#{t('recov'+(l+1).to_s)}" %></th>
-                <% if l+1 == 2 %>
-                    <th><%= "#{t('recovery')}" %></th>
-                <%end%>
+                <th><%= "E" %></th>
+                <th><%= "A" %></th>
+                <th><%= "N" %></th>
                 <th><%= "#{t('total')}" %></th>
+                <% if l+1 == 2 %>
+                    <th><%= "R" %></th>
+                <%end%>
             <% end %>
-            <th><%= "#{t('recovery')}" %></th>
+            <th><%= "R" %></th>
             <th><%= "#{t('average')}" %></th>
             <th><%= "#{t('options')}" %></th>
           </tr>
@@ -99,13 +107,13 @@
                         <td class="col-1"><%= nota.examen(l+1) %></td>
                         <td class="col-1"><%= nota.acumulado(l+1) %></td>
                         <td class="col-1"><%= nota.recuperacion(l+1) %></td>
+                        <td class="col-1"><%= nota.total_parcial(l+1) %></td>
                         <% if l+1 == 2 %>
                             <td class="col-1"><%= nota.get_recovery(1).round %></td>
                         <%end%>
-                        <td class="col-1"><%= nota.total_parcial(l+1) %></td>
                     <% end %>
                     <td class="col-1"><%= nota.get_recovery(2).round %></td>
-                    <td class="col-1"><%= nota.total_average.round(1) %></td>
+                    <td class="col-1"><%= nota.total_average_special.round 1 %></td>
                 <% else %>
                     <% 6.times do |l| %>
                         <td class="col-1">0.0</td>
@@ -171,7 +179,7 @@
                         <td class="col-1"><%= nota.recuperacion(l+1) %></td>
                         <td class="col-1"><%= nota.total_parcial(l+1) %></td>
                     <% end %>
-                    <td class="col-1"><%= nota.get_recovery(2).round %></td>
+                    <td class="col-1"><%= nota.get_recovery(1).round %></td>
                     <td class="col-1"><%= nota.total_average.round(1) %></td>
                 <% else %>
                     <% 6.times do |l| %>
