@@ -346,6 +346,8 @@ es: # locale
     batch_transfers:
       errors_found: "Se encontró el siguiente error"
 
+  semestre1: 'Semestre 1'
+  semestre2: 'Semestre 2'
   action: 'Accion'
   add_school_extra_fields: 'Campos extra escuelas'
   config_school_grade_details: 'Configurar campos adicionales'
