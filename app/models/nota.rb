@@ -167,4 +167,44 @@ class Nota < ActiveRecord::Base
     end
   end
 
+  def nivelacion(numero)
+    case numero
+      when 1
+        self.recovery.to_f
+      when 2
+        self.recovery2.to_f
+      else
+        0.0
+    end
+  end
+
+  def parcial(numero)
+    case numero
+      when 1
+        self.examen_1.to_f + self.acumulado_1.to_f
+      when 2
+        self.examen_2.to_f + self.acumulado_2.to_f
+      when 3
+        self.examen_3.to_f + self.acumulado_3.to_f
+      when 4
+        self.examen_4.to_f + self.acumulado_4.to_f
+      else
+        0.0
+    end
+  end
+
+  def promedio_semestre(numero)
+    if numero == 1
+      p1 = parcial(1) < nivelacion(1) ? nivelacion(1) : parcial(1)
+      p1 = p1 > recuperacion(1) ? p1 : recuperacion(1)
+      p2 = parcial(2) < recuperacion(2) ? recuperacion(2) : parcial(2)
+    else
+      p1 = parcial(3) < nivelacion(2) ? nivelacion(2) : parcial(3)
+      p1 = p1 > recuperacion(3) ? p1 : recuperacion(3)
+      p2 = parcial(4) < recuperacion(4) ? recuperacion(4) : parcial(4)
+    end
+
+    (p1 + p2)/2
+  end
+
 end

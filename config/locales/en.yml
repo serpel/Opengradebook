@@ -385,6 +385,8 @@ en: # locale
 
 
 
+  semestre1: 'Semester 1'
+  semestre2: 'Semester 2'
   add_school_extra_fields: 'Schools extra fields'
   config_school_grade_details: 'Config school grade details'
   action: 'Action'
