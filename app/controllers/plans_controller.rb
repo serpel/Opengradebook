@@ -148,35 +148,35 @@ class PlansController < ApplicationController
     sheet1.row(1).default_format = format
 
     #header sheet1
-    sheet1.update_row 0, '','','','','P1','','','P2','','','P3','','','P4'
+    sheet1.update_row 0, '','','P1','','','','P2','','','','','','P3','','','','P4'
     row = sheet1.row 1
     row.push "#{t('id')}", "#{t('name')}"
-    4.times do |i|
-      row.push "#{t('exam'+(i+1).to_s)}"
-      row.push "#{t('acum'+(i+1).to_s)}"
-      row.push "#{t('recov'+(i+1).to_s)}"
-      row.push "#{t('total')}"
-      if i+1 == 2
-        row.push "#{t('recovery')}"
-      end
+
+    2.times do |i|
+      row.push "E"
+      row.push "A"
+      row.push "T"
+      row.push "N"
+      row.push "E"
+      row.push "A"
+      row.push "T"
+      row.push "R1"
+      row.push "R2"
+      row.push "P"
     end
-    row.push "#{t('recovery')}"
-    row.push "#{t('average')}"
 
     #content
     students.each_with_index do |student, i|
       nota = student.notas.find_by_subject_id(plan.subject)
       nota = set_students_notes_equal_zero(plan.subject.id, student.id) if nota.nil?
 
-      total = nota.total_average_special.round
-      sheet1.update_row i+2, student.id, student.full_name.to_s.to_my_utf8,
-                        nota.examen(1), nota.acumulado(1), nota.recuperacion(1), nota.total_parcial(1).round,
-                        nota.examen(2), nota.acumulado(2), nota.recuperacion(2), nota.total_parcial(2).round,
-                        nota.get_recovery(1),
-                        nota.examen(3), nota.acumulado(3), nota.recuperacion(3), nota.total_parcial(3).round,
-                        nota.examen(4), nota.acumulado(4), nota.recuperacion(4), nota.total_parcial(4).round,
-                        nota.get_recovery(2),
-                        total
+      sheet1.update_row i+2, student.id, student.full_name.to_s,
+                        nota.examen(1), nota.acumulado(1), nota.parcial(1).round, nota.nivelacion(1),
+                        nota.examen(2), nota.acumulado(2), nota.parcial(2).round, nota.recuperacion(1), nota.recuperacion(2),
+                        nota.promedio_semestre(1).round(1),
+                        nota.examen(3), nota.acumulado(3), nota.parcial(3).round, nota.nivelacion(3),
+                        nota.examen(4), nota.acumulado(4), nota.parcial(4).round, nota.recuperacion(3), nota.recuperacion(4),
+                        nota.promedio_semestre(2).round(1)
     end
 
     sheet2 = book.create_worksheet :name => "#{t('detail')}"
@@ -215,7 +215,7 @@ class PlansController < ApplicationController
     sheet1.row(1).default_format = format
 
     #header sheet1
-    sheet1.update_row 0, '','','','','P1','','','P2','','','P3','','','P4'
+    sheet1.update_row 0, '','','','','P1','','','P2','','','P3','','','','P4'
     row = sheet1.row 1
     row.push "#{t('id')}", "#{t('name')}"
     4.times do |i|
@@ -315,21 +315,21 @@ class PlansController < ApplicationController
         nota = Nota.find_by_subject_id_and_student_id(subject_id,row[0]) || Nota.new
         nota.examen_1 = row[2].to_f
         nota.acumulado_1 = row[3].to_f
-        nota.recuperacion_1 = row[4].to_f
+        nota.recovery = row[5].to_f
 
         nota.examen_2 = row[6].to_f
         nota.acumulado_2 = row[7].to_f
-        nota.recuperacion_2 = row[8].to_f
-        nota.recovery = row[10].to_f
+        nota.recuperacion_1 = row[9].to_f
+        nota.recuperacion_2 = row[10].to_f
 
-        nota.examen_3 = row[11].to_f
-        nota.acumulado_3 = row[12].to_f
-        nota.recuperacion_3 = row[13].to_f
+        nota.examen_3 = row[12].to_f
+        nota.acumulado_3 = row[13].to_f
+        nota.recovery2 = row[15].to_f
 
-        nota.examen_4 = row[15].to_f
-        nota.acumulado_4 = row[16].to_f
-        nota.recuperacion_4 = row[17].to_f
-        nota.recovery2 = row[19].to_f
+        nota.examen_4 = row[16].to_f
+        nota.acumulado_4 = row[17].to_f
+        nota.recuperacion_3 = row[19].to_f
+        nota.recuperacion_4 = row[20].to_f
 
         nota.subject_id = subject_id if nota.subject_id.nil?
         nota.student_id = row[0].to_i if nota.student_id.nil?
