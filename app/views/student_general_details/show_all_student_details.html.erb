@@ -130,7 +130,7 @@ table#listing td.col-1{
 
     <div class="leftTable"> 
 
-      <table id="listing" width="250px">
+      <table id="listing" width="200px">
       <tr>
         <th colspan="3">Evaluation Key</th>
       </tr>
@@ -160,7 +160,7 @@ table#listing td.col-1{
         <td class="col-0">0-59</td>
       </tr>
     </table>   
-      <table id="listing"  width="250px">
+      <table id="listing"  width="200px">
       <thead>
         <tr>
           <th colspan="5">Attendance Record</th>
@@ -177,7 +177,7 @@ table#listing td.col-1{
       <% end %>
       </tbody>
     </table>
-      <table id="listing" width="250px">
+      <table id="listing" width="200px">
       <thead>
       <tr>
         <th colspan="8">Behavior</th>
@@ -234,15 +234,15 @@ table#listing td.col-1{
             <tr class="tr-read-<%= cycle('odd', 'even') %>">
               <% sub = Subject.find(student_note.subject_id) %>
               <td><%= sub.name %></td>
-              <td><%= student_note.total_parcial(1).round %></td>
+              <td><%= student_note.parcial(1).round %></td>
               <td><%= student_note.nivelacion(1).round %></td>
-              <td><%= student_note.total_parcial(2).round %></td>
+              <td><%= student_note.parcial(2).round %></td>
               <td><%= student_note.recuperacion(1).round %></td>
               <td><%= student_note.recuperacion(2).round %></td>
               <td><%= student_note.promedio_semestre(1).round %></td>
-              <td><%= student_note.total_parcial(3).round %></td>
+              <td><%= student_note.parcial(3).round %></td>
               <td><%= student_note.nivelacion(2).round %></td>
-              <td><%= student_note.total_parcial(4).round %></td>
+              <td><%= student_note.parcial(4).round %></td>
               <td><%= student_note.recuperacion(3).round %></td>
               <td><%= student_note.recuperacion(4).round %></td>
               <td><%= student_note.promedio_semestre(2).round %></td>

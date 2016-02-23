@@ -1,6 +1,6 @@
 table {
   font-family: 'Arial';
-  margin: 15px;
+  margin: 10px;
   border-collapse: collapse;
   border: 1px solid #eee;
   border-bottom: 2px solid #00cccc;
@@ -47,5 +47,5 @@ table th.last {
 }
 
 .text-input-bg select {
-  width: 100px;
+  width: 120px;
 }
