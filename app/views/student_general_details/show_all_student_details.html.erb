@@ -215,14 +215,14 @@ table#listing td.col-1{
         </tr>
         <tr>
           <th><%= "#{t('assigment')}" %></th>
-          <th><%= "#{t('tot')}" %></th>
           <th><%= "#{t('niv')}" %></th>
+          <th><%= "#{t('tot')}" %></th>
           <th><%= "#{t('tot')}" %></th>
           <th><%= "R1" %></th>
           <th><%= "R2" %></th>
           <th><%= "P" %></th>
-          <th><%= "#{t('tot')}" %></th>
           <th><%= "#{t('niv')}" %></th>
+          <th><%= "#{t('tot')}" %></th>
           <th><%= "#{t('tot')}" %></th>
           <th><%= "R1" %></th>
           <th><%= "R2" %></th>
@@ -234,14 +234,14 @@ table#listing td.col-1{
             <tr class="tr-read-<%= cycle('odd', 'even') %>">
               <% sub = Subject.find(student_note.subject_id) %>
               <td><%= sub.name %></td>
-              <td><%= student_note.parcial(1).round %></td>
               <td><%= student_note.nivelacion(1).round %></td>
+              <td><%= student_note.parcial(1).round %></td>
               <td><%= student_note.parcial(2).round %></td>
               <td><%= student_note.recuperacion(1).round %></td>
               <td><%= student_note.recuperacion(2).round %></td>
               <td><%= student_note.promedio_semestre(1).round %></td>
-              <td><%= student_note.parcial(3).round %></td>
               <td><%= student_note.nivelacion(2).round %></td>
+              <td><%= student_note.parcial(3).round %></td>
               <td><%= student_note.parcial(4).round %></td>
               <td><%= student_note.recuperacion(3).round %></td>
               <td><%= student_note.recuperacion(4).round %></td>
