@@ -134,7 +134,7 @@
                    <td class="col-1"><%= nota.recuperacion(4) %></td>
                    <td class="col-1"><%= nota.promedio_semestre(2).round %></td>
 
-                   <td class="col-1"><%= ((nota.promedio_semestre(1) + nota.promedio_semestre(2))/2).round 1 %></td>
+                   <td class="col-1"><%= nota.average_11_grade.round %></td>
                 <% else %>
                     <% 6.times do |l| %>
                         <td class="col-1">0.0</td>
