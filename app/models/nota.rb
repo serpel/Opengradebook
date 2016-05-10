@@ -205,4 +205,21 @@ class Nota < ActiveRecord::Base
     (p1 + p2)/2
   end
 
+  def average_11_grade
+    average = 0
+    p1 = parcial(1) > recuperacion(1) ? parcial(1) : recuperacion(1)
+    p2 = parcial(2) > recuperacion(2) ? parcial(2) : recuperacion(2)
+    p3 = parcial(3) > recuperacion(3) ? parcial(3) : recuperacion(3)
+    p4 = parcial(4) > recuperacion(4) ? parcial(4) : recuperacion(4)
+
+    if((p1 + p2) > 0)
+      average = (p1 + p2) / 2
+    end
+
+    if((p3 + p4) > 0)
+      average = (p1 + p2 + p3 + p4) / 4
+    end
+    average
+  end
+
 end
