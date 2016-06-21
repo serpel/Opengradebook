@@ -50,6 +50,7 @@ cd Opengradebook/
 bundle install
 rake db:create RAILS_ENV=development
 rake fedena:plugins:install_all RAILS_ENV=development
+rake db:seed RAILS_ENV=development
 ```
 
 **Default data Demo:** 
