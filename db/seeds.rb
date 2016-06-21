@@ -1,4 +1,3 @@
-=begin
 [
   {"config_key" => "InstitutionName"                 ,"config_value" => "" },
   {"config_key" => "InstitutionAddress"              ,"config_value" => ""},
@@ -30,6 +29,7 @@ end
   Configuration.find_or_create_by_config_key_and_config_value(param)
 end
 
+=begin
 if GradingLevel.count == 0
   [
     {"name" => "A"   ,"min_score" => 90 },
@@ -42,8 +42,9 @@ if GradingLevel.count == 0
     GradingLevel.create(param)
   end
 end
+=end
 
-
+#this step create the default username
 if User.first( :conditions=>{:admin=>true}).blank?
 
   employee_category = EmployeeCategory.find_or_create_by_prefix(:name => 'System Admin',:prefix => 'Admin',:status => true)
@@ -61,6 +62,7 @@ if User.first( :conditions=>{:admin=>true}).blank?
 
 end
 
+=begin
 [
   {"name" => 'Salary'         ,"description" => ' ',"is_income" => false },
   {"name" => 'Donation'       ,"description" => ' ',"is_income" => true},
@@ -68,6 +70,7 @@ end
 ].each do |param|
   FinanceTransactionCategory.find_or_create_by_name(param)
 end
+
 
 if Weekday.count == 0
   [
@@ -80,6 +83,7 @@ if Weekday.count == 0
     Weekday.create(param)
   end
 end
+=end
 
 [
   {"settings_key" => "ApplicationEnabled"                 ,"is_enabled" => false },
@@ -106,7 +110,6 @@ Event.all.each do |e|
   e.destroy if e.origin_type=="AdditionalExam"
 end
 
-=end
 p = Privilege.new
 p.name = "decroly_school"
 p.save!
