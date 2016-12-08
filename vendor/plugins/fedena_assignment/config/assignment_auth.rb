@@ -18,6 +18,7 @@ authorization do
       :show,
       :subject_assignments,
       :subjects_students_list,
+      :history
        ]
   end
 
@@ -39,6 +40,7 @@ authorization do
       :show,
       :subject_assignments,
       :subjects_students_list,
+      :history
        ]
   end
 
@@ -55,7 +57,8 @@ authorization do
       :show,
       :subject_assignments,
       :subjects_students_list,
-      :update]
+      :update,
+      :history]
     has_permission_on [:assignment_answers],
       :to=>[
       :create,

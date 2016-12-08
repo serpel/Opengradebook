@@ -168,6 +168,10 @@ new Ajax.Request('/reminder/update_recipient_list', {asynchronous:true, evalScri
         <div class="text-input-bg"><%= l.text_field :subject %></div>
       </div>
       <div class="label-field-pair">
+        <label for="cc"><%= t('cc') %></label>
+        <div class="text-input-bg"><%= l.text_field :cc %></div>
+      </div>
+      <div class="label-field-pair">
         <label for="student_grade"><%= t('message') %></label>
         <div class="text-area-bg"><%= l.text_area :body, :cols=>25, :rows=>10 %>
         </div>

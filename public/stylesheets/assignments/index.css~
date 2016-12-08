@@ -43,7 +43,7 @@ width:20%;
     cursor:pointer;
     width:210px;
     height: 18px;
-    text-align: left;
+    text-align: center;
 }
 
 .left_button:hover{
@@ -70,7 +70,7 @@ width:20%;
     cursor:pointer;
     width:210px;
     height: 18px;
-    text-align: left;
+    text-align: center;
 }
 
 .right_button:hover{

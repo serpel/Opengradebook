@@ -61,6 +61,15 @@ class AssignmentsController < ApplicationController
     end
   end
 
+  def history
+    @subject =Subject.find_by_id params[:subject_id]
+    unless @subject.nil?
+      #employee_id = current_user.employee_record.id
+      #@assignments =Assignment.paginate  :conditions=>"subject_id=#{@subject.id} and employee_id=#{employee_id}",:order=>"duedate desc", :page=>params[:page]
+      @assignments =Assignment.paginate :conditions=>"subject_id=#{@subject.id}", :order=>"duedate desc", :page=>params[:page]
+    end
+  end
+
 
   def subjects_students_list
     @subject = Subject.find_by_id params[:subject_id]

@@ -1,6 +1,9 @@
 <% unless @subject.nil? %>
-    <div class="submit_button">
+    <div class="left_button">
       <%= link_to "► #{t('create_new_assignment')}" , :controller=>:assignments,:action=>:new,:id=>@subject.id%>
+    </div>
+    <div class="right_button">
+      <%= link_to "► #{t('history')}", :controller=>:assignments,:action=>:history,:id=>1, :subject_id => @subject.id %>
     </div>
    <div class="extender"></div>
   <table id="listing" align="center" width="100%" cellpadding="1" cellspacing="1">
