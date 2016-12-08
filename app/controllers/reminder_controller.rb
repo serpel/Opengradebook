@@ -65,6 +65,13 @@ class ReminderController < ApplicationController
           Delayed::Job.enqueue(ImboxMailJob.new(sender,to,subject,body))
         end
 
+        cc = params[:reminder][:cc]
+        unless cc == ""
+          subject = "Resumen - " + subject
+          body = "Mensaje enviado a #{to.count} personas"
+          Delayed::Job.enqueue(ImboxMailJob.new(sender,cc,subject,body))
+        end
+
         flash[:notice] = "#{t('flash1')}"
         redirect_to :controller=>"reminder", :action=>"create_reminder"
       else
