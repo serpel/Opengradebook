@@ -1,5 +1,3 @@
-
-
 <script>
   function add_recipient(recipient) {
     var recipient_list = new Array();
@@ -20,6 +18,28 @@
     $('recipients').value = recipient_list.join();
     recipients = $('recipients').value;
 <%= remote_function(:url => {:action => 'update_recipient_list'}, :with => "'recipients='+recipients" ) %>
+  }
+
+  function add_copy(recipient) {
+      var recipient_list = new Array();
+      if($('copies').value != '')
+          recipient_list = $('copies').value.split(',');
+      else
+          recipient_list = [];
+
+      var recipient_exists = false;
+
+      for(i=0; i<recipient_list.length; i++)
+          if(recipient_list[i] == recipient)
+              recipient_exists = true;
+
+      if(!recipient_exists) {
+          recipient_list.push(recipient);
+      }
+      debugger;
+      $('copies').value = recipient_list.join();
+      copies = $('copies').value;
+      <%= remote_function(:url => {:action => 'update_copy_list'}, :with => "'copies='+copies" ) %>
   }
 
  function add_all_recipient(recipient) {
@@ -60,9 +80,23 @@ new Ajax.Request('/reminder/update_recipient_list', {asynchronous:true, evalScri
     $('recipients').value = recipient_list.join();
     recipients = $('recipients').value;
 <%= remote_function(:url => {:action => 'update_recipient_list'}, :with => "'recipients='+recipients" ) %>
+  }
 
+  function remove_copy(recipient) {
+      copies = $('copies').value;
+      var recipient_list = new Array();
+      recipient_list = $('copies').value.split(',');
 
+      for(i=0; i<recipient_list.length; i++)
+          if (recipient_list[i] == recipient)
+          {
+              recipient_list.splice(i,1);
+              break;
+          }
 
+      $('copies').value = recipient_list.join();
+      copies = $('copies').value;
+      <%= remote_function(:url => {:action => 'update_copy_list'}, :with => "'copies='+copies" ) %>
   }
 </script>
 
@@ -104,6 +138,7 @@ new Ajax.Request('/reminder/update_recipient_list', {asynchronous:true, evalScri
     <div id="form">
       <%= error_messages_for :reminder %>
       <%= hidden_field_tag :recipients, '' %>
+      <%= hidden_field_tag :copies, '' %>
       <% @config = Configuration.available_modules  %>
         
       <%= image_tag("loader.gif",
@@ -119,19 +154,34 @@ new Ajax.Request('/reminder/update_recipient_list', {asynchronous:true, evalScri
           <%= "#{t('reminder_to_staff')}" %>
           </h4>
         </div>
-       <div class="extender"></div>
+        <div class="extender"></div>
         <div id="select-employee-department">
-          <% @user = current_user %>        
-          <%= render :partial=>"select_employee_department" %>
+            <% @user = current_user %>
+            <%= render :partial=>"select_employee_department" %>
         </div>
+
+          <div class="label-field-to">
+            <div id="to_users"></div>
+          </div>
+          <div class="extender"></div>
+
+          <div class="to-options">
+            <h4>
+              <%= "#{t('cc')}" %>
+            </h4>
+          </div>
+
+        <div class="extender"></div>
+        <div id="select-employee-department2">
+            <% @user = current_user %>
+            <%= render :partial=>"select_employee_department2" %>
+        </div>
+
+         <div class="label-field-to">
+            <div id="to_users2"></div>
+         </div>
+         <div class="extender"></div>
        <% end %>
-
-      <div class="label-field-to">
-        <div id="to_users">
-
-        </div>
-      </div>
-      <div class="extender"></div>
         
       <!--<div class="to-options">
         <%= link_to_remote "#{t('reminder_to_student')}", :url=>{:controller=>"reminder",:action=>"select_student_course"},:update=>"select-student-course", :html=>{:class=>"themed_text"} %>
@@ -163,14 +213,15 @@ new Ajax.Request('/reminder/update_recipient_list', {asynchronous:true, evalScri
     </div>
     <div class="message">
       <div id="recipient-list"></div>
+      <div id="copy-list"></div>
       <div class="label-field-pair">
         <label for="subject"><%= t('subject') %></label>
         <div class="text-input-bg"><%= l.text_field :subject %></div>
       </div>
-      <div class="label-field-pair">
-        <label for="cc"><%= t('cc') %></label>
-        <div class="text-input-bg"><%= l.text_field :cc %></div>
-      </div>
+      <!--<div class="label-field-pair">-->
+        <!--<label for="cc"><%= t('cc') %></label>-->
+        <!--<div class="text-input-bg"><%= l.text_field :cc %></div>-->
+      <!--</div>-->
       <div class="label-field-pair">
         <label for="student_grade"><%= t('message') %></label>
         <div class="text-area-bg"><%= l.text_area :body, :cols=>25, :rows=>10 %>
@@ -189,6 +240,11 @@ new Ajax.Request('/reminder/update_recipient_list', {asynchronous:true, evalScri
         recipient_list = send_to.split(',');
         for(i=0; i<recipient_list.length; i++)
           add_recipient(recipient_list[i]);
+
+        copy_to = "<%=  params[:copy_to] %>";
+        copy_list = copy_to.split(',');
+        for(i=0; i<copy_list.length; i++)
+            add_copy(copy_list[i]);
       </script>
     <% end %>
   <% end %>
