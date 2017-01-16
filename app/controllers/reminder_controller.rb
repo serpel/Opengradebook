@@ -65,11 +65,18 @@ class ReminderController < ApplicationController
           Delayed::Job.enqueue(ImboxMailJob.new(sender,to,subject,body))
         end
 
-        cc = params[:reminder][:cc]
-        unless cc == ""
+        unless params[:copies] == ""
+
+          copy_array = params[:copies].split(",").collect{ |s| s.to_i }
           subject = "Resumen - " + subject
-          body = "Mensaje enviado a #{to.count} personas"
-          Delayed::Job.enqueue(ImboxMailJob.new(sender,cc,subject,body))
+          body = "Mensajes enviados a #{to.count} personas \n" +
+          "Contenido: " + params[:reminder][:body]
+          #Delayed::Job.enqueue(ImboxMailJob.new(sender,copies,subject,body)) unless copies.count > 0
+
+          Delayed::Job.enqueue(DelayedReminderJob.new( :sender_id  => @user.id,
+                                                       :recipient_ids => copy_array,
+                                                       :subject => subject,
+                                                       :body=> body)) if copy_array.count > 0
         end
 
         flash[:notice] = "#{t('flash1')}"
@@ -120,6 +127,24 @@ class ReminderController < ApplicationController
     end
   end
 
+
+  def to_employees2
+    if params[:dept_id] == ""
+      render :update do |page|
+        page.replace_html "to_employees2", :text => ""
+      end
+      #return
+    else
+      department = EmployeeDepartment.find(params[:dept_id])
+      employees = department.employees
+      @students_user = employees.collect { |s| s.user if s.status == true }
+      @students_user.compact!
+      render :update do |page|
+        page.replace_html 'to_users2', :partial => 'to_users2', :object => @students_user
+      end
+    end
+  end
+
   def to_students
     course = Course.find(params[:course_is]) if !params[:course_is].to_s.empty?
 
@@ -159,6 +184,18 @@ class ReminderController < ApplicationController
       @recipients = User.find(recipients_array)
       render :update do |page|
         page.replace_html 'recipient-list', :partial => 'recipient_list'
+      end
+    else
+      redirect_to :controller=>:user,:action=>:dashboard
+    end
+  end
+
+  def update_copy_list
+    if params[:copies]
+      recipients_array = params[:copies].split(",").collect{ |s| s.to_i }
+      @copies = User.find(recipients_array)
+      render :update do |page|
+        page.replace_html 'copy-list', :partial => 'copy_list'
       end
     else
       redirect_to :controller=>:user,:action=>:dashboard
