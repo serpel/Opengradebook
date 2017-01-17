@@ -69,7 +69,7 @@ class ReminderController < ApplicationController
 
           copy_array = params[:copies].split(",").collect{ |s| s.to_i }
           subject = "Resumen - " + subject
-          body = "Mensajes enviados a #{to.count} personas \n" +
+          body = "Mensajes enviados a #{recipients_array.count} personas \n" +
           "Contenido: " + params[:reminder][:body]
           #Delayed::Job.enqueue(ImboxMailJob.new(sender,copies,subject,body)) unless copies.count > 0
 
