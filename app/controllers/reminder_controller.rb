@@ -140,7 +140,7 @@ class ReminderController < ApplicationController
       @students_user = employees.collect { |s| s.user if s.status == true }
       @students_user.compact!
       render :update do |page|
-        page.replace_html 'to_users2', :partial => 'to_users2', :object => @students_user
+        page.replace_html 'to_employee', :partial => 'to_users2', :object => @students_user
       end
     end
   end

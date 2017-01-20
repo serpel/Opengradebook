@@ -177,10 +177,10 @@ new Ajax.Request('/reminder/update_recipient_list', {asynchronous:true, evalScri
             <%= render :partial=>"select_employee_department2" %>
         </div>
 
-         <div class="label-field-to">
-            <div id="to_users2"></div>
-         </div>
-         <div class="extender"></div>
+          <div class="label-field-to">
+            <div id="to_employee"></div>
+          </div>
+          <div class="extender"></div>
        <% end %>
         
       <!--<div class="to-options">
@@ -198,18 +198,19 @@ new Ajax.Request('/reminder/update_recipient_list', {asynchronous:true, evalScri
         <div class="extender"></div>
         <div id="select-student-course">
           <%  @user = current_user %>
-          <%=  render :partial=> "select_student_course" %>
+          <%= render :partial=> "select_student_course" %>
         </div>
-      
-        <div class="label-field-to">
-            <div id="to_users2"></div>
-        </div>
-        <div class="extender"></div>
 
-        <div class="label-field-to">
+          <div class="label-field-to">
+            <div id="to_users2"></div>
+          </div>
+          <div class="extender"></div>
+
+          <div class="label-field-to">
             <div id="to_users3"></div>
-        </div>
-      <% end %>     
+          </div>
+
+      <% end %>
     </div>
     <div class="message">
       <div id="recipient-list"></div>
