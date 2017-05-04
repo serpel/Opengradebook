@@ -1,0 +1,28 @@
+<h1>Listing privileges</h1>
+
+<table>
+  <tr>
+    Name
+  </tr>
+  <tr>
+    Description
+  </tr>
+  <tr>
+    Updated At
+  </tr>
+
+<% @privileges.each do |privilege| %>
+  <tr>
+    <td><%= privilege.name %></td>
+    <td><%= privilege.description %></td>
+    <td><%= privilege.updated_at %></td>
+    <td><%= link_to 'Show', privilege %></td>
+    <td><%= link_to 'Edit', edit_privilege_path(privilege) %></td>
+    <td><%= link_to 'Destroy', privilege, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New privilege', new_privilege_path %>

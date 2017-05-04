@@ -1,4 +1,8 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :message_logs
+
+  map.resources :privileges
+
   map.resources :biweekly_personality_grades
 
   map.resources :biweekly_subject_grades

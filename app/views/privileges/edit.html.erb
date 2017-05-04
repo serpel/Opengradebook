@@ -1,0 +1,14 @@
+<h1>Editing privilege</h1>
+
+<% form_for(@privilege) do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.text_field :name, :size => 8 %>
+  <%= f.text_field :description, :size => 8 %>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @privilege %> |
+<%= link_to 'Back', privileges_path %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  Employee: 
+  Reminder: 
+  quantity: 1
+
+two:
+  Employee: 
+  Reminder: 
+  quantity: 1

@@ -1,0 +1,24 @@
+<h1>Editing message_log</h1>
+
+<% form_for(@message_log) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :Employee %><br />
+    <%= f.text_field :Employee %>
+  </p>
+  <p>
+    <%= f.label :Reminder %><br />
+    <%= f.text_field :Reminder %>
+  </p>
+  <p>
+    <%= f.label :quantity %><br />
+    <%= f.text_field :quantity %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @message_log %> |
+<%= link_to 'Back', message_logs_path %>

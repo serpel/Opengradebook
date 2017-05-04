@@ -1,0 +1,26 @@
+<h1>Listing message_logs</h1>
+
+<table>
+  <tr>
+    <th>Employee</th>
+    <th>Subject</th>
+    <th>Body</th>
+    <th>Quantity</th>
+  </tr>
+
+<% @message_logs.each do |message_log| %>
+  <tr>
+    <td><%=h message_log.employee.full_name %></td>
+    <td><%=h message_log.subject %></td>
+    <td><%=h message_log.body %></td>
+    <td><%=h message_log.quantity %></td>
+    <td><%= link_to 'Show', message_log %></td>
+    <td><%= link_to 'Edit', edit_message_log_path(message_log) %></td>
+    <td><%= link_to 'Destroy', message_log, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New message_log', new_message_log_path %>

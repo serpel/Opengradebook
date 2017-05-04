@@ -2604,3 +2604,6 @@ en: # locale
   recov4: "Niv 4"
   recovery: "R"
   cc: "cc"
+  director_report_privilege: "Director Report"
+  quantity: "Quantity"
+

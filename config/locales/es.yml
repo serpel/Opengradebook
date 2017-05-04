@@ -2514,3 +2514,5 @@ es: # locale
     recov4: "Nivelación 4"
     recovery: "Recuperación"
     cc: "cc"
+    director_report_privilege: "Reporte Directores"
+    quantity: "Cantidad"

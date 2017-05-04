@@ -1,0 +1,18 @@
+<p>
+  <b>Employee:</b>
+  <%=h @message_log.employee.full_name %>
+</p>
+
+<p>
+  <b>Reminder:</b>
+  <%=h @message_log.reminder.subject %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%=h @message_log.quantity %>
+</p>
+
+
+<%= link_to 'Edit', edit_message_log_path(@message_log) %> |
+<%= link_to 'Back', message_logs_path %>

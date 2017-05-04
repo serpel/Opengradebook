@@ -5,6 +5,8 @@ class Reminder < ActiveRecord::Base
   belongs_to :user , :foreign_key => 'sender'
   belongs_to :to_user, :class_name=>"User",:foreign_key => 'recipient'
 
+  has_many    :message_logs
+
   cattr_reader :per_page
   @@per_page = 12
   

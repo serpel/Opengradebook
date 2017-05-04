@@ -65,19 +65,26 @@ class ReminderController < ApplicationController
           Delayed::Job.enqueue(ImboxMailJob.new(sender,to,subject,body))
         end
 
+        unless params[:copies] == ''
+          message_log = MessageLog.new(:employee_id => @user.employee_record.id, :subject => subject, :body  => body, :quantity => recipients_array.count)
+          message_log.save
+        end
+
+=begin
         unless params[:copies] == ""
 
           copy_array = params[:copies].split(",").collect{ |s| s.to_i }
           subject = "Resumen - " + subject
           body = "Mensajes enviados a #{recipients_array.count} personas \n" +
           "Contenido: " + params[:reminder][:body]
-          #Delayed::Job.enqueue(ImboxMailJob.new(sender,copies,subject,body)) unless copies.count > 0
+          #Delayed::Job.enqueue(ImboxbodyMailJob.new(sender,copies,subject,body)) unless copies.count > 0
 
           Delayed::Job.enqueue(DelayedReminderJob.new( :sender_id  => @user.id,
                                                        :recipient_ids => copy_array,
                                                        :subject => subject,
                                                        :body=> body)) if copy_array.count > 0
         end
+=end
 
         flash[:notice] = "#{t('flash1')}"
         redirect_to :controller=>"reminder", :action=>"create_reminder"
