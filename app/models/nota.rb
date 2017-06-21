@@ -201,17 +201,15 @@ class Nota < ActiveRecord::Base
   end
 
   def promedio_semestre(numero)
-    t = 0
+    p = 0
     if numero == 1
       r = recuperacion(1) >= recuperacion(2) ? recuperacion(1) : recuperacion(2) 
-      t2 = r > 0 ? r : parcial(2)
-      t = (parcial(1) + t2 ) / 2 
+      p = r > 0 ? r : (parcial(1) + parcial(2))/2
     else 
       r = recuperacion(3) >= recuperacion(4) ? recuperacion(3) : recuperacion(4) 
-      t2 = r > 0 ? r : parcial(4)
-      t = (parcial(3) + t2 ) / 2 
+      p = r > 0 ? r : (parcial(3) + parcial(4))/2
     end
-    t
+    p
   end
 
   def average_11_grade   
