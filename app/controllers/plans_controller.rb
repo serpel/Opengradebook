@@ -126,6 +126,7 @@ class PlansController < ApplicationController
     end
   end
 
+  require 'string'
   def excel_file_gradebook_for_10grade(plan_id)
 
     plan ||= Plan.find(plan_id)
@@ -170,7 +171,7 @@ class PlansController < ApplicationController
       nota = student.notas.find_by_subject_id(plan.subject)
       nota = set_students_notes_equal_zero(plan.subject.id, student.id) if nota.nil?
 
-      sheet1.update_row i+2, student.id, student.full_name.to_s,
+      sheet1.update_row i+2, student.id, student.full_name.to_s.to_my_utf8,
                         nota.examen(1), nota.acumulado(1), nota.parcial(1).round, nota.nivelacion(1),
                         nota.examen(2), nota.acumulado(2), nota.parcial(2).round, nota.recuperacion(1), nota.recuperacion(2),
                         nota.promedio_semestre(1).round(1),
@@ -193,6 +194,7 @@ class PlansController < ApplicationController
     return book
   end
 
+  require 'string'
   def excel_file_gradebook(plan_id)
 
     plan ||= Plan.find(plan_id)
