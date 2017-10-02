@@ -126,6 +126,7 @@ class PlansController < ApplicationController
     end
   end
 
+  require 'string'
   def export
     id = params[:id]
 
@@ -164,9 +165,10 @@ class PlansController < ApplicationController
 
       #content
       students.each_with_index do |student, i|
+        name = student.full_name
         nota = student.notas.find_by_subject_id(plan.subject)
         nota = set_students_notes_equal_zero(plan.subject.id, student.id) if nota.nil?
-        sheet1.update_row i+2, student.id, student.full_name,
+        sheet1.update_row i+2, student.id, name.to_s.to_my_utf8,
                           nota.examen_1, nota.acumulado_1, nota.recuperacion_1, nota.total_parcial(1),
                           nota.examen_2, nota.acumulado_2, nota.recuperacion_1, nota.total_parcial(2),
                           nota.examen_3, nota.acumulado_3, nota.recuperacion_1, nota.total_parcial(3),

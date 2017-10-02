@@ -17,18 +17,126 @@ class SchoolReportsController < ApplicationController
     end
   end
 
+  def batches
+    @employee = Employee.find_by_employee_number(current_user.username)
+    @my_subjects = @employee.subjects.select { |s| s.is_deleted == false }
+    b = @my_subjects.map { |a| a.batch_id }.uniq
+    @batches = Batch.find_all_by_id(b, :conditions => { :is_deleted => false, :is_active => true })
+  end
+
+  def get_students
+    parameter = params[:batch_id] == nil ? -1:params[:batch_id]
+    @students = Student.find_all_by_batch_id(parameter, :order => 'gender ASC, first_name ASC')
+    render(:update) { |page| page.replace_html 'students', :partial => 'students_by_course' }
+  end
+
+  require "odf-report"
+  require 'string'
   def gradebook_report
+
+    student = Student.find(params[:id])
+    grades = student.notas.select { |n| n.subject.batch == student.batch }
+    personalities = student.student_grade_personalities
+
+    odt_template = Rails.root.join('public/templates/decroly_boleta_calificaciones.odt')
+    report = ODFReport.new(odt_template) do |r|
+
+      r.add_field 'STUDENT', student.full_name
+      r.add_field 'COURSE', student.batch.course_section_name
+      r.add_field 'DATE', Time.now.strftime('%Y-%m-%d')
+      r.add_field 'YEAR', Time.now.strftime('%Y')
+      r.add_field 'DIRECTOR', 'R. Yomila A. de Aguirre'
+      r.add_field 'SECRETARY', 'Manuel Vasquez'
+
+      count = 1
+      r.add_table('TABLE_GRADE', grades) do |row, item|
+        row['NO'] = count
+        row['SUBJECT'] = item.subject.name.to_my_utf8
+        row['FIRST_PERIOD'] = item.partial(1).round
+        row['SECOND_PERIOD'] = item.partial(2).round
+        row['THIRD_PERIOD'] = item.partial(3).round
+        row['FOURTH_PERIOD'] = item.partial(4).round
+        row['AVERAGE'] = item.average.round
+        row['FIRST_RECOVERY'] = item.get_recovery(1).round
+        row['SECOND_RECOVERY'] = item.get_recovery(2).round
+        count += 1
+      end
+
+      count = 1
+      r.add_table('TABLE_PERSONALITY', personalities) do |row, personality|
+        row['NO'] = count
+        row['PERSONALITY'] = StudentAdditionalGradeField.find(personality.student_additional_grade_field_id).name.to_s.to_my_utf8
+        row['FIRST_PERIOD'] = personality.p1
+        row['SECOND_PERIOD'] = personality.p2
+        row['THIRD_PERIOD'] = personality.p3
+        row['FOURTH_PERIOD'] = personality.p4
+        row['SUMMARY'] = ''
+        count += 1
+      end
+    end
+
+    report_file_name = report.generate
+    send_file(report_file_name)
+  end
+
+  def gradebook_option
     respond_to do |format|
       format.html # index.html.erb
     end
   end
 
-  def biweekly_report
+  def biweekly_option
     respond_to do |format|
       format.html # index.html.erb
     end
   end
 
+  require "odf-report"
+  require 'string'
+  def beeweekly_report
+
+    period = params[:period]
+    student = Student.find(params[:id])
+    grades = student.biweekly_subject_grades.select { |n| n.subject.batch == student.batch and
+                                                          n.period == period}
+    personalities = student.biweekly_personality_grades
+
+    odt_template = Rails.root.join('public/templates/decroly_biweekly_report.odt')
+    report = ODFReport.new(odt_template) do |r|
+
+      r.add_field 'STUDENT', student.full_name
+      r.add_field 'COURSE', student.batch.course_section_name
+      r.add_field 'DATE', Time.now.strftime('%Y-%m-%d')
+      r.add_field 'YEAR', Time.now.strftime('%Y')
+      r.add_field 'PERIOD', period
+
+      count = 1
+      r.add_table('TABLE_GRADE', grades) do |row, item|
+        row['NO'] = count
+        row['SUBJECT'] = item.subject.name.to_my_utf8
+        row['FIRST_PERIOD'] = item.w1.round
+        row['SECOND_PERIOD'] = item.w2.round
+        row['THIRD_PERIOD'] = item.w3.round
+        row['FOURTH_PERIOD'] = item.w4.round
+        row['TOTAL'] = item.total.round
+        count += 1
+      end
+
+      count = 1
+      r.add_table('TABLE_PERSONALITY', personalities) do |row, personality|
+        row['NO'] = count
+        row['PERSONALITY'] = StudentAdditionalGradeField.find(personality.student_additional_grade_field_id).name.to_s.to_my_utf8
+        row['FIRST_PERIOD'] = personality.w1
+        row['SECOND_PERIOD'] = personality.w2
+        row['THIRD_PERIOD'] = personality.w3
+        row['FOURTH_PERIOD'] = personality.w4
+        count += 1
+      end
+    end
+
+    report_file_name = report.generate
+    send_file(report_file_name)
+  end
   # GET /school_reports/1
   # GET /school_reports/1.xml
   def show
