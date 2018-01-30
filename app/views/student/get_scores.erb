@@ -47,10 +47,10 @@ $('table tr').last().addClass('row-last');
             <% 4.times do |l| %>
                 <td class="col-1"><%=  nota != nil ? nota.examen(l+1) : 0.0 %></td>
                 <td class="col-1"><%=  nota != nil ? nota.acumulado(l+1) : 0.0 %></td>
-                <td class="col-1"><%=  nota != nil ? nota.recuperacion(l+1) : 0.0 %></td>
-                <td class="col-1"><%=  nota != nil ? nota.total_parcial(l+1) : 0.0 %></td>
+                <td class="col-1"><%=  nota != nil ? nota.nivelacion(l+1) : 0.0 %></td>
+                <td class="col-1"><%=  nota != nil ? nota.parcial(l+1) : 0.0 %></td>
             <% end %>
-            <td class="col-1"><%= nota != nil ? nota.total_average.round(1) : 0.0 %></td>
+            <td class="col-1"><%= nota != nil ? nota.promedio_semestre(1).round : 0.0 %></td>
           </tr>
           <tr class="tr-blank"></tr>
         <% end %>
