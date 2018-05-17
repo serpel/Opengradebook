@@ -30,8 +30,13 @@ class StudentController < ApplicationController
       @id = params[:id]
       @student = Student.find(params[:id])
       if @student.is_active?
-        subjects = @student.batch.subjects.map{ |s| s.id }
-        @student_scores = @student.notas.select { |n| subjects.include? n.subject_id }
+        @student_scores = Nota.find_by_sql("SELECT a.*
+                                     FROM notas a
+                                          inner join subjects b on a.subject_id = b.id
+                                    WHERE a.student_id = #{@student.id}
+                                      and b.is_deleted = false
+                                      and b.batch_id = #{@student.batch.id}
+                                    order by b.order asc")
         @st = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
 
         respond_to do |format|
@@ -51,7 +56,13 @@ class StudentController < ApplicationController
   def export
     begin
       @student = Student.find(params[:id])
-      @student_scores = @student.notas
+      @student_scores = Nota.find_by_sql("SELECT a.*
+                                     FROM notas a
+                                          inner join subjects b on a.subject_id = b.id
+                                    WHERE a.student_id = #{@student.id}
+                                      and b.is_deleted = false
+                                      and b.batch_id = #{@student.batch.id}
+                                    order by b.order asc")
       @student_details = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
 
       respond_to do |format|
