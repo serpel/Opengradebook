@@ -85,11 +85,13 @@ class Batch < ActiveRecord::Base
   end
 
   def normal_batch_subject
-    Subject.find_all_by_batch_id(self.id,:conditions=>["elective_group_id IS NULL AND is_deleted = false"])
+    Subject.all(:conditions=> ["batch_id = ? and elective_group_id IS NULL AND is_deleted = false", self.id], :order=>["subjects.order ASC"])
   end
+
   def elective_batch_subject(elect_group)
-    Subject.find_all_by_batch_id_and_elective_group_id(self.id,elect_group,:conditions=>["elective_group_id IS NOT NULL AND is_deleted = false"])
+    Subject.find_all_by_batch_id_and_elective_group_id(self.id,elect_group,:conditions=>["elective_group_id IS NOT NULL AND is_deleted = false"],  :order=> ["subjects.batch_id ASC"])
   end
+
   def has_own_weekday
     Weekday.find_all_by_batch_id(self.id,:conditions=>{:is_deleted=>false}).present?
   end

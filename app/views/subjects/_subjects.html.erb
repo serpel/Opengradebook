@@ -16,6 +16,7 @@
     <% end %>
     <% @subjects.each do |subject| %>
       <li id="subject-<%= subject.id %>" class="list<%= cycle('even','odd')%>" >
+        <div class="category-name"><%= subject.order %></div>
         <div class="category-name"><%= subject.name %></div>
         <div class="opt">
           <div class="category-code"><%= subject.code %></div>
