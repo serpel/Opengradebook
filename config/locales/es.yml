@@ -100,6 +100,7 @@ es: # locale
       subject:
         name: "Nombre"
         max_weekly_classes: "Clases semanales máx"
+        order: "Posicion"
 
       asset:
         amount: "Cantidad"
@@ -2514,3 +2515,4 @@ es: # locale
     recov4: "Nivelación 4"
     recovery: "Recuperación"
     cc: "cc"
+    order: "Posición"

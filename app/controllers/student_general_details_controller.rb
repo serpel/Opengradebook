@@ -56,9 +56,13 @@ class StudentGeneralDetailsController < ApplicationController
       @details = StudentGeneralDetail.find_all_by_batch_id_and_student_id(@student.batch_id, @student.id)
       if !@details.nil?
         @scores = []
-        @scores = @student.notas
-        subjects = @student.batch.subjects.map{ |s| s.id }
-        @scores = @student.notas.select { |n| subjects.include? n.subject_id }
+        @scores = Nota.find_by_sql("SELECT a.*
+                                     FROM notas a
+                                          inner join subjects b on a.subject_id = b.id
+                                    WHERE a.student_id = #{@student.id}
+                                      and b.is_deleted = false
+                                      and b.batch_id = #{@student.batch.id}
+                                    order by b.order asc")
         @course = @student.batch.course
         @time = Time.new
 

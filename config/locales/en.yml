@@ -101,6 +101,7 @@ en: # locale
         name: "Name"
         max_weekly_classes: "Maximum Weekly Classes"
         code: "Code"
+        order: "Position"
 
       asset:
         amount: "Amount"
@@ -2604,3 +2605,4 @@ en: # locale
   recov4: "Niv 4"
   recovery: "R"
   cc: "cc"
+  order: "Posición"
