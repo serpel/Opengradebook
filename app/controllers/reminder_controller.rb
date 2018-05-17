@@ -22,13 +22,15 @@ class ReminderController < ApplicationController
        @departments = EmployeeDepartment.find(:all, :conditions=>"status = true")
        @courses = Course.find(:all, :conditions=>"is_deleted = false", :order => "code asc")
     elsif @user.employee?
-       # Employee courses and depeartments
+       # Employee courses and departments
        @code = Employee.find_by_employee_number @user['username']
        @departments = EmployeeDepartment.find_all_by_id_and_status(@code['employee_department_id'],"1")
        @courses = Course.find_all_by_school_id_and_is_deleted(current_school,"0", :order => "code asc")
     elsif @user.student?
        @courses = current_course
-       @departments = EmployeeDepartment.find(:all, :conditions=>"status = true and code = 'Admin'")
+       student = Student.find(@user.student.id)
+       employees = Employee.find(:all, :conditions => "status = true and school_id = "+student.school_id.to_s)
+       @departments = EmployeeDepartment.find_all_by_id(employees)
     elsif @user.parent?
       parent = Guardian.find_by_user_id(@user['id'].to_s)
       student = Student.find(parent.ward_id)
