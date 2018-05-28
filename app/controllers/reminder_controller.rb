@@ -28,18 +28,18 @@ class ReminderController < ApplicationController
        @courses = Course.find_all_by_school_id_and_is_deleted(current_school,"0", :order => "code asc")
     elsif @user.student?
        @courses = current_course
-       student = Student.find(@user.student.id)
-       employees = Employee.find(:all, :conditions => "status = true and school_id = "+student.school_id.to_s)
-       @departments = EmployeeDepartment.find_all_by_id(employees)
+       #student = @user.student_record.school.id
+       sc = @user.student_record.school == nil ? 1 : @user.student_record.school.id
+       employees = Employee.find(:all, :conditions => "status = true and school_id = #{sc}")
+       dep = employees.map { |a| a.employee_department_id }
+       @departments = EmployeeDepartment.find_all_by_id(dep)
     elsif @user.parent?
       parent = Guardian.find_by_user_id(@user['id'].to_s)
       student = Student.find(parent.ward_id)
-      if !student.school_id.nil?
-        employees = Employee.find(:all, :conditions => "status = true and school_id = "+student.school_id.to_s)
-        @departments = EmployeeDepartment.find_all_by_id(employees)
-      else
-        @departments = EmployeeDepartment.find(:all, :conditions=>"status = true and code = 'Admin'")
-      end
+      sc = student.school == nil ? 1 : student.school.id
+      employees = Employee.find(:all, :conditions => "status = true and school_id = #{sc}")
+      dep = employees.map { |a| a.employee_department_id }
+      @departments = EmployeeDepartment.find_all_by_id(dep)
     end
 
     @new_reminder_count = Reminder.find_all_by_recipient(@user.id, :conditions=>"is_read = false")
