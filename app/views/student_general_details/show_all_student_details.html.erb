@@ -230,6 +230,7 @@ table#listing td.col-1{
         </tr>
         </thead>
         <tbody>
+        <% total = 0 %>
         <% @scores.each do |student_note| %>
             <tr class="tr-read-<%= cycle('odd', 'even') %>">
               <% sub = Subject.find(student_note.subject_id) %>
@@ -250,8 +251,16 @@ table#listing td.col-1{
                   <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
               <% end %>
             </tr>
+            <% total += student_note.promedio_total %>
         <% end %>
+
         </tbody>
+        <tfoot>
+            <tr class="tr-read-even">
+              <td>Promedio: <%= (total/@scores.count).round 1 %></td>
+              <td></td>
+            </tr>
+        </tfoot>
       </table>
     </div>
   <% else %>
