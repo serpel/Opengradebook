@@ -212,6 +212,18 @@ class Nota < ActiveRecord::Base
     p
   end
 
+  def promedio_total()
+    t = 0
+    if(promedio_semestre(1) > 0 && promedio_semestre(2) > 0)
+        t = (promedio_semestre(1)+promedio_semestre(2))/2
+    elsif promedio_semestre(1) > 0
+      t = promedio_semestre(1)
+    elsif promedio_semestre(2) > 0
+      t = promedio_semestre(2)
+    end
+    t
+  end
+
   def average_11_grade   
     s1 = promedio_semestre ( 1 )
     s2 = promedio_semestre ( 2 )
