@@ -247,6 +247,7 @@ table#listing td.col-1{
               <td><%= student_note.recuperacion(3).round %></td>
               <td><%= student_note.recuperacion(4).round %></td>
               <td><%= student_note.promedio_semestre(2).round %></td>
+              <td><%= student_note.promedio_total.round %></td>
               <% if permitted_to? :destroy and (@current_user.privileges.map{|p| p.name}.include?("SubjectMaster"))  %>
                   <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
               <% end %>
@@ -257,7 +258,7 @@ table#listing td.col-1{
         </tbody>
         <tfoot>
             <tr class="tr-read-even">
-              <td>Promedio: <%= (total/@scores.count).round 1 %></td>
+              <td>Promedio: <%= (total/@scores.count).round %></td>
               <td></td>
             </tr>
         </tfoot>
