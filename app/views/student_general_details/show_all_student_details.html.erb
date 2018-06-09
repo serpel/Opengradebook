@@ -289,6 +289,7 @@ table#listing td.col-1{
         </tr>
         </thead>
         <tbody>
+        <% total = 0 %>
         <% @scores.each do |student_note| %>
             <tr class="tr-read-<%= cycle('odd', 'even') %>">
               <% sub = Subject.find(student_note.subject_id) %>
@@ -299,6 +300,7 @@ table#listing td.col-1{
               <td><%= student_note.total_parcial(4).round %></td>
               <td><%= student_note.get_recovery(1).round %></td>
               <td><%= student_note.total_average.round %></td>
+              <% total += student_note.total_average %>
               <% if @scores.count == 0 %>
                   <% 4.times do |l| %>
                       <td colspan="1"><%= "#{t('partial'+(l+1).to_s)}" %></td>
@@ -310,6 +312,12 @@ table#listing td.col-1{
             </tr>
         <% end %>
         </tbody>
+        <tfoot>
+        <tr class="tr-read-even">
+          <td>Promedio: <%= (total/@scores.count).round(1) %></td>
+          <td></td>
+        </tr>
+        </tfoot>
       </table>
     </div>
   <% end %>
