@@ -250,12 +250,12 @@ table#listing td.col-1{
               <td><%= student_note.recuperacion(3).round %></td>
               <td><%= student_note.recuperacion(4).round %></td>
               <td><%= student_note.promedio_semestre(2).round %></td>
-              <td><%= student_note.promedio_total.round(1) %></td>
+              <td><%= student_note.promedio_total.round %></td>
               <% if permitted_to? :destroy and (@current_user.privileges.map{|p| p.name}.include?("SubjectMaster"))  %>
                   <td><%= link_to 'Destroy', student_note, :confirm => 'Are you sure?', :method => :delete %></td>
               <% end %>
             </tr>
-            <% total += student_note.promedio_total %>
+            <% total += student_note.promedio_total.round %>
         <% end %>
 
         </tbody>
