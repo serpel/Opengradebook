@@ -1,0 +1,13 @@
+<p>
+  <b>Periodnumber:</b>
+  <%=h @period.PeriodNumber %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%=h @period.Description %>
+</p>
+
+
+<%= link_to 'Edit', edit_period_path(@period) %> |
+<%= link_to 'Back', periods_path %>

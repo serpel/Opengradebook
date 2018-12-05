@@ -1,0 +1,18 @@
+<p>
+  <b>Value:</b>
+  <%=h @student_class_notes_value.Value %>
+</p>
+
+<p>
+  <b>Subjects:</b>
+  <%=h @student_class_notes_value.subjects %>
+</p>
+
+<p>
+  <b>Periods:</b>
+  <%=h @student_class_notes_value.periods %>
+</p>
+
+
+<%= link_to 'Edit', edit_student_class_notes_value_path(@student_class_notes_value) %> |
+<%= link_to 'Back', student_class_notes_values_path %>

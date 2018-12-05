@@ -1,0 +1,24 @@
+<h1>Editing student_class_notes_value</h1>
+
+<% form_for(@student_class_notes_value) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :Value %><br />
+    <%= f.text_field :Value %>
+  </p>
+  <p>
+    <%= f.label :subjects %><br />
+    <%= f.text_field :subjects %>
+  </p>
+  <p>
+    <%= f.label :periods %><br />
+    <%= f.text_field :periods %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @student_class_notes_value %> |
+<%= link_to 'Back', student_class_notes_values_path %>

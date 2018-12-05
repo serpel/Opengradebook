@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  Value: 9.99
+  subjects: 
+  periods: 
+
+two:
+  Value: 9.99
+  subjects: 
+  periods: 

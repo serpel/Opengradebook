@@ -1,0 +1,41 @@
+
+
+<div id="content-header">
+  <%= image_tag("/images/student_details/student_details_logo.jpg") %>
+  <h1><%= t('student_details') %> </h1>
+  <h3><%= t('view_details') %> </h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+      <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+  <div class="students-table">
+    <table align="center" width="100%" cellpadding="1" cellspacing="1">
+      <tr class="tr-head">
+        <th>Ordernumber</th>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Subject</th>
+      </tr>
+
+        <% @student_class_notes.each do |student_class_note| %>
+            <tr class="tr-<%= cycle('odd', 'even') %>">
+                <td><%=h student_class_note.OrderNumber %></td>
+                <td><%=h student_class_note.Name %></td>
+                <td><%=h student_class_note.Value %></td>
+                <td><%=h student_class_note.subject.name %></td>
+                <td><%= link_to 'Show', student_class_note %></td>
+                <td><%= link_to 'Edit', edit_student_class_note_path(student_class_note) %></td>
+                <td><%= link_to 'Destroy', student_class_note, :confirm => 'Are you sure?', :method => :delete %></td>
+            </tr>
+        <% end %>
+    </table>
+  </div>
+
+<%= link_to 'New student_class_note', new_student_class_note_path %>

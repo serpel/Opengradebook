@@ -1,0 +1,24 @@
+<h1>Listing student_class_notes_values</h1>
+
+<table>
+  <tr>
+    <th>Value</th>
+    <th>Subjects</th>
+    <th>Periods</th>
+  </tr>
+
+<% @student_class_notes_values.each do |student_class_notes_value| %>
+  <tr>
+    <td><%=h student_class_notes_value.Value %></td>
+    <td><%=h student_class_notes_value.subjects %></td>
+    <td><%=h student_class_notes_value.periods %></td>
+    <td><%= link_to 'Show', student_class_notes_value %></td>
+    <td><%= link_to 'Edit', edit_student_class_notes_value_path(student_class_notes_value) %></td>
+    <td><%= link_to 'Destroy', student_class_notes_value, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New student_class_notes_value', new_student_class_notes_value_path %>

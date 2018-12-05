@@ -1,0 +1,2 @@
+module StudentClassNotesHelper
+end

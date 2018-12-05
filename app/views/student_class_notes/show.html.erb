@@ -1,0 +1,23 @@
+<p>
+  <b>Ordernumber:</b>
+  <%=h @student_class_note.OrderNumber %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%=h @student_class_note.Name %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%=h @student_class_note.Value %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%=h @student_class_note.subject.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_student_class_note_path(@student_class_note) %> |
+<%= link_to 'Back', student_class_notes_path %>
