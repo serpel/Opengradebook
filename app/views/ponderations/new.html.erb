@@ -1,0 +1,48 @@
+<div id="content-header">
+  <%= image_tag("/images/student_details/student_details_logo.jpg") %>
+  <h1><%= t('student_details') %> </h1>
+  <h3><%= t('view_details') %> </h3>
+  <div id="app-back-button">
+    <%= link_to_function image_tag("/images/buttons/back.png",:border => 0), "history.back()" %>
+  </div>
+</div>
+
+<div id="page-yield">
+
+  <% unless flash[:notice].nil? %>
+      <p class="flash-msg"> <%= flash[:notice] %> </p>
+  <% end %>
+
+  <div class="box">
+
+
+<% form_for(@ponderation) do |f| %>
+    <%= f.error_messages %>
+
+    <div class="label-field-pair">
+       <div class="label-container"><%= f.label :Value %></div>
+       <div class="input-container"><%= f.text_field :Value %></div>
+    </div>
+
+
+    <div class="label-field-pair">
+        <div class="label-container"><%= f.label :GradeDefinition %></div>
+        <div class="text-input-bg"><%= select :GradeDefinition, :GradeDefinition_id,
+                                                @definitions.map{|s| [s.Name, s.id] },
+                                                {:prompt => "#{t('select_a_definition')}"}%></div>
+    </div>
+
+
+    <div class="label-field-pair">
+      <div class="label-container"><%= f.label :Subject %></div>
+      <div class="text-input-bg"><%= select :Subject, :subject_id,
+                                            @subjects.map{|s| [s.name, s.id] },
+                                            {:prompt => "#{t('select_a_subject')}"}%></div>
+    </div>
+
+    <p>
+        <%= f.submit 'Create', :class => "submit_button" %>
+    </p>
+<% end %>
+
+<%= link_to 'Back', ponderations_path %>

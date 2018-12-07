@@ -1,0 +1,21 @@
+<h1>Listing grade_definitions</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @grade_definitions.each do |grade_definition| %>
+  <tr>
+    <td><%=h grade_definition.Name %></td>
+    <td><%=h grade_definition.OrderNumber %></td>
+    <td><%= link_to 'Show', grade_definition %></td>
+    <td><%= link_to 'Edit', edit_grade_definition_path(grade_definition) %></td>
+    <td><%= link_to 'Destroy', grade_definition, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New grade_definition', new_grade_definition_path %>

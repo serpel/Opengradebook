@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :grades
+
+  map.resources :ponderations
+
+  map.resources :grade_definitions
+
   map.resources :student_class_notes_values
 
   map.resources :student_class_notes

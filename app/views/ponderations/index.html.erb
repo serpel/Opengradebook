@@ -1,0 +1,24 @@
+<h1>Listing ponderations</h1>
+
+<table>
+  <tr>
+    <th>Value</th>
+    <th>Gradedefinition</th>
+    <th>Subject</th>
+  </tr>
+
+<% @ponderations.each do |ponderation| %>
+  <tr>
+    <td><%=h ponderation.Value %></td>
+    <td><%=h ponderation.GradeDefinition %></td>
+    <td><%=h ponderation.Subject %></td>
+    <td><%= link_to 'Show', ponderation %></td>
+    <td><%= link_to 'Edit', edit_ponderation_path(ponderation) %></td>
+    <td><%= link_to 'Destroy', ponderation, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New ponderation', new_ponderation_path %>

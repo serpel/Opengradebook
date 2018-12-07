@@ -21,7 +21,6 @@
         <th>Ordernumber</th>
         <th>Name</th>
         <th>Value</th>
-        <th>Subject</th>
       </tr>
 
         <% @student_class_notes.each do |student_class_note| %>
@@ -29,7 +28,6 @@
                 <td><%=h student_class_note.OrderNumber %></td>
                 <td><%=h student_class_note.Name %></td>
                 <td><%=h student_class_note.Value %></td>
-                <td><%=h student_class_note.subject.name %></td>
                 <td><%= link_to 'Show', student_class_note %></td>
                 <td><%= link_to 'Edit', edit_student_class_note_path(student_class_note) %></td>
                 <td><%= link_to 'Destroy', student_class_note, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -39,3 +37,5 @@
   </div>
 
 <%= link_to 'New student_class_note', new_student_class_note_path %>
+
+</div>

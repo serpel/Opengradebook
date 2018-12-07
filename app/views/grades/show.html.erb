@@ -1,0 +1,23 @@
+<p>
+  <b>Value:</b>
+  <%=h @grade.value %>
+</p>
+
+<p>
+  <b>Period:</b>
+  <%=h @grade.Period %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%=h @grade.Subject %>
+</p>
+
+<p>
+  <b>Gradedefinition:</b>
+  <%=h @grade.GradeDefinition %>
+</p>
+
+
+<%= link_to 'Edit', edit_grade_path(@grade) %> |
+<%= link_to 'Back', grades_path %>

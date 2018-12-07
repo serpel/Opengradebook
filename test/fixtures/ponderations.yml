@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  OrderNumber: 1
+  Name: MyString
+  Value: 9.99
+  GradeDefinition: 
+
+two:
+  OrderNumber: 1
+  Name: MyString
+  Value: 9.99
+  GradeDefinition: 

@@ -1,0 +1,20 @@
+<h1>Editing grade_definition</h1>
+
+<% form_for(@grade_definition) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :Name %><br />
+    <%= f.text_field :Name %>
+  </p>
+  <p>
+      <%= f.label :OrderNumber %><br />
+      <%= f.text_field :OrderNumber %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @grade_definition %> |
+<%= link_to 'Back', grade_definitions_path %>

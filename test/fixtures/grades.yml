@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  value: 9.99
+  Period: 
+  Subject: 
+  GradeDefinition: 
+
+two:
+  value: 9.99
+  Period: 
+  Subject: 
+  GradeDefinition: 

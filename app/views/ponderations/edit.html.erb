@@ -1,0 +1,28 @@
+<h1>Editing ponderation</h1>
+
+<% form_for(@ponderation) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :OrderNumber %><br />
+    <%= f.text_field :OrderNumber %>
+  </p>
+  <p>
+    <%= f.label :Name %><br />
+    <%= f.text_field :Name %>
+  </p>
+  <p>
+    <%= f.label :Value %><br />
+    <%= f.text_field :Value %>
+  </p>
+  <p>
+    <%= f.label :GradeDefinition %><br />
+    <%= f.text_field :GradeDefinition %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @ponderation %> |
+<%= link_to 'Back', ponderations_path %>
