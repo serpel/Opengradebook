@@ -50,7 +50,7 @@ $('table tr').last().addClass('row-last');
                 <td class="col-1"><%=  nota != nil ? nota.nivelacion(l+1) : 0.0 %></td>
                 <td class="col-1"><%=  nota != nil ? nota.parcial(l+1) : 0.0 %></td>
             <% end %>
-            <td class="col-1"><%= nota != nil ? nota.promedio_semestre(1).round : 0.0 %></td>
+            <td class="col-1"><%= nota != nil ? nota.promedio_total().round : 0.0 %></td>
           </tr>
           <tr class="tr-blank"></tr>
         <% end %>
